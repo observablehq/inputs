@@ -1,0 +1,46 @@
+{
+  "name": "@observablehq/inputs",
+  "description": "User interface components for Observable notebooks",
+  "version": "0.0.1",
+  "author": {
+    "name": "Observable, Inc.",
+    "url": "https://observablehq.com"
+  },
+  "license": "ISC",
+  "main": "dist/@observablehq/inputs.cjs.js",
+  "unpkg": "dist/@observablehq/inputs.umd.min.js",
+  "module": "src/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/observablehq/inputs.git"
+  },
+  "files": [
+    "dist/**/*.js",
+    "src/**/*.js"
+  ],
+  "scripts": {
+    "test": "mkdir -p test/output && tape -r esm -r module-alias/register 'test/**/*-test.js' | tap-dot && eslint src test",
+    "prepublishOnly": "rm -rf dist && rollup -c",
+    "postpublish": "git push && git push --tags"
+  },
+  "_moduleAliases": {
+    "@observablehq/inputs": "./src/index.js"
+  },
+  "devDependencies": {
+    "eslint": "^7.12.1",
+    "esm": "^3.2.25",
+    "jsdom": "^16.4.0",
+    "module-alias": "^2.2.2",
+    "rollup": "^2.32.1",
+    "rollup-plugin-terser": "^7.0.2",
+    "tap-dot": "^2.0.0",
+    "tape": "^4.13.3",
+    "tape-await": "^0.1.2"
+  },
+  "dependencies": {
+    "htl": "^0.2.3"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  }
+}
