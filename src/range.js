@@ -11,7 +11,7 @@ export function Range([min, max] = [0, 1], {
 } = {}) {
   if (typeof format !==  "function") throw new TypeError("format is not a function");
   const form = html`<form style=${{...defaultStyle, ...style}}>
-    <input name=input oninput=${oninput} type=range style=${{...marginRight, width: `${+width}px`}}><output name=output style=${marginRight}}></output>${label}
+    <input name=input oninput=${oninput} type=range style=${{...marginRight, width: `${+width}px`}}><output name=output style=${marginRight}></output>${label}
   </form>`;
   const {input, output} = form.elements;
   input.min = min = +min;

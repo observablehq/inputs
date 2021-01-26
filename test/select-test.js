@@ -12,6 +12,12 @@ tape("Select(options) sets the options", test => {
   test.equal(c.value, red);
 });
 
+tape("Select(options) formats null as empty by default", test => {
+  const s = Select(["red", null, "blue"], {value: null});
+  test.deepEqual(Array.from(s.elements.input.options, o => o.value), ["red", "", "blue"]);
+  test.equal(s.value, null);
+});
+
 tape("Select(…, {format}) sets the format function", test => {
   const s = Select(["red", undefined, "blue"], {format: x => x && x.toUpperCase()});
   test.deepEqual(Array.from(s.elements.input.options, o => o.value), ["RED", "undefined", "BLUE"]);
