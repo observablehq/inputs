@@ -11,3 +11,9 @@ tape("Select(options) sets the options", test => {
   test.deepEqual(Array.from(c.elements.input.options, o => o.value), ["red", "green", "blue"]);
   test.equal(c.value, red);
 });
+
+tape("Select(…, {format}) sets the format function", test => {
+  const s = Select(["red", undefined, "blue"], {format: x => x && x.toUpperCase()});
+  test.deepEqual(Array.from(s.elements.input.options, o => o.value), ["RED", "undefined", "BLUE"]);
+  test.equal(s.value, "red");
+});
