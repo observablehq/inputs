@@ -1,9 +1,9 @@
 import {html} from "htl";
-import {stringify} from "./format.js";
+import {formatNumber, stringify} from "./format.js";
 import {boxSizing, defaultStyle, marginRight} from "./style.js";
 
 export function Range([min, max] = [0, 1], {
-  format = d => d.toLocaleString("en"),
+  format = formatNumber,
   label = "",
   value,
   step,

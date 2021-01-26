@@ -1,10 +1,10 @@
 import {html} from "htl";
 import {arrayify} from "./array.js";
-import {stringify} from "./format.js";
+import {formatNumber, stringify} from "./format.js";
 import {boxSizing, defaultStyle, marginRight} from "./style.js";
 
 export function Search(data, {
-  format = value => `${value.length.toLocaleString("en")} results`, // length format
+  format = value => `${formatNumber(value.length)} results`, // length format
   value = "", // initial search query
   placeholder = "Search", // placeholder text to show when empty
   filter = searchFilter, // returns the filter function given query
