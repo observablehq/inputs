@@ -1,4 +1,5 @@
 import {Range} from "@observablehq/inputs";
+import {html} from "htl";
 import {number, string} from "./coercible.js";
 import tape from "./jsdom.js";
 
@@ -25,12 +26,13 @@ tape("Range() is equivalent to Range([0, 1])", test => {
 });
 
 tape("Range(…, {label}) sets the label", test => {
-  test.equal(Range([0, 1], {label: "foo"}).elements.output.value, "0.5 foo");
-  test.equal(Range([0, 100], {label: "bar"}).elements.output.value, "50 bar");
+  test.equal(Range([0, 1], {label: "foo"}).textContent.trim(), "0.5foo");
+  test.equal(Range([0, 100], {label: "bar"}).textContent.trim(), "50bar");
+  test.equal(Range([0, 100], {label: html`<b>bar</b>`}).textContent.trim(), "50bar");
 });
 
 tape("Range(…, {format}) sets the format", test => {
-  test.equal(Range([0, 1], {format: d => d.toFixed(4)}).elements.output.value, "0.5000");
+  test.equal(Range([0, 1], {format: d => d.toFixed(4)}).textContent.trim(), "0.5000");
   test.throws(() => Range([0, 1], {format: "foo"}), TypeError);
 });
 
@@ -50,11 +52,11 @@ tape("Range(…, {value}) sets the initial value", test => {
   const r = Range([0, 100], {value: 10});
   test.equal(r.value, 10);
   test.equal(r.elements.input.valueAsNumber, 10);
-  test.equal(r.elements.output.value, "10");
+  test.equal(r.textContent.trim(), "10");
   const s = Range([0, 100], {value: string("10")});
   test.equal(s.value, 10);
   test.equal(s.elements.input.valueAsNumber, 10);
-  test.equal(s.elements.output.value, "10");
+  test.equal(s.textContent.trim(), "10");
 });
 
 tape("Range(…, {width}) sets the width", test => {

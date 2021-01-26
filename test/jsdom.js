@@ -13,12 +13,16 @@ function wrap(tape) {
       global.window = jsdom.window;
       global.document = jsdom.window.document;
       global.Node = jsdom.window.Node;
+      global.NodeList = jsdom.window.NodeList;
+      global.HTMLCollection = jsdom.window.HTMLCollection;
       try {
         return await run(test);
       } finally {
         delete global.window;
         delete global.document;
         delete global.Node;
+        delete global.NodeList;
+        delete global.HTMLCollection;
       }
     });
   };
