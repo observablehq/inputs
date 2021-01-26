@@ -2,7 +2,7 @@ import {html} from "htl";
 import {defaultStyle, marginRight} from "./style.js";
 
 export function Select(data, {
-  format = data instanceof Map ? ([key]) => maybeEmpty(key) : maybeEmpty,
+  format = data instanceof Map ? ([key]) => key : d => d,
   valueof = data instanceof Map ? ([, value]) => value : d => d,
   label,
   value,
@@ -17,7 +17,7 @@ export function Select(data, {
     oninput=${oninput}
     style=${{...defaultStyle, ...style}}>
     <select style=${marginRight} name=input>
-      ${data.map((d, i) => html`<option>${format(d, i, data) + ""}`)}
+      ${data.map((d, i) => html`<option>${stringify(format(d, i, data))}`)}
     </select>${label}
   </form>`;
   const {input} = form.elements;
@@ -32,6 +32,6 @@ export function Select(data, {
   return form;
 }
 
-function maybeEmpty(x) {
-  return x == null ? "" : x;
+function stringify(x) {
+  return x == null ? "" : x + "";
 }
