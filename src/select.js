@@ -1,5 +1,5 @@
 import {html} from "htl";
-import {defaultStyle, marginRight} from "./style.js";
+import {boxSizing, defaultStyle, marginRight} from "./style.js";
 
 const ns = "observablehq-select";
 let nextId = 0;
@@ -19,7 +19,7 @@ export function Select(data, {
     onchange=${() => form.dispatchEvent(new CustomEvent("input"))}
     oninput=${oninput}
     style=${{...defaultStyle, ...formStyle}}>
-    <select style=${{...marginRight, width}} name=input>
+    <select style=${{...marginRight, ...boxSizing, width}} name=input>
       ${data.map((d, i) => html`<option>${stringify(format(d, i, data))}`)}
     </select>${label}
   </form>`;
@@ -51,7 +51,7 @@ export function AutoSelect(data, {
     onsubmit=${event => event.preventDefault()}
     oninput=${oninput}
     style=${{...defaultStyle, ...formStyle}}>
-    <input name=input autocomplete=off list=${id} style=${{...marginRight, width}}>${label}
+    <input name=input autocomplete=off list=${id} style=${{...marginRight, ...boxSizing, width}}>${label}
     <datalist id=${id}>${keys.map(key => html`<option>${key}`)}</datalist>
   </form>`;
   const {input} = form.elements;

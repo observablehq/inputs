@@ -8,3 +8,7 @@ export const defaultStyle = {
 export const marginRight = {
   marginRight: "0.4em"
 };
+
+export const boxSizing = {
+  boxSizing: "border-box"
+};
