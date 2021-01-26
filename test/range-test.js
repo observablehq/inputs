@@ -59,7 +59,7 @@ tape("Range(…, {value}) sets the initial value", test => {
   test.equal(s.textContent.trim(), "10");
 });
 
-tape("Range(…, {width}) sets the width", test => {
-  test.equal(Range([0, 100], {width: 240}).elements.input.style.width, "240px");
-  test.equal(Range([0, 100], {width: number(240)}).elements.input.style.width, "240px");
+tape("Range(…, {style}) applies additional styles", test => {
+  test.equal(Range([0, 100], {style: {}}).elements.input.style.width, "180px");
+  test.equal(Range([0, 100], {style: {width: "240px"}}).elements.input.style.width, "240px");
 });
