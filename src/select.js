@@ -45,20 +45,20 @@ export function AutoSelect(data, {
   if (typeof valueof !== "function") throw new TypeError("valueof is not a function");
   data = Array.from(data);
   const {width = "180px", ...formStyle} = style;
-  const keys = data.map((d, i) => stringify(format(d, i, data)));
+  const index = new Map(data.map((d, i) => [stringify(format(d, i, data)), i]).reverse());
   const id = `${ns}-${++nextId}`;
   const form = html`<form
     onsubmit=${event => event.preventDefault()}
     oninput=${oninput}
     style=${{...defaultStyle, ...formStyle}}>
     <input name=input autocomplete=off list=${id} style=${{...marginRight, ...boxSizing, width}}>${label}
-    <datalist id=${id}>${keys.map(key => html`<option>${key}`)}</datalist>
+    <datalist id=${id}>${Array.from(index, ([key]) => html`<option>${key}`).reverse()}</datalist>
   </form>`;
   const {input} = form.elements;
   if (value !== undefined) input.value = stringify(format(value));
   function oninput() {
-    const i = keys.findIndex(key => key === input.value);
-    form.value = i < 0 ? null : valueof(data[i], i, data);
+    const i = index.get(input.value);
+    form.value = i === undefined ? null : valueof(data[i], i, data);
   }
   oninput();
   return form;

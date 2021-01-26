@@ -1,4 +1,4 @@
-import {Select} from "@observablehq/inputs";
+import {AutoSelect, Select} from "@observablehq/inputs";
 import {string} from "./coercible.js";
 import tape from "./jsdom.js";
 
@@ -22,4 +22,10 @@ tape("Select(…, {format}) sets the format function", test => {
   const s = Select(["red", null, "blue"], {format: x => x && x.toUpperCase()});
   test.deepEqual(Array.from(s.elements.input.options, o => o.value), ["RED", "", "BLUE"]);
   test.equal(s.value, "red");
+});
+
+tape("AutoSelect(options, {format}) deduplicates formatted options", test => {
+  const s = AutoSelect(["Red", "rEd", "reD", "blue"], {format: s => s.toLowerCase(), value: "red"});
+  test.deepEqual(Array.from(s.querySelector("datalist").options, o => o.value), ["red", "blue"]);
+  test.equal(s.value, "Red"); // the first one wins
 });
