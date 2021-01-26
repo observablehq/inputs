@@ -215,9 +215,11 @@ function style() {
 .${ns} table {
   max-width: initial;
   min-height: 33px;
+  margin: 0;
   border-collapse: separate;
   border-spacing: 0;
   font-variant-numeric: tabular-nums;
+  line-height: inherit;
 }
 
 .${ns} thead th span {
