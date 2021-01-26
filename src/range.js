@@ -1,6 +1,6 @@
 import {html} from "htl";
 import {formatNumber, stringify} from "./format.js";
-import {boxSizing, defaultStyle, marginRight} from "./style.js";
+import {boxSizing, defaultStyle, mr1, mr2} from "./style.js";
 
 export function Range([min, max] = [0, 1], {
   format = formatNumber,
@@ -12,7 +12,7 @@ export function Range([min, max] = [0, 1], {
   if (typeof format !==  "function") throw new TypeError("format is not a function");
   const {width = "180px", ...formStyle} = style;
   const form = html`<form style=${{...defaultStyle, ...formStyle}}>
-    <input name=input oninput=${oninput} type=range style=${{...marginRight, ...boxSizing, width}}><output name=output style=${marginRight}></output>${label}
+    <input name=input oninput=${oninput} type=range style=${{...mr2, ...boxSizing, width}}><output name=output style=${mr1}></output>${label}
   </form>`;
   const {input, output} = form.elements;
   input.min = min = +min;

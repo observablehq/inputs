@@ -1,7 +1,7 @@
 import {html} from "htl";
 import {arrayify} from "./array.js";
 import {stringify} from "./format.js";
-import {boxSizing, defaultStyle, marginRight} from "./style.js";
+import {boxSizing, defaultStyle, mr2} from "./style.js";
 
 const ns = "observablehq-select";
 let nextId = 0;
@@ -21,7 +21,7 @@ export function Select(data, {
     onchange=${() => form.dispatchEvent(new CustomEvent("input"))}
     oninput=${oninput}
     style=${{...defaultStyle, ...formStyle}}>
-    <select style=${{...marginRight, ...boxSizing, width}} name=input>
+    <select style=${{...mr2, ...boxSizing, width}} name=input>
       ${data.map((d, i) => html`<option>${stringify(format(d, i, data))}`)}
     </select>${label}
   </form>`;
@@ -53,7 +53,7 @@ export function AutoSelect(data, {
     onsubmit=${event => event.preventDefault()}
     oninput=${oninput}
     style=${{...defaultStyle, ...formStyle}}>
-    <input name=input autocomplete=off list=${id} style=${{...marginRight, ...boxSizing, width}}>${label}
+    <input name=input autocomplete=off list=${id} style=${{...mr2, ...boxSizing, width}}>${label}
     <datalist id=${id}>${Array.from(index, ([key]) => html`<option>${key}`).reverse()}</datalist>
   </form>`;
   const {input} = form.elements;

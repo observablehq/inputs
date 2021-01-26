@@ -5,8 +5,12 @@ export const defaultStyle = {
   font: "13px var(--sans-serif)"
 };
 
-export const marginRight = {
-  marginRight: "0.4em"
+export const mr1 = {
+  marginRight: "0.25em"
+};
+
+export const mr2 = {
+  marginRight: "0.5em"
 };
 
 export const boxSizing = {
