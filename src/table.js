@@ -1,5 +1,7 @@
 import {html} from "htl";
 import {arrayify} from "./array.js";
+import {formatDate, formatNumber, stringify} from "./format.js";
+import {defined, ascending, descending} from "./sort.js";
 
 const ns = "observablehq-table";
 
@@ -37,14 +39,6 @@ export function Table(
     ${tbody}
   </table>
 </div>`;
-
-  function inputof(tr) {
-    return tr.firstChild.firstChild;
-  }
-
-  function orderof(th) {
-    return th.firstChild;
-  }
 
   function render(i, j) {
     return Array.from(index.subarray(i, j), i => {
@@ -202,6 +196,14 @@ export function Table(
   return root;
 }
 
+function inputof(tr) {
+  return tr.firstChild.firstChild;
+}
+
+function orderof(th) {
+  return th.firstChild;
+}
+
 function style() {
   return html`<style>
 
@@ -281,7 +283,7 @@ function formatof(base = {}, data, columns) {
     switch (type(data, column)) {
       case "number": format[column] = formatNumber; break;
       case "date": format[column] = formatDate; break;
-      default: format[column] = formatDefault; break;
+      default: format[column] = stringify; break;
     }
   }
   return format;
@@ -317,45 +319,4 @@ function columnsof(data) {
     }
   }
   return Object.keys(columns);
-}
-
-function pad(value, width) {
-  return (value + "").padStart(width, "0");
-}
-
-function formatDefault(value) {
-  return value + "";
-}
-
-function formatNumber(value) {
-  return value.toLocaleString("en");
-}
-
-function formatYear(year) {
-  return year < 0 ? "-" + pad(-year, 6) : year > 9999 ? "+" + pad(year, 6) : pad(year, 4);
-}
-
-function formatDate(date) {
-  var hours = date.getUTCHours(),
-      minutes = date.getUTCMinutes(),
-      seconds = date.getUTCSeconds(),
-      milliseconds = date.getUTCMilliseconds();
-  return isNaN(date) ? "Invalid Date"
-      : formatYear(date.getUTCFullYear(), 4) + "-" + pad(date.getUTCMonth() + 1, 2) + "-" + pad(date.getUTCDate(), 2)
-      + (milliseconds ? "T" + pad(hours, 2) + ":" + pad(minutes, 2) + ":" + pad(seconds, 2) + "." + pad(milliseconds, 3) + "Z"
-      : seconds ? "T" + pad(hours, 2) + ":" + pad(minutes, 2) + ":" + pad(seconds, 2) + "Z"
-      : minutes || hours ? "T" + pad(hours, 2) + ":" + pad(minutes, 2) + "Z"
-      : "");
-}
-
-function ascending(a, b) {
-  return defined(b) - defined(a) || (a < b ? -1 : a > b ? 1 : a >= b ? 0 : NaN);
-}
-
-function descending(b, a) {
-  return defined(a) - defined(b) || (a < b ? -1 : a > b ? 1 : a >= b ? 0 : NaN);
-}
-
-function defined(d) {
-  return d != null && !Number.isNaN(d);
 }
