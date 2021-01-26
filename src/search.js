@@ -4,7 +4,8 @@ import {formatNumber, stringify} from "./format.js";
 import {boxSizing, defaultStyle, marginRight} from "./style.js";
 
 export function Search(data, {
-  format = value => `${formatNumber(value.length)} results`, // length format
+  format = value => formatNumber(value.length), // length format
+  label = "results",
   value = "", // initial search query
   placeholder = "Search", // placeholder text to show when empty
   filter = searchFilter, // returns the filter function given query
@@ -12,16 +13,23 @@ export function Search(data, {
 } = {}) {
   const columns = data.columns;
   data = arrayify(data);
+  label = html`<span>${label}`;
   const {width = "180px", ...formStyle} = style;
   const form = html`<form style=${{...defaultStyle, ...formStyle}} onsubmit=${event => event.preventDefault()}>
-    <input name=input type=search style=${{...marginRight, ...boxSizing, width}} placeholder=${placeholder} value=${value} oninput=${oninput}><output name=output>
+    <input name=input type=search style=${{...marginRight, ...boxSizing, width}} placeholder=${placeholder} value=${value} oninput=${oninput}><output name=output style=${marginRight}>${label}
   </form>`;
   const {input, output} = form.elements;
   function oninput() {
     const value = data.filter(filter(input.value));
     if (columns !== undefined) value.columns = columns;
     form.value = value;
-    output.value = input.value ? stringify(format(value)) : "";
+    if (input.value) {
+      output.value = stringify(format(value));
+      label.style.display = "inline";
+    } else {
+      output.value = "";
+      label.style.display = "none";
+    }
   }
   oninput();
   return form;
