@@ -1,5 +1,15 @@
 import {Range} from "@observablehq/inputs";
+import {number, string} from "./coercible.js";
 import tape from "./jsdom.js";
+
+tape("Range([min, max]) sets the min and max", test => {
+  const r = Range([0, 100]);
+  test.equal(r.elements.input.min, "0");
+  test.equal(r.elements.input.max, "100");
+  const s = Range([number(0), number(100)]);
+  test.equal(s.elements.input.min, "0");
+  test.equal(s.elements.input.max, "100");
+});
 
 tape("Range([min, max]) sets the initial value to (min + max) / 2", test => {
   test.equal(Range([0, 1]).value, 0.5);
@@ -21,10 +31,13 @@ tape("Range(…, {label}) sets the label", test => {
 
 tape("Range(…, {format}) sets the format", test => {
   test.equal(Range([0, 1], {format: d => d.toFixed(4)}).elements.output.value, "0.5000");
+  test.throws(() => Range([0, 1], {format: "foo"}), TypeError);
 });
 
 tape("Range(…, {step}) sets the step", test => {
   test.equal(Range([0, 100], {step: 10}).elements.input.step, "10");
+  test.equal(Range([0, 100], {step: undefined}).elements.input.step, "any");
+  test.equal(Range([0, 100], {step: number(10)}).elements.input.step, "10");
 });
 
 tape("Range(…, {step}) does not affect the initial value", test => {
@@ -38,23 +51,13 @@ tape("Range(…, {value}) sets the initial value", test => {
   test.equal(r.value, 10);
   test.equal(r.elements.input.valueAsNumber, 10);
   test.equal(r.elements.output.value, "10");
+  const s = Range([0, 100], {value: string("10")});
+  test.equal(s.value, 10);
+  test.equal(s.elements.input.valueAsNumber, 10);
+  test.equal(s.elements.output.value, "10");
 });
 
-tape("Range(…, {value}) coerces the initial value to a number", test => {
-  const r = Range([0, 100], {value: "10"});
-  test.equal(r.value, 10);
-  test.equal(r.elements.input.valueAsNumber, 10);
-  test.equal(r.elements.output.value, "10");
-});
-
-tape("Range(…, {value}) coerces the step to a number, if not undefined", test => {
-  test.equal(Range([0, 100], {step: undefined}).elements.input.step, "any");
-  test.equal(Range([0, 100], {step: "10"}).elements.input.step, "10");
-});
-
-tape("Range([min, max]) coerces the min and max to numbers", test => {
-  const r = Range(["0", "100"]);
-  test.equal(r.value, 50);
-  test.equal(r.elements.input.min, "0");
-  test.equal(r.elements.input.max, "100");
+tape("Range(…, {width}) sets the width", test => {
+  test.equal(Range([0, 100], {width: 240}).elements.input.style.width, "240px");
+  test.equal(Range([0, 100], {width: number(240)}).elements.input.style.width, "240px");
 });

@@ -7,6 +7,7 @@ export function Range([min, max] = [0, 1], {
   value,
   step
 } = {}) {
+  if (typeof format !==  "function") throw new TypeError("format is not a function");
   const form = html`<form style="font: 13px var(--sans-serif); display: flex; align-items: center; min-height: 33px;">
     <input name=input oninput=${oninput} type=range style="margin: 0 0.4em 0 0; width: ${+width}px;"><output name=output>
   </form>`;
