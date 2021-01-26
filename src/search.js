@@ -1,30 +1,34 @@
 import {html} from "htl";
+import {arrayify} from "./array.js";
+import {stringify} from "./format.js";
+import {boxSizing, defaultStyle, marginRight} from "./style.js";
 
 export function Search(data, {
+  format = value => `${value.length.toLocaleString("en")} results`, // length format
   value = "", // initial search query
   placeholder = "Search", // placeholder text to show when empty
-  filter = defaultFilter, // returns the filter function given query
-  width // the width of the search box
+  filter = searchFilter, // returns the filter function given query
+  style = {}
 } = {}) {
   const columns = data.columns;
-  data = arrayof(data);
-
-  const form = html`<form style="font: 13px var(--sans-serif); display: flex; align-items: center; min-height: 33px;">${Object.assign(html`<input name=i type=search style="margin: 0 0.4em 0 0; ${width === undefined ? "" : `width: ${+width}px;`}">`, {placeholder, value, oninput})}<output name=o>`;
-
+  data = arrayify(data);
+  const {width = "180px", ...formStyle} = style;
+  const form = html`<form style=${{...defaultStyle, ...formStyle}} onsubmit=${event => event.preventDefault()}>
+    <input name=input type=search style=${{...marginRight, ...boxSizing, width}} placeholder=${placeholder} value=${value} oninput=${oninput}><output name=output>
+  </form>`;
+  const {input, output} = form.elements;
   function oninput() {
-    const value = data.filter(filter(form.i.value));
+    const value = data.filter(filter(input.value));
     if (columns !== undefined) value.columns = columns;
     form.value = value;
-    form.o.value = form.i.value ? `${form.value.length.toLocaleString("en")} results` : "";
+    output.value = input.value ? stringify(format(value)) : "";
   }
-
-  form.i.oninput();
-  form.onsubmit = event => event.preventDefault();
+  oninput();
   return form;
 }
 
-function defaultFilter(query) {
-  const filters = query.split(/\s+/g).filter(t => t).map(termFilter);
+export function searchFilter(query) {
+  const filters = (query + "").split(/\s+/g).filter(t => t).map(termFilter);
   return d => {
     if (d == null) return false;
     if (typeof d === "object") {
@@ -45,12 +49,6 @@ function defaultFilter(query) {
     }
     return true;
   };
-}
-
-function arrayof(x) {
-  return typeof x === "object" && "length" in x
-    ? x // Array, TypedArray, NodeList, array-like
-    : Array.from(x); // Map, Set, iterable, string, or anything else
 }
 
 function* valuesof(d) {

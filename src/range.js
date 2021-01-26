@@ -1,4 +1,5 @@
 import {html} from "htl";
+import {stringify} from "./format.js";
 import {boxSizing, defaultStyle, marginRight} from "./style.js";
 
 export function Range([min, max] = [0, 1], {
@@ -18,7 +19,7 @@ export function Range([min, max] = [0, 1], {
   input.max = max = +max;
   input.step = step === undefined ? "any" : +step;
   input.value = value === undefined ? (min + max) / 2 : +value;
-  function oninput() { output.value = format(form.value = input.valueAsNumber); }
+  function oninput() { output.value = stringify(format(form.value = input.valueAsNumber)); }
   oninput();
   return form;
 }

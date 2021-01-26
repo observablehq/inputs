@@ -1,4 +1,5 @@
 import {html} from "htl";
+import {arrayify} from "./array.js";
 
 const ns = "observablehq-table";
 
@@ -15,7 +16,7 @@ export function Table(
     layout // "fixed" or "auto"
   } = {}
 ) {
-  data = arrayof(data);
+  data = arrayify(data);
   if (columns === undefined) columns = columnsof(data);
   if (layout === undefined) layout = columns.length >= 12 ? "auto" : "fixed";
   format = formatof(format, data, columns);
@@ -316,12 +317,6 @@ function columnsof(data) {
     }
   }
   return Object.keys(columns);
-}
-
-function arrayof(x) {
-  return typeof x === "object" && "length" in x
-    ? x // Array, TypedArray, NodeList, array-like
-    : Array.from(x); // Map, Set, iterable, string, or anything else
 }
 
 function pad(value, width) {

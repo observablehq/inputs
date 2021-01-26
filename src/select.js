@@ -1,4 +1,6 @@
 import {html} from "htl";
+import {arrayify} from "./array.js";
+import {stringify} from "./format.js";
 import {boxSizing, defaultStyle, marginRight} from "./style.js";
 
 const ns = "observablehq-select";
@@ -13,7 +15,7 @@ export function Select(data, {
 } = {}) {
   if (typeof format !== "function") throw new TypeError("format is not a function");
   if (typeof valueof !== "function") throw new TypeError("valueof is not a function");
-  data = Array.from(data);
+  data = arrayify(data);
   const {width = "180px", ...formStyle} = style;
   const form = html`<form
     onchange=${() => form.dispatchEvent(new CustomEvent("input"))}
@@ -43,7 +45,7 @@ export function AutoSelect(data, {
 } = {}) {
   if (typeof format !== "function") throw new TypeError("format is not a function");
   if (typeof valueof !== "function") throw new TypeError("valueof is not a function");
-  data = Array.from(data);
+  data = arrayify(data);
   const {width = "180px", ...formStyle} = style;
   const index = new Map(data.map((d, i) => [stringify(format(d, i, data)), i]).reverse());
   const id = `${ns}-${++nextId}`;
@@ -62,8 +64,4 @@ export function AutoSelect(data, {
   }
   oninput();
   return form;
-}
-
-function stringify(x) {
-  return x == null ? "" : x + "";
 }
