@@ -1,3 +1,5 @@
+import {promises as fs} from "fs";
+import * as path from "path";
 import {JSDOM} from "jsdom";
 import tape from "tape-await";
 
@@ -21,6 +23,7 @@ export async function withJsdom(run) {
   global.Node = jsdom.window.Node;
   global.NodeList = jsdom.window.NodeList;
   global.HTMLCollection = jsdom.window.HTMLCollection;
+  global.fetch = async (href) => new Response(path.resolve("./test", href));
   try {
     return await run();
   } finally {
@@ -29,5 +32,20 @@ export async function withJsdom(run) {
     delete global.Node;
     delete global.NodeList;
     delete global.HTMLCollection;
+    delete global.fetch;
+  }
+}
+
+class Response {
+  constructor(href) {
+    this._href = href;
+    this.ok = true;
+    this.status = 200;
+  }
+  async text() {
+    return fs.readFile(this._href, {encoding: "utf-8"});
+  }
+  async json() {
+    return JSON.parse(await this.text());
   }
 }

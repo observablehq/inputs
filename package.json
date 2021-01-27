@@ -27,6 +27,7 @@
     "@observablehq/inputs": "./src/index.js"
   },
   "devDependencies": {
+    "d3": "^6.5.0",
     "eslint": "^7.12.1",
     "esm": "^3.2.25",
     "js-beautify": "^1.13.5",

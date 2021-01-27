@@ -32,3 +32,7 @@ export {
   selectStyle,
   selectValue
 } from "./selects.js";
+
+export {
+  table
+} from "./tables.js";
