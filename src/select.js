@@ -1,5 +1,6 @@
 import {html} from "htl";
 import {arrayify} from "./array.js";
+import {preventDefault} from "./event.js";
 import {stringify} from "./format.js";
 import {boxSizing, defaultStyle, mr2} from "./style.js";
 
@@ -59,7 +60,7 @@ export function AutoSelect(data, {
   const index = new Map(data.map((d, i) => [stringify(format(d, i, data)), i]).reverse());
   const id = `${ns}-${++nextId}`;
   const form = html`<form
-    onsubmit=${event => event.preventDefault()}
+    onsubmit=${preventDefault}
     oninput=${oninput}
     style=${{...defaultStyle, ...formStyle}}>
     <input name=input autocomplete=off list=${id} style=${{...mr2, ...boxSizing, width}}>${label}

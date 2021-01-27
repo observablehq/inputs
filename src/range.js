@@ -1,9 +1,10 @@
 import {html} from "htl";
-import {formatNumber, stringify} from "./format.js";
-import {boxSizing, defaultStyle, mr1, mr2} from "./style.js";
+import {preventDefault} from "./event.js";
+import {formatNumber} from "./format.js";
+import {boxSizing, defaultStyle, textStyle, mr1, mr2} from "./style.js";
 
 export function Range([min, max] = [0, 1], {
-  format = formatNumber,
+  format = d => formatNumber(d).replace(/,/g, ""), // number is strict!
   label = "",
   value,
   step,
@@ -11,15 +12,21 @@ export function Range([min, max] = [0, 1], {
 } = {}) {
   if (typeof format !==  "function") throw new TypeError("format is not a function");
   const {width = "180px", ...formStyle} = style;
-  const form = html`<form style=${{...defaultStyle, ...formStyle}}>
-    <input name=input oninput=${oninput} type=range style=${{...mr2, ...boxSizing, width}}><output name=output style=${mr1}></output>${label}
+  const form = html`<form style=${{...defaultStyle, ...formStyle}} onsubmit=${preventDefault}>
+    <input type=range name=range oninput=${onrange}  style=${{...mr2, ...boxSizing, width}}>
+    <input type=number name=number oninput=${onnumber} style=${{...textStyle, ...mr1, width: "8ch"}}>${label}
   </form>`;
-  const {input, output} = form.elements;
-  input.min = min = +min;
-  input.max = max = +max;
-  input.step = step === undefined ? "any" : +step;
-  input.value = value === undefined ? (min + max) / 2 : +value;
-  function oninput() { output.value = stringify(format(form.value = input.valueAsNumber)); }
-  oninput();
+  const {range, number} = form.elements;
+  number.min = range.min = min = +min;
+  number.max = range.max = max = +max;
+  number.step = range.step = step === undefined ? "any" : step = +step;
+  number.value = range.value = value === undefined ? (min + max) / 2 : +value;
+  function onrange() {
+    number.value = format(form.value = range.valueAsNumber);
+  }
+  function onnumber() {
+    range.value = form.value = number.valueAsNumber;
+  }
+  onrange();
   return form;
 }

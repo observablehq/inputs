@@ -16,3 +16,7 @@ export const mr2 = {
 export const boxSizing = {
   boxSizing: "border-box"
 };
+
+export const textStyle = {
+  font: "inherit"
+};

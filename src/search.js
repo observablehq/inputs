@@ -1,5 +1,6 @@
 import {html} from "htl";
 import {arrayify} from "./array.js";
+import {preventDefault} from "./event.js";
 import {formatNumber, stringify} from "./format.js";
 import {boxSizing, defaultStyle, mr1, mr2} from "./style.js";
 
@@ -15,7 +16,7 @@ export function Search(data, {
   data = arrayify(data);
   label = html`<span>${label}`;
   const {width = "180px", ...formStyle} = style;
-  const form = html`<form style=${{...defaultStyle, ...formStyle}} onsubmit=${event => event.preventDefault()}>
+  const form = html`<form style=${{...defaultStyle, ...formStyle}} onsubmit=${preventDefault}>
     <input name=input type=search style=${{...mr2, ...boxSizing, width}} placeholder=${placeholder} value=${value} oninput=${oninput}><output name=output style=${mr1}></output>${label}
   </form>`;
   const {input, output} = form.elements;

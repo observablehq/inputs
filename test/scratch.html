@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<head>
+  <style>
+
+body {
+  max-width: 960px;
+  margin: 1em auto;
+}
+
+:root {
+  --syntax-normal: #1b1e23;
+  --syntax-comment: #828282;
+  --syntax-diff: #24292e;
+  --syntax-diff-bg: #ffffff;
+  --syntax-number: #20a5ba;
+  --syntax-keyword: #c30771;
+  --syntax-atom: #10a778;
+  --syntax-string: #008ec4;
+  --syntax-error: #ffbedc;
+  --syntax-unknown-variable: #838383;
+  --syntax-known-variable: #005f87;
+  --syntax-matchbracket: #20bbfc;
+  --syntax-key: #6636b4;
+  --hr: rgba(0, 0, 0, 0.05);
+  --monospace: Menlo, Consolas, monospace;
+  --monospace-font: 14px/1.5 var(--monospace);
+  --serif: "Source Serif Pro", "Iowan Old Style", "Apple Garamond",
+    "Palatino Linotype", "Times New Roman", "Droid Serif", Times, serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  --sans-serif: -apple-system, BlinkMacSystemFont, "avenir next", avenir,
+    helvetica, "helvetica neue", ubuntu, roboto, noto, "segoe ui", arial,
+    sans-serif;
+}
+
+html {
+  font: 17px/1.5 var(--serif);
+  -webkit-text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #1b1e23;
+}
+
+body.fullscreen {
+  margin: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: #333;
+  font-weight: 700;
+  line-height: 1.15;
+  margin-top: 0;
+  margin-bottom: 0.25rem;
+}
+
+h2 ~ p,
+h3 ~ p,
+h4 ~ p,
+h2 ~ table,
+h3 ~ table,
+h4 ~ table {
+  margin-top: 0;
+}
+
+a[href] {
+  text-decoration: none;
+}
+
+a[href]:hover {
+  text-decoration: underline;
+}
+
+h1 code,
+h2 code,
+h3 code,
+h4 code,
+h5 code,
+h6 code {
+  font-size: 90%;
+}
+
+pre,
+code,
+tt {
+  font: var(--monospace-font);
+}
+
+img {
+  max-width: calc(100vw - 28px);
+}
+
+p,
+table,
+figure,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.katex-display {
+  max-width: 640px;
+}
+
+blockquote,
+ol,
+ul {
+  max-width: 600px;
+}
+
+blockquote {
+  margin: 1rem 1.5rem;
+}
+
+ul,
+ol {
+  padding-left: 28px;
+}
+
+hr {
+  height: 1px;
+  margin: 1rem 0;
+  padding: 1rem 0;
+  border: none;
+  background: no-repeat center/100% 1px
+    linear-gradient(to right, var(--hr), var(--hr));
+}
+
+pre {
+  padding: 2px 0;
+}
+
+.observablehq--md-pre {
+  overflow-x: auto;
+}
+
+input:not([type]),
+input[type="email"],
+input[type="number"],
+input[type="password"],
+input[type="range"],
+input[type="search"],
+input[type="tel"],
+input[type="text"],
+input[type="url"] {
+  width: 240px;
+}
+
+input,
+canvas {
+  vertical-align: middle;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font: 14px var(--sans-serif);
+}
+
+th {
+  text-align: left;
+}
+
+tr:not(:last-child) {
+  border-bottom: solid 1px #eee;
+}
+
+thead tr {
+  border-bottom: solid 1px #ccc;
+}
+
+figure,
+table {
+  margin: 1rem 0;
+}
+
+figure img {
+  max-width: 100%;
+}
+
+figcaption {
+  font: small var(--sans-serif);
+  color: var(--syntax-unknown-variable);
+}
+
+  </style>
+</head>
+<body>
+  <script type="module">
+
+import {Range} from "@observablehq/inputs";
+
+document.body.appendChild(Range());
+
+  </script>
+</body>
