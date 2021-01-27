@@ -11,17 +11,23 @@ export function Select(data, {
   valueof = data instanceof Map ? ([, value]) => value : d => d,
   label,
   value,
+  multiple,
   style = {}
 } = {}) {
   if (typeof format !== "function") throw new TypeError("format is not a function");
   if (typeof valueof !== "function") throw new TypeError("valueof is not a function");
   data = arrayify(data);
+  if (multiple === true) multiple = Math.max(1, Math.min(data.length, 10));
   const {width = "180px", ...formStyle} = style;
   const form = html`<form
     onchange=${() => form.dispatchEvent(new CustomEvent("input"))}
     oninput=${oninput}
     style=${{...defaultStyle, ...formStyle}}>
-    <select style=${{...mr2, ...boxSizing, width}} name=input>
+    <select
+      style=${{...mr2, ...boxSizing, width}}
+      multiple=${!!multiple}
+      size=${!!multiple && +multiple}
+      name=input>
       ${data.map((d, i) => html`<option>${stringify(format(d, i, data))}`)}
     </select>${label}
   </form>`;
@@ -29,8 +35,12 @@ export function Select(data, {
   if (value !== undefined) input.selectedIndex = data.indexOf(value);
   function oninput(event) {
     if (event && event.isTrusted) form.onchange = null;
-    const i = input.selectedIndex;
-    form.value = valueof(data[i], i, data);
+    if (multiple) {
+      form.value = Array.from(input.selectedOptions, ({index: i}) => valueof(data[i], i, data));
+    } else {
+      const i = input.selectedIndex;
+      form.value = valueof(data[i], i, data);
+    }
   }
   oninput();
   return form;
