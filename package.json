@@ -19,7 +19,7 @@
     "src/**/*.js"
   ],
   "scripts": {
-    "test": "mkdir -p test/output && tape -r esm -r module-alias/register 'test/**/*-test.js' | tap-dot && eslint src test",
+    "test": "mkdir -p test/output && tape -r esm -r module-alias/register 'test/**/*-test.js' | tap-dot && node -r esm -r module-alias/register test/input.js | tap-dot && eslint src test",
     "prepublishOnly": "rm -rf dist && rollup -c",
     "postpublish": "git push && git push --tags"
   },
@@ -29,6 +29,7 @@
   "devDependencies": {
     "eslint": "^7.12.1",
     "esm": "^3.2.25",
+    "js-beautify": "^1.13.5",
     "jsdom": "^16.4.0",
     "module-alias": "^2.2.2",
     "rollup": "^2.32.1",
