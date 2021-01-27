@@ -12,6 +12,7 @@ export {
   search,
   searchLabel,
   searchLabelHtml,
+  searchLabelValue,
   searchPlaceholder,
   searchStyle,
   searchValue,

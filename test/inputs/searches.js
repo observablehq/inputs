@@ -13,6 +13,10 @@ export async function searchLabelHtml() {
   return Search(["red", "green", "blue"], {label: html`<b>color</b>`});
 }
 
+export async function searchLabelValue() {
+  return Search(["red", "green", "blue", "black"], {label: "colors", value: "bl"});
+}
+
 export async function searchPlaceholder() {
   return Search(["red", "green", "blue"], {placeholder: "dollars&pounds"});
 }
