@@ -28,11 +28,10 @@ export function Select(data, {
       multiple=${!!multiple}
       size=${!!multiple && +multiple}
       name=input>
-      ${data.map((d, i) => html`<option>${stringify(format(d, i, data))}`)}
+      ${data.map((d, i) => html`<option selected=${value !== undefined && value === valueof(d, i, data)}>${stringify(format(d, i, data))}`)}
     </select>${label}
   </form>`;
   const {input} = form.elements;
-  if (value !== undefined) input.selectedIndex = data.indexOf(value);
   function oninput(event) {
     if (event && event.isTrusted) form.onchange = null;
     if (multiple) {

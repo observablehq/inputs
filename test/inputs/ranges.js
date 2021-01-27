@@ -26,5 +26,5 @@ export async function rangeWide() {
 }
 
 export async function rangeStyle() {
-  return Range([0, 1], {background: "red"});
+  return Range([0, 1], {style: {background: "red"}});
 }
