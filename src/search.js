@@ -8,10 +8,10 @@ export function Search(data, {
   label = "results",
   value = "", // initial search query
   placeholder = "Search", // placeholder text to show when empty
-  filter = searchFilter, // returns the filter function given query
+  columns = data.columns,
+  filter = columns === undefined ? searchFilter : columnFilter(columns), // returns the filter function given query
   style = {}
 } = {}) {
-  const columns = data.columns;
   data = arrayify(data);
   label = html`<span>${label}`;
   const {width = "180px", ...formStyle} = style;
@@ -56,6 +56,23 @@ export function searchFilter(query) {
       }
     }
     return true;
+  };
+}
+
+function columnFilter(columns) {
+  return query => {
+    const filters = (query + "").split(/\s+/g).filter(t => t).map(termFilter);
+    return d => {
+      out: for (const filter of filters) {
+        for (const column of columns) {
+          if (filter.test(d[column])) {
+            continue out;
+          }
+        }
+        return false;
+      }
+      return true;
+    };
   };
 }
 
