@@ -13,11 +13,11 @@ export async function rangeFixed() {
   return Range([0, 1], {value: 0.12345, format: x => x.toFixed(3)});
 }
 
-export async function rangeLabeled() {
+export async function rangeLabel() {
   return Range([0, 1], {label: "dollars&pounds"});
 }
 
-export async function rangeLabeledHtml() {
+export async function rangeLabelHtml() {
   return Range([0, 1], {label: html`<b>intensity</b>`});
 }
 

@@ -2,11 +2,21 @@ export {
   range,
   range100,
   rangeFixed,
-  rangeLabeled,
-  rangeLabeledHtml,
+  rangeLabel,
+  rangeLabelHtml,
   rangeStyle,
   rangeWide
 } from "./ranges.js";
+
+export {
+  search,
+  searchLabel,
+  searchLabelHtml,
+  searchPlaceholder,
+  searchStyle,
+  searchValue,
+  searchWide
+} from "./searches.js";
 
 export {
   select,
