@@ -19,7 +19,6 @@ export function Search(data, {
 } = {}) {
   let value = [];
   data = arrayify(data);
-  label = html`<span>${label}`;
   const {width = "180px", ...formStyle} = style;
   const form = html`<form style=${{...defaultStyle, ...formStyle}} onsubmit=${preventDefault}>
     ${maybeLabel(label)}<div style=${flexStyle}>
