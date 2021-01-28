@@ -5,7 +5,7 @@ import {boxSizing, defaultStyle, mr2} from "./style.js";
 
 export function Text({
   label = "",
-  value,
+  value = "",
   placeholder,
   pattern,
   spellcheck,
