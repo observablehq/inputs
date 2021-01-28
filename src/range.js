@@ -13,7 +13,7 @@ export function Range([min, max] = [0, 1], {
   if (typeof format !==  "function") throw new TypeError("format is not a function");
   const {width = "180px", ...formStyle} = style;
   const form = html`<form style=${{...defaultStyle, ...formStyle}} onsubmit=${preventDefault}>
-    <input type=range name=range oninput=${onrange}  style=${{...mr2, ...boxSizing, width}}>
+    <input type=range name=range oninput=${onrange} style=${{...mr2, ...boxSizing, width}}>
     <input type=number name=number oninput=${onnumber} style=${{...numberStyle, ...mr1, width: "8ch"}}>${label}
   </form>`;
   const {range, number} = form.elements;

@@ -26,6 +26,12 @@ User interface components for Observable notebooks.
 
 …
 
+## Text
+
+<a name="Text" href="#Text">#</a> <b>Text</b>(<i>options</i>) · [Source](./src/text.js)
+
+…
+
 ## Input
 
 <a name="Input" href="#Input">#</a> <b>Input</b>(<i>value</i>) · [Source](./src/input.js)
