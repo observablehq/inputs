@@ -20,10 +20,6 @@ User interface components for Observable notebooks.
 
 …
 
-<a name="AutoSelect" href="#AutoSelect">#</a> <b>AutoSelect</b>(<i>data</i>, <i>options</i>) · [Source](./src/select.js)
-
-…
-
 ## Table
 
 <a name="Table" href="#Table">#</a> <b>Table</b>(<i>data</i>, <i>options</i>) · [Source](./src/table.js)

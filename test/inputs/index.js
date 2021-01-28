@@ -25,11 +25,23 @@ export {
   selectLabel,
   selectLabelHtml,
   selectMap,
+  selectMapKey,
   selectMapValue,
   selectMultiple,
   selectMultipleLong,
+  selectMultipleMapKey,
+  selectMultipleMapValue,
   selectMultipleSize,
+  selectMultipleValue,
   selectStyle,
+  selectUnique,
+  selectUniqueFormat,
+  selectSortTrue,
+  selectSortFalse,
+  selectSortAscending,
+  selectSortDescending,
+  selectSortFunction,
+  selectSortFormat,
   selectValue
 } from "./selects.js";
 
