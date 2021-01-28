@@ -20,3 +20,8 @@ export const boxSizing = {
 export const textStyle = {
   font: "inherit"
 };
+
+export const numberStyle = {
+  ...textStyle,
+  fontVariantNumeric: "tabular-nums"
+};

@@ -1,7 +1,7 @@
 import {html} from "htl";
 import {preventDefault} from "./event.js";
 import {formatNumber} from "./format.js";
-import {boxSizing, defaultStyle, textStyle, mr1, mr2} from "./style.js";
+import {boxSizing, defaultStyle, numberStyle, mr1, mr2} from "./style.js";
 
 export function Range([min, max] = [0, 1], {
   format = d => formatNumber(d).replace(/,/g, ""), // number is strict!
@@ -14,7 +14,7 @@ export function Range([min, max] = [0, 1], {
   const {width = "180px", ...formStyle} = style;
   const form = html`<form style=${{...defaultStyle, ...formStyle}} onsubmit=${preventDefault}>
     <input type=range name=range oninput=${onrange}  style=${{...mr2, ...boxSizing, width}}>
-    <input type=number name=number oninput=${onnumber} style=${{...textStyle, ...mr1, width: "8ch"}}>${label}
+    <input type=number name=number oninput=${onnumber} style=${{...numberStyle, ...mr1, width: "8ch"}}>${label}
   </form>`;
   const {range, number} = form.elements;
   number.min = range.min = min = +min;
