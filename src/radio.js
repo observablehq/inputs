@@ -17,7 +17,7 @@ export function Radio(data, {
   if (multiple) value = value === undefined ? [] : arrayify(value);
   const {...formStyle} = style;
   const form = html`<form style=${{...defaultStyle, ...formStyle}} onchange=${onchange} oninput=${oninput} onsubmit=${preventDefault}>
-    ${maybeLabel(label)}<div style=${flexStyle}>
+    ${maybeLabel(label)}<div>
       ${Array.from(data, (d, i) => html`<label style=${radioStyle}><input type=${multiple ? "checkbox" : "radio"} style=${mr2} name="input" value=${i} checked=${multiple ? value.includes(d) : value === d}>${format(d, i, data)}`)}
     </div>
   </form>`;
