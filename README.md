@@ -2,6 +2,12 @@
 
 User interface components for Observable notebooks.
 
+## Radio
+
+<a name="Radio" href="#Radio">#</a> <b>Radio</b>(<i>data</i>, <i>options</i>) · [Source](./src/radio.js)
+
+…
+
 ## Range
 
 <a name="Range" href="#Range">#</a> <b>Range</b>(<i>extent</i> = [0, 1], <i>options</i>) · [Source](./src/range.js)

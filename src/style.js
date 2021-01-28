@@ -1,6 +1,10 @@
-export const defaultStyle = {
+export const flexStyle = {
   display: "flex",
-  alignItems: "center",
+  alignItems: "center"
+};
+
+export const defaultStyle = {
+  ...flexStyle,
   minHeight: "25.5px",
   font: "13px var(--sans-serif)"
 };
