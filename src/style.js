@@ -1,7 +1,7 @@
 export const defaultStyle = {
   display: "flex",
   alignItems: "center",
-  minHeight: "33px",
+  minHeight: "25.5px",
   font: "13px var(--sans-serif)"
 };
 
