@@ -20,6 +20,7 @@ export async function withJsdom(run) {
   const jsdom = new JSDOM("");
   global.window = jsdom.window;
   global.document = jsdom.window.document;
+  global.CustomEvent = jsdom.window.CustomEvent;
   global.Node = jsdom.window.Node;
   global.NodeList = jsdom.window.NodeList;
   global.HTMLCollection = jsdom.window.HTMLCollection;
@@ -29,6 +30,7 @@ export async function withJsdom(run) {
   } finally {
     delete global.window;
     delete global.document;
+    delete global.CustomEvent;
     delete global.Node;
     delete global.NodeList;
     delete global.HTMLCollection;
