@@ -21,6 +21,10 @@ export async function searchPlaceholder() {
   return Search(["red", "green", "blue"], {placeholder: "dollars&pounds"});
 }
 
+export async function searchFormat() {
+  return Search(["red", "green", "blue", "black"], {value: "b", format: x => x > 1 ? ">1" : x + ""});
+}
+
 export async function searchSpellcheck() {
   return Search(["red", "green", "blue"], {spellcheck: false});
 }

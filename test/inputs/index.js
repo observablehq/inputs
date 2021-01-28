@@ -10,6 +10,7 @@ export {
 
 export {
   search,
+  searchFormat,
   searchLabel,
   searchLabelHtml,
   searchLabelValue,

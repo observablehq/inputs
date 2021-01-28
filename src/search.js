@@ -5,7 +5,7 @@ import {formatNumber, stringify} from "./format.js";
 import {boxSizing, defaultStyle, mr1, mr2, textStyle} from "./style.js";
 
 export function Search(data, {
-  format = value => formatNumber(value.length), // length format
+  format = formatNumber, // length format
   label = "results",
   value = "", // initial search query
   placeholder = "Search", // placeholder text to show when empty
@@ -26,7 +26,7 @@ export function Search(data, {
     if (columns !== undefined) value.columns = columns;
     form.value = value;
     if (input.value) {
-      output.value = stringify(format(value));
+      output.value = stringify(format(value.length));
       label.style.display = "inline";
     } else {
       output.value = "";
