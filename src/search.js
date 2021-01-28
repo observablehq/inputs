@@ -2,7 +2,7 @@ import {html} from "htl";
 import {arrayify} from "./array.js";
 import {preventDefault} from "./event.js";
 import {formatNumber, stringify} from "./format.js";
-import {boxSizing, defaultStyle, mr1, mr2} from "./style.js";
+import {boxSizing, defaultStyle, mr1, mr2, textStyle} from "./style.js";
 
 export function Search(data, {
   format = value => formatNumber(value.length), // length format
@@ -10,6 +10,7 @@ export function Search(data, {
   value = "", // initial search query
   placeholder = "Search", // placeholder text to show when empty
   columns = data.columns,
+  spellcheck,
   filter = columns === undefined ? searchFilter : columnFilter(columns), // returns the filter function given query
   style = {}
 } = {}) {
@@ -17,7 +18,7 @@ export function Search(data, {
   label = html`<span>${label}`;
   const {width = "180px", ...formStyle} = style;
   const form = html`<form style=${{...defaultStyle, ...formStyle}} onsubmit=${preventDefault}>
-    <input name=input type=search style=${{...mr2, ...boxSizing, width}} placeholder=${placeholder} value=${value} oninput=${oninput}><output name=output style=${mr1}></output>${label}
+    <input name=input type=search spellcheck=${spellcheck === undefined ? false : spellcheck + ""} style=${{...mr2, ...textStyle, ...boxSizing, width}} placeholder=${placeholder} value=${value} oninput=${oninput}><output name=output style=${mr1}></output>${label}
   </form>`;
   const {input, output} = form.elements;
   function oninput() {

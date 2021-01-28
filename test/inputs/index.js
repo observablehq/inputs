@@ -14,6 +14,7 @@ export {
   searchLabelHtml,
   searchLabelValue,
   searchPlaceholder,
+  searchSpellcheck,
   searchStyle,
   searchValue,
   searchWide
