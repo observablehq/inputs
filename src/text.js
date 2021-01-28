@@ -1,10 +1,13 @@
 import {html} from "htl";
 import {preventDefault} from "./event.js";
 import {stringify} from "./format.js";
-import {boxSizing, defaultStyle, mr2} from "./style.js";
+import {maybeLabel} from "./label.js";
+import {boxSizing, defaultStyle} from "./style.js";
+
+const textStyle = boxSizing;
 
 export function Text({
-  label = "",
+  label,
   value = "",
   placeholder,
   pattern,
@@ -13,9 +16,9 @@ export function Text({
   maxlength,
   style = {}
 } = {}) {
-  const {width = "180px", ...formStyle} = style;
+  const {width = "240px", ...formStyle} = style;
   const form = html`<form style=${{...defaultStyle, ...formStyle}} onsubmit=${preventDefault}>
-    <input type=text name=text minlength=${minlength} maxlength=${maxlength} pattern=${pattern} spellcheck=${spellcheck === undefined ? false : spellcheck + ""} placeholder=${placeholder} value=${stringify(value)} oninput=${oninput} style=${{...mr2, ...boxSizing, width}}>${label}
+    ${maybeLabel(label)}<input type=text name=text minlength=${minlength} maxlength=${maxlength} pattern=${pattern} spellcheck=${spellcheck === undefined ? false : spellcheck + ""} placeholder=${placeholder} value=${stringify(value)} oninput=${oninput} style=${{...textStyle, width}}>
   </form>`;
   const {text} = form.elements;
   function oninput() {

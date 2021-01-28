@@ -22,7 +22,7 @@ export async function searchPlaceholder() {
 }
 
 export async function searchFormat() {
-  return Search(["red", "green", "blue", "black"], {query: "b", format: x => x > 1 ? ">1" : x + ""});
+  return Search(["red", "green", "blue", "black"], {query: "b", format: x => `${x > 1 ? ">1" : x} results`});
 }
 
 export async function searchSpellcheck() {

@@ -1,8 +1,11 @@
 import {html} from "htl";
 import {arrayify} from "./array.js";
 import {stringify} from "./format.js";
+import {maybeLabel} from "./label.js";
 import {ascending, descending} from "./sort.js";
-import {boxSizing, defaultStyle, mr2, textStyle} from "./style.js";
+import {boxSizing, defaultStyle, textStyle} from "./style.js";
+
+const selectStyle = {...textStyle, ...boxSizing};
 
 export function Select(data, {
   format = data instanceof Map ? ([key]) => key : d => d,
@@ -27,21 +30,14 @@ export function Select(data, {
   const selection = value === undefined ? undefined : new Set(multiple > 0 ? arrayify(value) : [value]);
   data = arrayify(data);
   if (multiple === true) multiple = Math.max(1, Math.min(data.length, 10));
-  const {width = "180px", ...formStyle} = style;
+  const {width, ...formStyle} = style;
   let options = data.map((d, i) => [stringify(format(d, i, data)), d, i]);
   if (sort !== undefined) options.sort(([a], [b]) => sort(a, b));
   if (unique) options = [...new Map(options.map(o => [o[0], o])).values()];
-  const form = html`<form
-    onchange=${() => form.dispatchEvent(new CustomEvent("input"))}
-    oninput=${oninput}
-    style=${{...defaultStyle, ...formStyle}}>
-    <select
-      style=${{...mr2, ...textStyle, ...boxSizing, width}}
-      multiple=${multiple > 0}
-      size=${multiple > 0 && multiple}
-      name=input>
+  const form = html`<form onchange=${() => form.dispatchEvent(new CustomEvent("input"))} oninput=${oninput} style=${{...defaultStyle, ...formStyle}}>
+    ${maybeLabel(label)}<select style=${{...selectStyle, width}} multiple=${multiple > 0} size=${multiple > 0 && multiple} name=input>
       ${options.map(([key, d, i]) => html`<option selected=${selection !== undefined && selection.has(valueof(d, i, data))}>${key}`)}
-    </select>${label}
+    </select>
   </form>`;
   const {input} = form.elements;
   function oninput(event) {

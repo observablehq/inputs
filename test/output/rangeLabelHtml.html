@@ -1,4 +1,7 @@
 <form style="display: flex; align-items: center; min-height: 25.5px; font: var(--sans-serif) 13px 13px;">
-  <input type="range" name="range" style="margin-right: 0.5em; box-sizing: border-box; width: 180px;" min="0" max="1" step="any">
-  <input type="number" name="number" style="font-variant-numeric: tabular-nums; margin-right: 0.25em; width: 8ch;" min="0" max="1" step="any"><b>intensity</b>
+  <div style="width: 160px; margin-right: 0.5em;"><b>intensity</b></div>
+  <div style="display: flex; align-items: center;">
+    <input type="number" name="number" style="font-variant-numeric: tabular-nums; width: 60px;" min="0" max="1" step="any">
+    <input type="range" name="range" style="margin-right: 0.5em; box-sizing: border-box; width: calc(180px - 1em);" min="0" max="1" step="any">
+  </div>
 </form>

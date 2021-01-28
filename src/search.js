@@ -2,11 +2,14 @@ import {html} from "htl";
 import {arrayify} from "./array.js";
 import {preventDefault} from "./event.js";
 import {formatNumber, stringify} from "./format.js";
-import {boxSizing, defaultStyle, mr1, mr2, textStyle} from "./style.js";
+import {maybeLabel} from "./label.js";
+import {boxSizing, defaultStyle, flexStyle, mr2, textStyle} from "./style.js";
+
+const searchStyle = {...mr2, ...textStyle, ...boxSizing};
 
 export function Search(data, {
-  format = formatNumber, // length format
-  label = "results",
+  format = length => `${formatNumber(length)} results`, // length format
+  label,
   query = "", // initial search query
   placeholder = "Search", // placeholder text to show when empty
   columns = data.columns,
@@ -19,19 +22,16 @@ export function Search(data, {
   label = html`<span>${label}`;
   const {width = "180px", ...formStyle} = style;
   const form = html`<form style=${{...defaultStyle, ...formStyle}} onsubmit=${preventDefault}>
-    <input name=input type=search spellcheck=${spellcheck === undefined ? false : spellcheck + ""} style=${{...mr2, ...textStyle, ...boxSizing, width}} placeholder=${placeholder} value=${query} oninput=${oninput}><output name=output style=${mr1}></output>${label}
+    ${maybeLabel(label)}<div style=${flexStyle}>
+      <input name=input type=search spellcheck=${spellcheck === undefined ? false : spellcheck + ""} style=${{...searchStyle, width}} placeholder=${placeholder} value=${query} oninput=${oninput}>
+      <output name=output>
+    </div>
   </form>`;
   const {input, output} = form.elements;
   function oninput() {
     value = data.filter(filter(input.value));
     if (columns !== undefined) value.columns = columns;
-    if (input.value) {
-      output.value = stringify(format(value.length));
-      label.style.display = "inline";
-    } else {
-      output.value = "";
-      label.style.display = "none";
-    }
+    output.value = input.value ? format(value.length) : "";
   }
   oninput();
   return Object.defineProperties(form, {
