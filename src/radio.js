@@ -2,7 +2,7 @@ import {html} from "htl";
 import {arrayify} from "./array.js";
 import {preventDefault} from "./event.js";
 import {maybeLabel} from "./label.js";
-import {defaultStyle, flexStyle, inlineFlexStyle, mr2, mr3} from "./style.js";
+import {defaultStyle, inlineFlexStyle, mr2, mr3} from "./style.js";
 
 const radioStyle = {...mr3, ...inlineFlexStyle};
 
