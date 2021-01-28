@@ -13,7 +13,7 @@ export function Table(
     sort, // name of column to sort by, if any
     reverse = false, // if sorting, true for ascending and false for descending
     format, // object of column name to format function
-    align = {}, // object of column name to left, right, or center
+    align, // object of column name to left, right, or center
     width = {}, // object of column name to width
     layout // "fixed" or "auto"
   } = {}
