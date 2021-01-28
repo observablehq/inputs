@@ -9,6 +9,7 @@ export function Table(
   data,
   {
     columns = data.columns, // array of column names
+    value, // initial selection
     rows = 11.5, // maximum number of rows to show
     sort, // name of column to sort by, if any
     reverse = false, // if sorting, true for ascending and false for descending
@@ -166,8 +167,8 @@ export function Table(
   }
 
   function revalue() {
-    root.value = Array.from(selected.size ? selected : index, i => data[i]);
-    root.value.columns = columns;
+    value = Array.from(selected.size ? selected : index, i => data[i]);
+    value.columns = columns;
   }
 
   root.onscroll = () => {
@@ -176,13 +177,16 @@ export function Table(
     }
   };
 
+  if (value !== undefined) {
+    const values = new Set(value);
+    selected = new Set(index.filter(i => values.has(data[i])));
+  }
+
   if (data.length) {
     tbody.append(...render(0, n));
   } else {
     tbody.append(html`<tr>${columns.length ? html`<td>` : null}<td rowspan=${columns.length} style="padding-left: 1em; font-style: oblique;">No results.</td></tr>`);
   }
-
-  revalue();
 
   if (sort !== undefined) {
     let i = columns.indexOf(sort);
@@ -192,8 +196,21 @@ export function Table(
     }
   }
 
+  revalue();
+
   if (!Table.style) Table.style = document.body.appendChild(style());
-  return root;
+  return Object.defineProperty(root, "value", {
+    get() {
+      return value;
+    },
+    set(v) {
+      const values = new Set(v);
+      const selection = new Set(index.filter(i => values.has(data[i])));
+      for (const i of selected) if (!selection.has(i)) unselect(i);
+      for (const i of selection) if (!selected.has(i)) select(i);
+      revalue();
+    }
+  });
 }
 
 function inputof(tr) {

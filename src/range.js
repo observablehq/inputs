@@ -22,11 +22,20 @@ export function Range([min, max] = [0, 1], {
   number.step = range.step = step === undefined ? "any" : step = +step;
   number.value = range.value = value === undefined ? (min + max) / 2 : +value;
   function onrange() {
-    number.value = format(form.value = range.valueAsNumber);
+    number.value = format(value = range.valueAsNumber);
   }
   function onnumber() {
-    range.value = form.value = number.valueAsNumber;
+    range.value = value = number.valueAsNumber;
   }
   onrange();
-  return form;
+  return Object.defineProperty(form, "value", {
+    get() {
+      return value;
+    },
+    set(v) {
+      value = v;
+      number.value = format(v);
+      range.value = v;
+    }
+  });
 }

@@ -47,12 +47,27 @@ export function Select(data, {
   function oninput(event) {
     if (event && event.isTrusted) form.onchange = null;
     if (multiple > 0) {
-      form.value = Array.from(input.selectedOptions, ({index: i}) => valueof(data[i], i, data));
+      value = Array.from(input.selectedOptions, ({index: i}) => valueof(data[i], i, data));
     } else {
       const i = input.selectedIndex;
-      form.value = valueof(data[i], i, data);
+      value = valueof(data[i], i, data);
     }
   }
   oninput();
-  return form;
+  return Object.defineProperty(form, "value", {
+    get() {
+      return value;
+    },
+    set(v) {
+      value = v;
+      if (multiple > 0) {
+        const selection = new Set(arrayify(value));
+        for (const [j, [, d, i]] of options.entries()) {
+          input.options[j].selected = selection.has(valueof(d, i, data));
+        }
+      } else {
+        input.value = v;
+      }
+    }
+  });
 }

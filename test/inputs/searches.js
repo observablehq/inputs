@@ -13,8 +13,8 @@ export async function searchLabelHtml() {
   return Search(["red", "green", "blue"], {label: html`<b>color</b>`});
 }
 
-export async function searchLabelValue() {
-  return Search(["red", "green", "blue", "black"], {label: "colors", value: "bl"});
+export async function searchLabelQuery() {
+  return Search(["red", "green", "blue", "black"], {label: "colors", query: "bl"});
 }
 
 export async function searchPlaceholder() {
@@ -22,7 +22,7 @@ export async function searchPlaceholder() {
 }
 
 export async function searchFormat() {
-  return Search(["red", "green", "blue", "black"], {value: "b", format: x => x > 1 ? ">1" : x + ""});
+  return Search(["red", "green", "blue", "black"], {query: "b", format: x => x > 1 ? ">1" : x + ""});
 }
 
 export async function searchSpellcheck() {
@@ -33,8 +33,8 @@ export async function searchStyle() {
   return Search(["red", "green", "blue"], {style: {background: "red"}});
 }
 
-export async function searchValue() {
-  return Search(["red", "green", "blue", "black"], {value: "bl"});
+export async function searchQuery() {
+  return Search(["red", "green", "blue", "black"], {query: "bl"});
 }
 
 export async function searchWide() {

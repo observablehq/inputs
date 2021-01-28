@@ -13,11 +13,11 @@ export {
   searchFormat,
   searchLabel,
   searchLabelHtml,
-  searchLabelValue,
+  searchLabelQuery,
   searchPlaceholder,
   searchSpellcheck,
   searchStyle,
-  searchValue,
+  searchQuery,
   searchWide
 } from "./searches.js";
 

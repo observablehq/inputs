@@ -7,6 +7,7 @@ module.exports = {
   },
   mount: {
     "src": "/src",
+    "test/data": "/data",
     "scratch": "/"
   }
 };
