@@ -3,6 +3,11 @@ export const flexStyle = {
   alignItems: "center"
 };
 
+export const inlineFlexStyle = {
+  display: "inline-flex",
+  alignItems: "center"
+};
+
 export const defaultStyle = {
   ...flexStyle,
   minHeight: "25.5px",
