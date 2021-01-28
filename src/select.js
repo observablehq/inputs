@@ -1,12 +1,8 @@
 import {html} from "htl";
 import {arrayify} from "./array.js";
-import {preventDefault} from "./event.js";
 import {stringify} from "./format.js";
 import {ascending, descending} from "./sort.js";
 import {boxSizing, defaultStyle, mr2, textStyle} from "./style.js";
-
-const ns = "observablehq-select";
-let nextId = 0;
 
 export function Select(data, {
   format = data instanceof Map ? ([key]) => key : d => d,
