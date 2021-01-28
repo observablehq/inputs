@@ -17,6 +17,10 @@ export const mr2 = {
   marginRight: "0.5em"
 };
 
+export const mr3 = {
+  marginRight: "1em"
+};
+
 export const boxSizing = {
   boxSizing: "border-box"
 };
