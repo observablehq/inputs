@@ -1,6 +1,6 @@
 # Observable Inputs
 
-**Observable Inputs** are lightweight user interface components (buttons, sliders, dropdowns, tables, and the like) to help you explore data and build interactive displays in [Observable notebooks](https://observablehq.com). (Although intended for use on Observable as [views](https://observablehq.com/@observablehq/introduction-to-views), these components are vanilla JavaScript that behave like plain old HTML input elements, so you can use them anywhere else on the web, too.)
+**Observable Inputs** are lightweight user interface components (buttons, sliders, dropdowns, tables, and the like) to help you explore data and build interactive displays in [Observable notebooks](https://observablehq.com). (Although intended for use as [Observable views](https://observablehq.com/@observablehq/introduction-to-views), this library is vanilla JavaScript that creates plain old HTML input elements, so you can use them anywhere else on the web, too.)
 
 * [Button](#Button) - click a button
 * [Radio](#Radio) - choose one or many from a set (radio or checkbox)
