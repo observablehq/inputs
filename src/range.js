@@ -49,9 +49,8 @@ export function Range([min, max] = [0, 1], {
       return value;
     },
     set(v) {
-      value = v;
-      number.value = format(v);
       range.value = v;
+      onrange();
     }
   });
 }
