@@ -67,23 +67,28 @@ The Radio input allows the user to choose one of a given set of options; or, if 
 The available *options* are:
 
 * *label* - a label; either a string or an HTML element.
-* *format* - the formatting function (defaults to identity).
-* *multiple* - indicates whether the input offers multiple choices (as checkboxes). Defaults to false (radio buttons).
-* *value* - the input’s initial value, which must be passed as an array if the input offers multiple choices. Defaults to null (no selection).
+* *multiple* - whether to allow multiple choice (checkboxes); defaults to false (radios).
+* *format* - a formatting function; defaults to the identity function.
+* *keyof* -
+* *valueof* -
+* *sort* -
+* *unique* -
+* *value* - the initial value, which must be an array if multiple choice is allowed; defaults to null (no selection).
 * *style* - additional styles as a {key: value} object.
 
-<a name="Range" href="#Range">#</a> <b>Range</b>(<i>extent</i> = [0, 1], <i>options</i>) · [Source](./src/range.js)
+<a name="Range" href="#Range">#</a> <b>Range</b>(<i>[*min*, *max*]</i> = [0, 1], <i>options</i>) · [Source](./src/range.js)
 
 <img src="./img/range.png" alt="A Range input of intensity, a number between 0 and 100" width="640">
 
-The Range input allows the user to specify a numeric value between the given minimum and maximum. This value can be adjust roughly with a slider, or precisely by typing in a number.
+The Range input allows the user to specify a numeric value between the given *min* and *max*. This value can be adjust roughly with a slider, or precisely by typing a number.
 
 The available *options* are:
 
 * *label* - a label; either a string or an HTML element.
+* *format* -
+* *step* - the step, or precision, of the slider. This does not constrain the number typed, but the browser may show a warning if the user types a decimal number when the step is integer.
+* *value* - the initial value. Clamped to the extent, and rounded to the closest possible if *step* is defined. Defaults to the middle of the extent.
 * *style* - additional styles as a {key: value} object.
-* *step* - the step, or precision, of the slider input. Does not constrain the number typed, but the browser may show a warning if the user types a decimal number when the step is integer. Defaults to null.
-* *value* - the input’s initial value. Clamped to the extent, and rounded to the closest possible if options.step is not null. Defaults to the middle of the extent.
 
 <a name="Search" href="#Search">#</a> <b>Search</b>(<i>data</i>, <i>options</i>) · [Source](./src/search.js)
 
@@ -94,12 +99,13 @@ The Search input allows freeform full-text search of a tabular dataset using a s
 The available *options* are:
 
 * *label* - a label; either a string or an HTML element.
-* *style* - additional styles as a {key: value} object.
+* *query* - the initial search query; defaults to the empty string.
+* *placeholder* -
 * *columns* - the list of columns (or property names) that contain text to search. Defaults to data.columns, which makes it work out of the box with csv data obtained from d3-array or observable’s FileAttachement's csv method.
-* *query* - the initial search query. Defaults to null.
-* *format* - the formatting function, receives the non-null number of results. The default function displays “n results”.
-* *spellcheck* - whether to activate the browser’s spell-checker on this input (defaults to false).
-* *filter* - the filter factory, a function that receives the query and returns a filter.
+* *format* - a format function, receives the number of results when a query is entered; by default returns “{n} results”.
+* *spellcheck* - whether to activate the browser’s spell-checker.
+* *filter* - the filter factory: a function that receives the query and returns a filter.
+* *style* - additional styles as a {key: value} object.
 
 <a name="search_filter_query" href="#search_filter_query">#</a> <i>filter(query)</i> is passed the data value and index to test, and must return a truthy value for those that match the query.
 
@@ -120,17 +126,18 @@ viewof selection = Select(d3.group(athletes, d => d.sport));
 
 The *selection* will be the list of athletes practicing the selected sport.
 
+The available *options* are:
 
-Options:
 * *label* - a label; either a string or an HTML element.
-* *style* - additional styles as a {key: value} object.
-* *format* - formats the option to display in the select. By default, if the data is a map, returns the selected key; if data is an array of values, returns the value.
-* *valueof* - creates the result. By default, if the data is a map, returns the elements associated to the selected key(s); if data is an array of values, returns the selected value(s).
 * *multiple* - a boolean allowing to select multiple values at once. Defaults to false.
 * *value* - the initial value of the select. If the data is a Map, use *key* instead.
 * *key* - the initial value of the select when data is a Map. If the data is an array, use *value* instead.
+* *format* - formats the option to display in the select. By default, if the data is a map, returns the selected key; if data is an array of values, returns the value.
 * *sort* - whether to sort the options. Defaults to false (no sorting). Possible values are *true* or "ascending", to sort the options in natural ascending order, and "descending", to sort the options in natural descending order.
 * *unique* - a boolean that indicates that the input should reduce the initial list of options computed from the data to a unique Set.
+* *keyof* -
+* *valueof* - creates the result. By default, if the data is a map, returns the elements associated to the selected key(s); if data is an array of values, returns the selected value(s).
+* *style* - additional styles as a {key: value} object.
 
 <a name="Table" href="#Table">#</a> <b>Table</b>(<i>data</i>, <i>options</i>) · [Source](./src/table.js)
 
@@ -138,9 +145,8 @@ Options:
 
 The Table input displays a tabular dataset. The value of the Table is the selected rows, a filtered (and possibly sorted) view of the input data: rows can be selected by clicking or shift-clicking checkboxes.
 
-Options:
-<!-- * *label* - a label; either a string or an HTML element. -->
-* *style* - additional styles as a {key: value} object.
+The available *options* are:
+
 * *columns* - the list of columns (or property names) that contain text to display. Defaults to data.columns, which makes it work out of the box with csv data obtained from d3-array or observable’s FileAttachement's csv method.
 * *value* - a subset of data to use as the initial selection. Defaults to null.
 * *rows* - maximum number of rows to show. Defaults to 11.5.
@@ -150,6 +156,7 @@ Options:
 * *align* - an object of column name to left, right, or center.
 * *width* - an object of column name object of column name to width.
 * *layout* - sets the [table-layout](https://developer.mozilla.org/en-US/docs/Web/CSS/table-layout) CSS property: "fixed" or "auto". Defaults to "fixed" if the number of columns is greater than 12, "auto" if lower.
+* *style* - additional styles as a {key: value} object.
 
 <a name="Text" href="#Text">#</a> <b>Text</b>(<i>options</i>) · [Source](./src/text.js)
 
@@ -157,16 +164,16 @@ Options:
 
 The Text input allows freeform text input. See also the [Search](#Search) input.
 
-Options:
+The available *options* are:
+
 * *label* - a label; either a string or an HTML element.
-* *style* - additional styles as a {key: value} object.
 * *value* - the initial value. Defaults to "".
 * *placeholder* - the [placeholder](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/placeholder) attribute. Defaults to null.
 * *pattern* - the [pattern](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/pattern) attribute. Defaults to null.
 * *spellcheck* - whether to activate the browser’s spell-checker on this input (defaults to false).
 * *minlength* - [minimum length](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/minlength) attribute. Defaults to null.
 * *maxlength* - [maximum length](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/maxlength) attribute. Defaults to null.
-
+* *style* - additional styles as a {key: value} object.
 
 ## Utilities
 
