@@ -177,13 +177,13 @@ export function Table(
     }
   };
 
+  if (sort === undefined && reverse) {
+    index.reverse();
+  }
+
   if (value !== undefined) {
     const values = new Set(value);
     selected = new Set(index.filter(i => values.has(data[i])));
-  }
-
-  if (sort === undefined && reverse) {
-    index.reverse();
   }
 
   if (data.length) {
