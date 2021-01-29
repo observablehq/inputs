@@ -17,7 +17,7 @@ User interface components for Observable notebooks.
 
 <img src="./img/button.png" alt="A Button labeled OK" width="640">
 
-Possibly the simplest input, the Button input emits an *input* event when you click it. Buttons are often used to trigger the evaluation of cells, say to restart an animation.
+Possibly the simplest input, the Button input emits an *input* event when you click it. Buttons are often used to trigger the evaluation of cells, say to restart an animation. By default, the value of a button is the number of times it has been clicked.
 
 <a name="Button" href="#Button">#</a> <b>Button</b>(<i>text</i>, <i>options</i>) · [Source](./src/button.js)
 
