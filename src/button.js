@@ -1,9 +1,9 @@
 import {html} from "htl";
 import {preventDefault} from "./event.js";
 import {maybeLabel} from "./label.js";
-import {boxSizing, defaultStyle, mr2, textStyle} from "./style.js";
+import {boxSizing, defaultStyle, textStyle} from "./style.js";
 
-const buttonStyle = {...mr2, ...boxSizing, ...textStyle};
+const buttonStyle = {...boxSizing, ...textStyle};
 
 export function Button(text = "≡", {
   label = "",

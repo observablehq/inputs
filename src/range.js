@@ -4,8 +4,15 @@ import {formatNumber} from "./format.js";
 import {maybeLabel} from "./label.js";
 import {boxSizing, defaultStyle, textStyle, mr2, flexStyle} from "./style.js";
 
-const numberStyle = {...textStyle, fontVariantNumeric: "tabular-nums", width: "60px"};
-const rangeStyle = {...mr2, ...boxSizing};
+const numberStyle = {
+  ...boxSizing,
+  ...textStyle,
+  ...mr2,
+  fontVariantNumeric: "tabular-nums",
+  width: "70px"
+};
+
+const rangeStyle = boxSizing;
 
 export function Range([min, max] = [0, 1], {
   format = d => formatNumber(d).replace(/,/g, ""), // number is strict!
@@ -15,7 +22,7 @@ export function Range([min, max] = [0, 1], {
   style = {}
 } = {}) {
   if (typeof format !==  "function") throw new TypeError("format is not a function");
-  const {width = "calc(180px - 1em)", ...formStyle} = style;
+  const {width = "calc(170px - 0.5em)", ...formStyle} = style;
   const form = html`<form style=${{...defaultStyle, ...formStyle}} onsubmit=${preventDefault}>
     ${maybeLabel(label)}<div style=${flexStyle}>
       <input type=number name=number oninput=${onnumber} style=${numberStyle}>
