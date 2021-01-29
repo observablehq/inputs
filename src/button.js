@@ -17,7 +17,7 @@ export function Button(text = "≡", {
     ${maybeLabel(label)}<button onclick=${onclick} style=${{...buttonStyle, width}}>${text}</button>
   </form>`;
   function onclick() {
-    form.value = value = reduce(value);
+    form.value = reduce(form.value);
     form.dispatchEvent(new CustomEvent("input"));
   }
   form.value = value;
