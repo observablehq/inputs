@@ -15,6 +15,8 @@ User interface components for Observable notebooks.
 
 ### Button
 
+<img src="./img/button.png" alt="A Button labeled OK">
+
 Possibly the simplest input, the Button input emits an *input* event when you click it. Buttons are often used to trigger the evaluation of cells, say to restart an animation.
 
 <a name="Button" href="#Button">#</a> <b>Button</b>(<i>text</i>, <i>options</i>) · [Source](./src/button.js)
@@ -22,6 +24,9 @@ Possibly the simplest input, the Button input emits an *input* event when you cl
 …
 
 ### Radio
+
+<img src="./img/radio.png" alt="A single-choice Radio input of colors">
+<br><img src="./img/radio-multiple.png" alt="A multiple-choice Radio input of flavors">
 
 The Radio input allows the user to choose one of a given set of options; or, if desired, multiple values may be chosen with checkboxes. Unlike the [Select](#Select) input, all of the Radio input’s choices are visible up-front.
 
@@ -31,6 +36,8 @@ The Radio input allows the user to choose one of a given set of options; or, if 
 
 ### Range
 
+<img src="./img/range.png" alt="A Range input of intensity, a number between 0 and 100">
+
 The Range input allows the user to specify a numeric value between the given minimum and maximum. This value can be adjust roughly with a slider, or precisely by typing in a number.
 
 <a name="Range" href="#Range">#</a> <b>Range</b>(<i>extent</i> = [0, 1], <i>options</i>) · [Source](./src/range.js)
@@ -38,6 +45,8 @@ The Range input allows the user to specify a numeric value between the given min
 …
 
 ### Search
+
+<img src="./img/search.png" alt="A Search input over a tabular dataset of athletes">
 
 The Search input allows freeform full-text search of a tabular dataset using a simple (but extensible) query parser. It is often used inconjunction with a [Table](#Table).
 
@@ -47,6 +56,9 @@ The Search input allows freeform full-text search of a tabular dataset using a s
 
 ### Select
 
+<img src="./img/select.png" alt="A Select input asking to choose a t-shirt size">
+<br><img src="./img/select-multiple.png" alt="A Select multiple-choice input asking to choose ink colors">
+
 The Select input allows the user to choose one of a given set of options; or, if desired, multiple values may be chosen. Unlike the [Radio](#Radio) input, only one (or a few) choices are visible up-front, affording a compact display even when many options are available.
 
 <a name="Select" href="#Select">#</a> <b>Select</b>(<i>data</i>, <i>options</i>) · [Source](./src/select.js)
@@ -55,6 +67,8 @@ The Select input allows the user to choose one of a given set of options; or, if
 
 ### Table
 
+<img src="./img/table.png" alt="A Table input showing rows of Olympic athletes">
+
 The Table input displays a tabular dataset. The value of the Table is the selected rows, a filtered (and possibly sorted) view of the input data: rows can be selected by clicking or shift-clicking checkboxes.
 
 <a name="Table" href="#Table">#</a> <b>Table</b>(<i>data</i>, <i>options</i>) · [Source](./src/table.js)
@@ -62,6 +76,8 @@ The Table input displays a tabular dataset. The value of the Table is the select
 …
 
 ### Text
+
+<img src="./img/text.png" alt="A Text input asking to enter your name">
 
 The Text input allows freeform text input. See also the [Search](#Search) input.
 
