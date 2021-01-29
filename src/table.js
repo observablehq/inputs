@@ -9,10 +9,11 @@ export function Table(
   data,
   {
     columns = data.columns, // array of column names
+    label,
     value, // initial selection
     rows = 11.5, // maximum number of rows to show
     sort, // name of column to sort by, if any
-    reverse = false, // if sorting, true for ascending and false for descending
+    reverse = false, // if sorting, true for descending and false for ascending
     format, // object of column name to format function
     align, // object of column name to left, right, or center
     width = {}, // object of column name to width
@@ -38,6 +39,7 @@ export function Table(
   <table style=${{tableLayout: layout}}>
     <thead>${data.length || columns.length ? theadr : null}</thead>
     ${tbody}
+    ${label !== undefined && html`<caption>${label}`}
   </table>
 </div>`;
 
@@ -180,6 +182,10 @@ export function Table(
   if (value !== undefined) {
     const values = new Set(value);
     selected = new Set(index.filter(i => values.has(data[i])));
+  }
+
+  if (sort === undefined && reverse) {
+    index.reverse();
   }
 
   if (data.length) {
