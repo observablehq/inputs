@@ -9,7 +9,6 @@ export function Table(
   data,
   {
     columns = data.columns, // array of column names
-    label,
     value, // initial selection
     rows = 11.5, // maximum number of rows to show
     sort, // name of column to sort by, if any
@@ -38,7 +37,7 @@ export function Table(
   const root = html`<div class=${ns} style="max-height: ${(rows + 1) * 24 - 1}px;">
   <table style=${{tableLayout: layout}}>
     <thead>${data.length || columns.length ? theadr : null}</thead>
-    ${tbody}${label === undefined ? null : html`<caption>${label}`}
+    ${tbody}
   </table>
 </div>`;
 
