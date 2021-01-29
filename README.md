@@ -49,7 +49,7 @@ document.body.appendChild(radio);
 
 <img src="./img/button.png" alt="A Button labeled OK" width="640">
 
-Possibly the simplest input, the Button input emits an *input* event when you click it. Buttons are often used to trigger the evaluation of cells, say to restart an animation. By default, the value of a button is the number of times it has been clicked. The given *contents*, either a string or an HTML element, are displayed within the button. If *contents* is not specified, it defaults to “≡”, but specifying a more meaningful *contents* is strongly encouraged for usability.
+Possibly the simplest input, a Button emits an *input* event when you click it. Buttons are often used to trigger the evaluation of cells, say to restart an animation. By default, the value of a Button is how many times it has been clicked. The given *contents*, either a string or an HTML element, are displayed within the button. If *contents* is not specified, it defaults to “≡”, but a more meaningful *contents* is strongly encouraged for usability.
 
 The available *options* are:
 
@@ -62,7 +62,9 @@ The available *options* are:
 
 <img src="./img/radio.png" alt="A single-choice Radio input of colors" width="640">
 
-The Radio input allows the user to choose one of a given set of options; or, if desired, multiple values may be chosen with checkboxes. Unlike the [Select](#Select) input, all of the Radio input’s choices are visible up-front. If multiple choice is allowed via the *multiple* option, the input’s value is the array of elements in the iterable *data* that are currently selected; if single choice is required, the input’s value is the selected element from the iterable *data*, or null if no choice has been made.
+A Radio allows the user to choose one of a given set of options; or, if desired, multiple values may be chosen with checkboxes. Unlike a [Select](#Select), all of a Radio’s choices are visible up-front. If multiple choice is allowed via the *multiple* option, the Radio’s value is the array of elements from the iterable *data* that are currently selected; if single choice is required, the Radio’s value is the selected element from the iterable *data*, or null if no choice has been made.
+
+If *data* is a Map, the displayed options are the keys from the Map, while the Radio’s value is a value from the Map, or an array of values if multiple choice is allowed.
 
 The available *options* are:
 
@@ -130,10 +132,10 @@ The available *options* are:
 * *multiple* - a boolean allowing to select multiple values at once. Defaults to false.
 * *value* - the initial value of the select. If the data is a Map, use *key* instead.
 * *key* - the initial value of the select when data is a Map. If the data is an array, use *value* instead.
-* *format* - formats the option to display in the select. By default, if the data is a map, returns the selected key; if data is an array of values, returns the value.
+* *format* - formats the option to display in the select.
 * *sort* - whether to sort the options. Defaults to false (no sorting). Possible values are *true* or "ascending", to sort the options in natural ascending order, and "descending", to sort the options in natural descending order.
 * *unique* - a boolean that indicates that the input should reduce the initial list of options computed from the data to a unique Set.
-* *keyof* -
+* *keyof* - By default, if the data is a map, returns the selected key; if data is an array of values, returns the value.
 * *valueof* - creates the result. By default, if the data is a map, returns the elements associated to the selected key(s); if data is an array of values, returns the selected value(s).
 * *style* - additional styles as a {key: value} object.
 
