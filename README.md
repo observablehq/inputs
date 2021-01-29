@@ -13,7 +13,11 @@
 * [bind](#bind) - synchronize two or more inputs
 * [disposal](#disposal) - detect when an input is discarded
 
-Observable Inputs is released under the [ISC license](./LICENSE) and depends only on [Hypertext Literal](https://github.com/observablehq/htl), our tagged template literal for safely generating dynamic HTML. In the future, these components will be incorporated into the [Observable standard library](https://github.com/observablehq/stdlib) and available in new notebooks by default; to use on Observable now:
+Observable Inputs are released under the [ISC license](./LICENSE) and depends only on [Hypertext Literal](https://github.com/observablehq/htl), our tagged template literal for safely generating dynamic HTML.
+
+## Installing
+
+In the future, these components will be incorporated into the [Observable standard library](https://github.com/observablehq/stdlib) and available in new notebooks by default; to use on Observable now:
 
 ```js
 import {Radio, Range, Select, Table} from "@observablehq/inputs"
@@ -38,6 +42,8 @@ document.body.appendChild(radio);
 
 </script>
 ```
+
+## Inputs
 
 <a name="Button" href="#Button">#</a> <b>Button</b>(<i>text</i>, <i>options</i>) · [Source](./src/button.js)
 
