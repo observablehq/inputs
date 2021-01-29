@@ -65,7 +65,7 @@ The Select input allows the user to choose one of a given set of options; or, if
 
 ### Table
 
-<img src="./img/table.png" alt="A Table input showing rows of Olympic athletes" width="989">
+<img src="./img/table.png" alt="A Table input showing rows of Olympic athletes" width="988">
 
 The Table input displays a tabular dataset. The value of the Table is the selected rows, a filtered (and possibly sorted) view of the input data: rows can be selected by clicking or shift-clicking checkboxes.
 
