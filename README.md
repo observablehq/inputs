@@ -41,7 +41,7 @@ The Range input allows the user to specify a numeric value between the given min
 
 <img src="./img/search.png" alt="A Search input over a tabular dataset of athletes" width="640">
 
-The Search input allows freeform full-text search of a tabular dataset using a simple (but extensible) query parser. It is often used inconjunction with a [Table](#Table).
+The Search input allows freeform full-text search of a tabular dataset using a simple (but extensible) query parser. It is often used in conjunction with a [Table](#Table).
 
 …
 
