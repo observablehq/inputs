@@ -11,7 +11,7 @@ export function Button(text = "≡", {
   reduce = value => value + 1,
   style = {}
 } = {}) {
-  if (reduce !== undefined && typeof reduce !== "function") throw new TypeError("reduce is not a function");
+  if (typeof reduce !== "function") throw new TypeError("reduce is not a function");
   const {width, ...formStyle} = style;
   const form = html`<form style=${{...defaultStyle, ...formStyle}} onsubmit=${preventDefault}>
     ${maybeLabel(label)}<button onclick=${onclick} style=${{...buttonStyle, width}}>${text}</button>
