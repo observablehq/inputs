@@ -38,8 +38,7 @@ export function Table(
   const root = html`<div class=${ns} style="max-height: ${(rows + 1) * 24 - 1}px;">
   <table style=${{tableLayout: layout}}>
     <thead>${data.length || columns.length ? theadr : null}</thead>
-    ${tbody}
-    ${label !== undefined && html`<caption>${label}`}
+    ${tbody}${label === undefined ? null : html`<caption>${label}`}
   </table>
 </div>`;
 
