@@ -45,11 +45,11 @@ document.body.appendChild(radio);
 
 ## Inputs
 
-<a name="Button" href="#Button">#</a> <b>Button</b>(<i>text</i>, <i>options</i>) · [Source](./src/button.js)
+<a name="Button" href="#Button">#</a> <b>Button</b>(<i>contents</i> = "≡", <i>options</i>) · [Source](./src/button.js)
 
 <img src="./img/button.png" alt="A Button labeled OK" width="640">
 
-Possibly the simplest input, the Button input emits an *input* event when you click it. Buttons are often used to trigger the evaluation of cells, say to restart an animation. By default, the value of a button is the number of times it has been clicked.
+Possibly the simplest input, the Button input emits an *input* event when you click it. Buttons are often used to trigger the evaluation of cells, say to restart an animation. By default, the value of a button is the number of times it has been clicked. The given *contents*, either a string or an HTML element, are displayed within the button. If *contents* is not specified, it defaults to “≡”, but specifying a more meaningful *contents* is strongly encouraged for usability.
 
 The available *options* are:
 
@@ -62,7 +62,7 @@ The available *options* are:
 
 <img src="./img/radio.png" alt="A single-choice Radio input of colors" width="640">
 
-The Radio input allows the user to choose one of a given set of options; or, if desired, multiple values may be chosen with checkboxes. Unlike the [Select](#Select) input, all of the Radio input’s choices are visible up-front.
+The Radio input allows the user to choose one of a given set of options; or, if desired, multiple values may be chosen with checkboxes. Unlike the [Select](#Select) input, all of the Radio input’s choices are visible up-front. If multiple choice is allowed via the *multiple* option, the input’s value is the array of elements in the iterable *data* that are currently selected; if single choice is required, the input’s value is the selected element from the iterable *data*, or null if no choice has been made.
 
 The available *options* are:
 
@@ -94,22 +94,20 @@ The available *options* are:
 
 <img src="./img/search.png" alt="A Search input over a tabular dataset of athletes" width="640">
 
-The Search input allows freeform full-text search of a tabular dataset using a simple (but extensible) query parser. It is often used in conjunction with a [Table](#Table).
+The Search input allows freeform full-text search of a tabular dataset using a simple (but extensible) query parser. It is often used in conjunction with a [Table](#Table). The value of the input is an array of elements from the iterable *data* that match the current search query. If the query is currently empty, the search input’s value is all elements in *data*.
 
 The available *options* are:
 
 * *label* - a label; either a string or an HTML element.
 * *query* - the initial search query; defaults to the empty string.
 * *placeholder* -
-* *columns* - the list of columns (or property names) that contain text to search. Defaults to data.columns, which makes it work out of the box with csv data obtained from d3-array or observable’s FileAttachement's csv method.
+* *columns* - an array of columns (property names) to search; defaults to *data*.columns. If not defined, all properties in each object in *data* will be searched.
 * *format* - a format function, receives the number of results when a query is entered; by default returns “{n} results”.
 * *spellcheck* - whether to activate the browser’s spell-checker.
 * *filter* - the filter factory: a function that receives the query and returns a filter.
 * *style* - additional styles as a {key: value} object.
 
-<a name="search_filter_query" href="#search_filter_query">#</a> <i>filter(query)</i> is passed the data value and index to test, and must return a truthy value for those that match the query.
-
-The default filter splits the query into non-empty tokens, and checks that each of the tokens matches the beginning of at least one string in the data’s columns, in a case-insensitive way. In other words, the default search for "Hello, world" will match "Worldwide hello services", and will not match "Hello".
+If specified, the function returned by *filter* is passed each element from *data*, along with its index, and returns a truthy value if the given element matches the query. The default filter splits the current query into space-separated tokens, and checks that each token matches the beginning of at least one string in the data’s columns, case-insensitive. For example, the query [Hello, world] will match the string “Worldwide hello services” but not “Hello”.
 
 <a name="Select" href="#Select">#</a> <b>Select</b>(<i>data</i>, <i>options</i>) · [Source](./src/select.js)
 
