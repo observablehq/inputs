@@ -1,6 +1,6 @@
 # Observable Inputs
 
-User interface components for Observable notebooks.
+**Observable Inputs** are simple, reusable user interface components. They’re like plain HTML input elements, just a bit better (and more opinionated). These inputs are designed for use in [Observable notebooks](https://observablehq.com) as [views](https://observablehq.com/@observablehq/introduction-to-views) to drive interaction, but you can use them anywhere on the web in place of plain HTML inputs. This library is open-source and depends only on [Hypertext Literal](https://github.com/observablehq/htl), our tagged template literal for safely generating dynamic HTML.
 
 * [Button](#Button) - click a button
 * [Radio](#Radio) - choose one or many from a set (radio or checkbox)
