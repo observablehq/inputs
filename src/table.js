@@ -12,7 +12,7 @@ export function Table(
     value, // initial selection
     rows = 11.5, // maximum number of rows to show
     sort, // name of column to sort by, if any
-    reverse = false, // if sorting, true for ascending and false for descending
+    reverse = false, // if sorting, true for descending and false for ascending
     format, // object of column name to format function
     align, // object of column name to left, right, or center
     width = {}, // object of column name to width
@@ -176,6 +176,10 @@ export function Table(
       tbody.append(...render(n, n += rows));
     }
   };
+
+  if (sort === undefined && reverse) {
+    index.reverse();
+  }
 
   if (value !== undefined) {
     const values = new Set(value);
