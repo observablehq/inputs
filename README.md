@@ -15,7 +15,7 @@ User interface components for Observable notebooks.
 
 ### Button
 
-<img src="./img/button.png" alt="A Button labeled OK">
+<img src="./img/button.png" alt="A Button labeled OK" width="219">
 
 Possibly the simplest input, the Button input emits an *input* event when you click it. Buttons are often used to trigger the evaluation of cells, say to restart an animation.
 
@@ -25,8 +25,8 @@ Possibly the simplest input, the Button input emits an *input* event when you cl
 
 ### Radio
 
-<img src="./img/radio.png" alt="A single-choice Radio input of colors">
-<br><img src="./img/radio-multiple.png" alt="A multiple-choice Radio input of flavors">
+<img src="./img/radio.png" alt="A single-choice Radio input of colors" width="346">
+<br><img src="./img/radio-multiple.png" alt="A multiple-choice Radio input of flavors" width="416">
 
 The Radio input allows the user to choose one of a given set of options; or, if desired, multiple values may be chosen with checkboxes. Unlike the [Select](#Select) input, all of the Radio input’s choices are visible up-front.
 
@@ -36,7 +36,7 @@ The Radio input allows the user to choose one of a given set of options; or, if 
 
 ### Range
 
-<img src="./img/range.png" alt="A Range input of intensity, a number between 0 and 100">
+<img src="./img/range.png" alt="A Range input of intensity, a number between 0 and 100" width="399">
 
 The Range input allows the user to specify a numeric value between the given minimum and maximum. This value can be adjust roughly with a slider, or precisely by typing in a number.
 
@@ -46,7 +46,7 @@ The Range input allows the user to specify a numeric value between the given min
 
 ### Search
 
-<img src="./img/search.png" alt="A Search input over a tabular dataset of athletes">
+<img src="./img/search.png" alt="A Search input over a tabular dataset of athletes" width="394">
 
 The Search input allows freeform full-text search of a tabular dataset using a simple (but extensible) query parser. It is often used inconjunction with a [Table](#Table).
 
@@ -56,8 +56,8 @@ The Search input allows freeform full-text search of a tabular dataset using a s
 
 ### Select
 
-<img src="./img/select.png" alt="A Select input asking to choose a t-shirt size">
-<br><img src="./img/select-multiple.png" alt="A Select multiple-choice input asking to choose ink colors">
+<img src="./img/select.png" alt="A Select input asking to choose a t-shirt size" width="253">
+<br><img src="./img/select-multiple.png" alt="A Select multiple-choice input asking to choose ink colors" width="240">
 
 The Select input allows the user to choose one of a given set of options; or, if desired, multiple values may be chosen. Unlike the [Radio](#Radio) input, only one (or a few) choices are visible up-front, affording a compact display even when many options are available.
 
@@ -67,7 +67,7 @@ The Select input allows the user to choose one of a given set of options; or, if
 
 ### Table
 
-<img src="./img/table.png" alt="A Table input showing rows of Olympic athletes">
+<img src="./img/table.png" alt="A Table input showing rows of Olympic athletes" width="989">
 
 The Table input displays a tabular dataset. The value of the Table is the selected rows, a filtered (and possibly sorted) view of the input data: rows can be selected by clicking or shift-clicking checkboxes.
 
@@ -77,7 +77,7 @@ The Table input displays a tabular dataset. The value of the Table is the select
 
 ### Text
 
-<img src="./img/text.png" alt="A Text input asking to enter your name">
+<img src="./img/text.png" alt="A Text input asking to enter your name" width="413">
 
 The Text input allows freeform text input. See also the [Search](#Search) input.
 
