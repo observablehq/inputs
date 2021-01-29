@@ -25,8 +25,7 @@ Possibly the simplest input, the Button input emits an *input* event when you cl
 
 ### Radio
 
-<img src="./img/radio.png" alt="A single-choice Radio input of colors" width="346">
-<br><img src="./img/radio-multiple.png" alt="A multiple-choice Radio input of flavors" width="416">
+<img src="./img/radio.png" alt="A single-choice Radio input of colors" width="346"><br><img src="./img/radio-multiple.png" alt="A multiple-choice Radio input of flavors" width="416">
 
 The Radio input allows the user to choose one of a given set of options; or, if desired, multiple values may be chosen with checkboxes. Unlike the [Select](#Select) input, all of the Radio input’s choices are visible up-front.
 
@@ -56,8 +55,7 @@ The Search input allows freeform full-text search of a tabular dataset using a s
 
 ### Select
 
-<img src="./img/select.png" alt="A Select input asking to choose a t-shirt size" width="253">
-<br><img src="./img/select-multiple.png" alt="A Select multiple-choice input asking to choose ink colors" width="240">
+<img src="./img/select.png" alt="A Select input asking to choose a t-shirt size" width="253"><br><img src="./img/select-multiple.png" alt="A Select multiple-choice input asking to choose ink colors" width="240">
 
 The Select input allows the user to choose one of a given set of options; or, if desired, multiple values may be chosen. Unlike the [Radio](#Radio) input, only one (or a few) choices are visible up-front, affording a compact display even when many options are available.
 
