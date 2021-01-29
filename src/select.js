@@ -3,9 +3,6 @@ import {arrayify} from "./array.js";
 import {stringify} from "./format.js";
 import {maybeLabel} from "./label.js";
 import {ascending, descending} from "./sort.js";
-import {boxSizing, defaultStyle, textStyle} from "./style.js";
-
-const selectStyle = {...textStyle, ...boxSizing};
 
 export function Select(data, {
   format = data instanceof Map ? ([key]) => key : d => d,
@@ -34,12 +31,15 @@ export function Select(data, {
   let options = data.map((d, i) => [stringify(format(d, i, data)), d, i]);
   if (sort !== undefined) options.sort(([a], [b]) => sort(a, b));
   if (unique) options = [...new Map(options.map(o => [o[0], o])).values()];
-  const form = html`<form onchange=${() => form.dispatchEvent(new CustomEvent("input"))} oninput=${oninput} style=${{...defaultStyle, ...formStyle}}>
-    ${maybeLabel(label)}<select style=${{...selectStyle, width}} multiple=${multiple > 0} size=${multiple > 0 && multiple} name=input>
+  const form = html`<form class=__ns__ onchange=${onchange} oninput=${oninput} style=${formStyle}>
+    ${maybeLabel(label)}<select style=${{width}} multiple=${multiple > 0} size=${multiple > 0 && multiple} name=input>
       ${options.map(([key, d, i]) => html`<option selected=${selection !== undefined && selection.has(valueof(d, i, data))}>${key}`)}
     </select>
   </form>`;
   const {input} = form.elements;
+  function onchange() {
+    form.dispatchEvent(new CustomEvent("input"));
+  }
   function oninput(event) {
     if (event && event.isTrusted) form.onchange = null;
     if (multiple > 0) {

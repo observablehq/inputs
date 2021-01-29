@@ -3,8 +3,6 @@ import {arrayify} from "./array.js";
 import {formatDate, formatNumber, stringify} from "./format.js";
 import {defined, ascending, descending} from "./sort.js";
 
-const ns = "observablehq-table";
-
 export function Table(
   data,
   {
@@ -34,7 +32,7 @@ export function Table(
   const tbody = html`<tbody>`;
   const tr = html`<tr><td><input type=checkbox></td>${columns.map(column => html`<td style=${{textAlign: align[column]}}>`)}`;
   const theadr = html`<tr><th><input type=checkbox onclick=${reselectAll}></th>${columns.map((column) => html`<th title=${column} style=${{width: width[column], textAlign: align[column]}} onclick=${event => resort(event, column)}><span></span>${column}</th>`)}</tr>`;
-  const root = html`<div class=${ns} style="max-height: ${(rows + 1) * 24 - 1}px;">
+  const root = html`<div class="__ns__ __ns__-table" style="max-height: ${(rows + 1) * 24 - 1}px;">
   <table style=${{tableLayout: layout}}>
     <thead>${data.length || columns.length ? theadr : null}</thead>
     ${tbody}
@@ -44,7 +42,6 @@ export function Table(
   function render(i, j) {
     return Array.from(index.subarray(i, j), i => {
       const itr = tr.cloneNode(true);
-      itr.classList.toggle("selected", selected.has(i));
       const input = inputof(itr);
       input.onclick = reselect;
       input.checked = selected.has(i);
@@ -65,7 +62,6 @@ export function Table(
     let j = index.indexOf(i);
     if (j < tbody.childNodes.length) {
       const tr = tbody.childNodes[j];
-      tr.classList.toggle("selected", false);
       inputof(tr).checked = false;
     }
     selected.delete(i);
@@ -75,7 +71,6 @@ export function Table(
     let j = index.indexOf(i);
     if (j < tbody.childNodes.length) {
       const tr = tbody.childNodes[j];
-      tr.classList.toggle("selected", true);
       inputof(tr).checked = true;
     }
     selected.add(i);
@@ -99,7 +94,6 @@ export function Table(
     } else {
       selected = new Set(index);
       for (const tr of tbody.childNodes) {
-        tr.classList.toggle("selected", true);
         inputof(tr).checked = true;
       }
     }
@@ -131,7 +125,6 @@ export function Table(
     let compare;
     if (currentSortHeader === th && currentReverse) {
       orderof(currentSortHeader).textContent = "";
-      currentSortHeader.classList.toggle("sort", false);
       currentSortHeader = null;
       currentReverse = false;
       compare = ascending;
@@ -141,14 +134,12 @@ export function Table(
       } else {
         if (currentSortHeader) {
           orderof(currentSortHeader).textContent = "";
-          currentSortHeader.classList.toggle("sort", false);
         }
         currentSortHeader = th, currentReverse = false;
       }
       const order = currentReverse ? descending : ascending;
       compare = (a, b) => order(data[a][column], data[b][column]);
       orderof(th).textContent = currentReverse ? "▾"  : "▴";
-      th.classList.toggle("sort", true);
     }
     index.sort(compare);
     selected = new Set(Array.from(selected).sort(compare));
@@ -160,7 +151,6 @@ export function Table(
   }
 
   function reinput() {
-    theadr.classList.toggle("selected", selected.size);
     inputof(theadr).checked = selected.size;
     revalue();
     root.dispatchEvent(new CustomEvent("input"));
@@ -202,7 +192,6 @@ export function Table(
 
   revalue();
 
-  if (!Table.style) Table.style = document.body.appendChild(style());
   return Object.defineProperty(root, "value", {
     get() {
       return value;
@@ -223,77 +212,6 @@ function inputof(tr) {
 
 function orderof(th) {
   return th.firstChild;
-}
-
-function style() {
-  return html`<style>
-
-.${ns} {
-  overflow-y: scroll;
-  margin: 0 -14px;
-}
-
-.${ns} table {
-  max-width: initial;
-  min-height: 33px;
-  margin: 0;
-  border-collapse: separate;
-  border-spacing: 0;
-  font-variant-numeric: tabular-nums;
-  line-height: inherit;
-}
-
-.${ns} thead th span {
-  display: inline-block;
-  width: 0.5em;
-  margin-left: -0.5em;
-}
-
-.${ns} td,
-.${ns} th {
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  border-bottom: solid 1px #eee;
-}
-
-.${ns} tr > :not(:first-of-type) {
-  padding-left: 0.7em;
-}
-
-.${ns} tr > :last-of-type {
-  padding-right: 1em;
-}
-
-.${ns} tr > :first-of-type {
-  width: 19px;
-}
-
-.${ns} tr,
-.${ns} tr:last-child td {
-  border-bottom: none;
-}
-
-.${ns} tr > :first-of-type input {
-  opacity: 0;
-  margin: 0 3px 3px 4px;
-}
-
-.${ns} tr:hover > :first-of-type input,
-.${ns} tr > :first-of-type input:focus,
-.${ns} tr > :first-of-type input:checked {
-  opacity: inherit;
-}
-
-.${ns} thead th {
-  position: sticky;
-  top: 0;
-  background: white;
-  border-bottom: solid 1px #ccc;
-  cursor: ns-resize;
-}
-
-</style>`;
 }
 
 function formatof(base = {}, data, columns) {

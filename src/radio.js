@@ -2,9 +2,6 @@ import {html} from "htl";
 import {arrayify} from "./array.js";
 import {preventDefault} from "./event.js";
 import {maybeLabel} from "./label.js";
-import {defaultStyle, inlineFlexStyle, mr2, mr3} from "./style.js";
-
-const radioStyle = {...mr3, ...inlineFlexStyle};
 
 export function Radio(data, {
   format = d => d,
@@ -17,9 +14,9 @@ export function Radio(data, {
   if (multiple) value = value === undefined ? [] : arrayify(value);
   else if (value === undefined) value = null;
   const {...formStyle} = style;
-  const form = html`<form style=${{...defaultStyle, ...formStyle}} onchange=${onchange} oninput=${oninput} onsubmit=${preventDefault}>
+  const form = html`<form class=__ns__ style=${formStyle} onchange=${onchange} oninput=${oninput} onsubmit=${preventDefault}>
     ${maybeLabel(label)}<div>
-      ${Array.from(data, (d, i) => html`<label style=${radioStyle}><input type=${multiple ? "checkbox" : "radio"} style=${mr2} name="input" value=${i} checked=${multiple ? value.includes(d) : value === d}>${format(d, i, data)}`)}
+      ${Array.from(data, (d, i) => html`<label><input type=${multiple ? "checkbox" : "radio"} name="input" value=${i} checked=${multiple ? value.includes(d) : value === d}>${format(d, i, data)}`)}
     </div>
   </form>`;
   const {input} = form.elements;

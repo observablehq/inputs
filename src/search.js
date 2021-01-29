@@ -3,9 +3,6 @@ import {arrayify} from "./array.js";
 import {preventDefault} from "./event.js";
 import {formatNumber, stringify} from "./format.js";
 import {maybeLabel} from "./label.js";
-import {boxSizing, defaultStyle, flexStyle, mr2, textStyle} from "./style.js";
-
-const searchStyle = {...mr2, ...textStyle, ...boxSizing};
 
 export function Search(data, {
   format = length => `${formatNumber(length)} results`, // length format
@@ -19,10 +16,10 @@ export function Search(data, {
 } = {}) {
   let value = [];
   data = arrayify(data);
-  const {width = "180px", ...formStyle} = style;
-  const form = html`<form style=${{...defaultStyle, ...formStyle}} onsubmit=${preventDefault}>
-    ${maybeLabel(label)}<div style=${flexStyle}>
-      <input name=input type=search spellcheck=${spellcheck === undefined ? false : spellcheck + ""} style=${{...searchStyle, width}} placeholder=${placeholder} value=${query} oninput=${oninput}>
+  const {width, ...formStyle} = style;
+  const form = html`<form class=__ns__ style=${formStyle} onsubmit=${preventDefault}>
+    ${maybeLabel(label)}<div class=__ns__-input>
+      <input name=input type=search spellcheck=${spellcheck === undefined ? false : spellcheck + ""} style=${{width}} placeholder=${placeholder} value=${query} oninput=${oninput}>
       <output name=output>
     </div>
   </form>`;

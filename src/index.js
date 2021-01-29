@@ -1,3 +1,5 @@
+import "./style.css";
+
 export {Range} from "./range.js";
 export {Button} from "./button.js";
 export {Radio} from "./radio.js";
