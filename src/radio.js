@@ -1,46 +1,20 @@
 import {html} from "htl";
-import {arrayify} from "./array.js";
-import {preventDefault} from "./event.js";
+import {createChooser} from "./chooser.js";
 import {maybeLabel} from "./label.js";
 
-export function Radio(data, {
-  format = d => d,
-  label,
-  value,
-  multiple,
-  style = {}
-} = {}) {
-  multiple = !!multiple;
-  if (multiple) value = value === undefined ? [] : arrayify(value);
-  else if (value === undefined) value = null;
-  const {...formStyle} = style;
-  const form = html`<form class=__ns__ style=${formStyle} onchange=${onchange} oninput=${oninput} onsubmit=${preventDefault}>
+export const Radio = createChooser({
+  render(data, keys, selection, {format = d => d, multiple, label, style: {...formStyle} = {}}) {
+    if (typeof format !== "function") throw new TypeError("format is not a function");
+    return html`<form class=__ns__ style=${formStyle}>
     ${maybeLabel(label)}<div>
-      ${Array.from(data, (d, i) => html`<label><input type=${multiple ? "checkbox" : "radio"} name="input" value=${i} checked=${multiple ? value.includes(d) : value === d}>${format(d, i, data)}`)}
+      ${keys.map(([key, i]) => html`<label><input type=${multiple ? "checkbox" : "radio"} name="input" value=${i} checked=${selection.has(i)}>${format(key, i, data)}`)}
     </div>
   </form>`;
-  const {input} = form.elements;
-  function onchange() {
-    form.dispatchEvent(new CustomEvent("input")); // Safari
+  },
+  selectedIndexes(input) {
+    return Array.from(input).filter(i => i.checked).map(i => +i.value);
+  },
+  select(input, selected) {
+    input.checked = selected;
   }
-  function oninput(event) {
-    if (event && event.isTrusted) form.onchange = null;
-    value = multiple
-      ? Array.from(input).filter(i => i.checked).map(i => data[i.value])
-      : data[input.value];
-  }
-  return Object.defineProperty(form, "value", {
-    get() {
-      return value;
-    },
-    set(v) {
-      if (multiple) {
-        const selection = new Set(v);
-        for (const i of input) i.checked = selection.has(data[i.value]);
-      } else {
-        input.value = data.indexOf(v);
-      }
-      oninput();
-    }
-  });
-}
+});
