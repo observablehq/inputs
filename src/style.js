@@ -15,15 +15,15 @@ export const defaultStyle = {
 };
 
 export const mr1 = {
-  marginRight: "0.25em"
+  marginRight: "3.25px" // 0.25em
 };
 
 export const mr2 = {
-  marginRight: "0.5em"
+  marginRight: "6.5px" // 0.5em
 };
 
 export const mr3 = {
-  marginRight: "1em"
+  marginRight: "13px" // 1em
 };
 
 export const boxSizing = {

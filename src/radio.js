@@ -15,6 +15,7 @@ export function Radio(data, {
 } = {}) {
   multiple = !!multiple;
   if (multiple) value = value === undefined ? [] : arrayify(value);
+  else if (value === undefined) value = null;
   const {...formStyle} = style;
   const form = html`<form style=${{...defaultStyle, ...formStyle}} onchange=${onchange} oninput=${oninput} onsubmit=${preventDefault}>
     ${maybeLabel(label)}<div>

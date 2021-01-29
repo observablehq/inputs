@@ -12,7 +12,10 @@ const numberStyle = {
   width: "70px"
 };
 
-const rangeStyle = boxSizing;
+const rangeStyle = {
+  ...boxSizing,
+  margin: 0
+};
 
 export function Range([min, max] = [0, 1], {
   format = d => formatNumber(d).replace(/,/g, ""), // number is strict!
@@ -22,7 +25,7 @@ export function Range([min, max] = [0, 1], {
   style = {}
 } = {}) {
   if (typeof format !==  "function") throw new TypeError("format is not a function");
-  const {width = "calc(170px - 0.5em)", ...formStyle} = style;
+  const {width = "163.5px", ...formStyle} = style;
   const form = html`<form style=${{...defaultStyle, ...formStyle}} onsubmit=${preventDefault}>
     ${maybeLabel(label)}<div style=${flexStyle}>
       <input type=number name=number oninput=${onnumber} style=${numberStyle}>
