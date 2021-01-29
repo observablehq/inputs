@@ -1,6 +1,6 @@
 # Observable Inputs
 
-**Observable Inputs** are simple, reusable user interface components. They’re like plain HTML input elements, just a bit better (and more opinionated). These inputs are designed for use in [Observable notebooks](https://observablehq.com) as [views](https://observablehq.com/@observablehq/introduction-to-views) to drive interaction, but you can use them anywhere on the web in place of plain HTML inputs. This library is open-source and depends only on [Hypertext Literal](https://github.com/observablehq/htl), our tagged template literal for safely generating dynamic HTML.
+**Observable Inputs** are lightweight user interface components (buttons, sliders, dropdowns, tables, and the like) to help you explore data and build interactive displays in [Observable notebooks](https://observablehq.com). (Although intended for use on Observable as [views](https://observablehq.com/@observablehq/introduction-to-views), these components are vanilla JavaScript that behave like plain old HTML input elements, so you can use them anywhere else on the web, too.)
 
 * [Button](#Button) - click a button
 * [Radio](#Radio) - choose one or many from a set (radio or checkbox)
@@ -12,6 +12,32 @@
 * [Input](#Input) - a programmatic interface for storing input state
 * [bind](#bind) - synchronize two or more inputs
 * [disposal](#disposal) - detect when an input is discarded
+
+Observable Inputs is released under the [ISC license](./LICENSE) and depends only on [Hypertext Literal](https://github.com/observablehq/htl), our tagged template literal for safely generating dynamic HTML. In the future, these components will be incorporated into the [Observable standard library](https://github.com/observablehq/stdlib) and available in new notebooks by default; to use on Observable now:
+
+```js
+import {Radio, Range, Select, Table} from "@observablehq/inputs"
+```
+
+To install on Node:
+
+```
+yarn add @observablehq/inputs
+```
+
+Or in vanilla JavaScript:
+
+```html
+<script type="module">
+
+import {Radio, Range, Select, Table} from "https://cdn.jsdelivr.net/npm/@observablehq/inputs@0.1/dist/inputs.js";
+
+const radio = Radio(["red", "green", "blue"]);
+radio.addEventListener("input", () => console.log(`you picked ${radio.value}`));
+document.body.appendChild(radio);
+
+</script>
+```
 
 <a name="Button" href="#Button">#</a> <b>Button</b>(<i>text</i>, <i>options</i>) · [Source](./src/button.js)
 

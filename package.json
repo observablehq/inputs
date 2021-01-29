@@ -7,8 +7,8 @@
     "url": "https://observablehq.com"
   },
   "license": "ISC",
-  "main": "dist/@observablehq/inputs.cjs.js",
-  "unpkg": "dist/@observablehq/inputs.umd.min.js",
+  "main": "dist/inputs.cjs.js",
+  "unpkg": "dist/inputs.umd.min.js",
   "module": "src/index.js",
   "repository": {
     "type": "git",
