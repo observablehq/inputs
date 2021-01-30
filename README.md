@@ -75,7 +75,13 @@ viewof flavor = Radio(["Salty", "Spicy", "Sour", "Umami"], {label: "Flavor", mul
 
 A Radio allows the user to choose one of a given set of options (one of the given elements in the iterable *data*); or, if desired, multiple values may be chosen with checkboxes. Unlike a [Select](#Select), a Radio’s choices are all visible up-front. If multiple choice is allowed via the *multiple* option, the Radio’s value is an array of the elements from the iterable *data* that are currently selected; if single choice is required, the Radio’s value is an element from the iterable *data*, or null if no choice has been made.
 
-To customize the display of options, optional *keyof* and *valueof* functions may be given; the result of the *keyof* function for each element in *data* is displayed to the user (and may be formatted via an optional *format* function), while the result of the *valueof* function is exposed as the Radio’s value when selected. If *data* is a Map, the *keyof* function defaults to the map entry’s key (`([key]) => key`) and the *valueof* function defaults to the map entry’s value (`([, value]) => value`); otherwise, both *keyof* and *valueof* default to the identity function (`d => d`). (See the color example above.)
+To customize the display of options, optional *keyof* and *valueof* functions may be given; the result of the *keyof* function for each element in *data* is displayed to the user, while the result of the *valueof* function is exposed as the Radio’s value when selected. If *data* is a Map, the *keyof* function defaults to the map entry’s key (`([key]) => key`) and the *valueof* function defaults to the map entry’s value (`([, value]) => value`); otherwise, both *keyof* and *valueof* default to the identity function (`d => d`). For example, with [d3.group](https://github.com/d3/d3-array/blob/master/README.md#group):
+
+```js
+viewof sportAthletes = Radio(d3.group(athletes, d => d.sport))
+```
+
+Keys may be sorted and uniqued via the *sort* and *unique* options, respectively, and formatted via an optional *format* function. As with the *label* option, the *format* function may return either a string or an HTML element.
 
 The available *options* are:
 
@@ -88,8 +94,6 @@ The available *options* are:
 * *valueof* - a function to return the value of the given element in *data*.
 * *value* - the initial value, which must be an array if multiple choice is allowed; defaults to null (no selection).
 * *style* - additional styles as a {key: value} object.
-
-As with the *label* option, the *format* function may return either a string or an HTML element.
 
 <a name="Range" href="#Range">#</a> <b>Range</b>(<i>[*min*, *max*]</i> = [0, 1], <i>options</i>) · [Source](./src/range.js)
 
