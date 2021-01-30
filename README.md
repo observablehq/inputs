@@ -149,12 +149,12 @@ The available *options* are:
 * *query* - the initial search terms; defaults to the empty string.
 * *placeholder* - a placeholder string for when the query is empty.
 * *columns* - an array of columns to search; defaults to *data*.columns.
-* *format* - a format function, receives the number of results when a query is entered; by default returns “{n} results”.
+* *format* - a function to show the number of results.
 * *spellcheck* - whether to activate the browser’s spell-checker.
 * *filter* - the filter factory: a function that receives the query and returns a filter.
 * *style* - additional styles as a {key: value} object.
 
-If specified, the function returned by *filter* is passed each element from *data*, along with its index, and returns a truthy value if the given element matches the query. The default filter splits the current query into space-separated tokens, and checks that each token matches the beginning of at least one string in the data’s columns, case-insensitive. For example, the query [Hello, world] will match the string “Worldwide hello services” but not “Hello”.
+If a *filter* function is specified, it is invoked whenever the query changes; the function it returns is then passed each element from *data*, along with its zero-based index, and should return a truthy value if the given element matches the query. The default filter splits the current query into space-separated tokens and checks that each token matches the beginning of at least one string in the data’s columns, case-insensitive. For example, the query [hello world] will match the string “Worldwide Hello Services” but not “hello”.
 
 <a name="Select" href="#Select">#</a> <b>Select</b>(<i>data</i>, <i>options</i>) · [Source](./src/select.js)
 
