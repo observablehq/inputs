@@ -1,6 +1,6 @@
 # Observable Inputs
 
-**Observable Inputs** are lightweight user interface components — buttons, sliders, dropdowns, tables, and the like — to help you explore data and build interactive displays in [Observable notebooks](https://observablehq.com). (Although intended for use as [Observable views](https://observablehq.com/@observablehq/introduction-to-views), this library is vanilla JavaScript that creates plain old HTML input elements, so you can use them anywhere else on the web, too!)
+**Observable Inputs** are lightweight user interface components — buttons, sliders, dropdowns, tables, and the like — to help you explore data and build interactive displays in [Observable notebooks](https://observablehq.com). (Although intended for use as [Observable views](https://observablehq.com/@observablehq/introduction-to-views), this vanilla JavaScript library creates plain old HTML elements, so you can use them anywhere on the web!)
 
 * [Button](#Button) - click a button
 * [Radio](#Radio) - choose one or many from a set (radio or checkbox)
@@ -17,19 +17,13 @@ Observable Inputs are released under the [ISC license](./LICENSE) and depend onl
 
 ## Installing
 
-In the future, these components will be incorporated into the [Observable standard library](https://github.com/observablehq/stdlib) and available in new notebooks by default; to use on Observable now:
+In the future, these components will be incorporated into the [Observable standard library](https://github.com/observablehq/stdlib) and available in notebooks by default; to use on Observable now:
 
 ```js
 import {Radio, Range, Select, Table} from "@observablehq/inputs"
 ```
 
-To install on Node:
-
-```
-yarn add @observablehq/inputs
-```
-
-Or in vanilla JavaScript:
+To use in vanilla JavaScript:
 
 ```html
 <script type="module">
@@ -43,13 +37,19 @@ document.body.appendChild(radio);
 </script>
 ```
 
+To install on Node:
+
+```
+yarn add @observablehq/inputs
+```
+
 ## Inputs
 
 <a name="Button" href="#Button">#</a> <b>Button</b>(<i>content</i> = "≡", <i>options</i>) · [Source](./src/button.js)
 
 <img src="./img/button.png" alt="A Button labeled OK" width="640">
 
-Possibly the simplest input, a Button emits an *input* event when you click it. Buttons are often used to trigger the evaluation of cells, say to restart an animation. By default, the value of a Button is how many times it has been clicked. The given *content*, either a string or an HTML element, is displayed within the button. If *content* is not specified, it defaults to “≡”, but a more meaningful value is strongly encouraged for usability.
+A Button emits an *input* event when you click it. Buttons are often used to trigger the evaluation of cells, say to restart an animation. By default, the value of a Button is how many times it has been clicked. The given *content*, either a string or an HTML element, is displayed within the button. If *content* is not specified, it defaults to “≡”, but a more meaningful value is strongly encouraged for usability.
 
 The available *options* are:
 
@@ -62,19 +62,25 @@ The available *options* are:
 
 <img src="./img/radio.png" alt="A single-choice Radio input of colors" width="640">
 
-A Radio allows the user to choose one of a given set of options; or, if desired, multiple values may be chosen with checkboxes. Unlike a [Select](#Select), all of a Radio’s choices are visible up-front. If multiple choice is allowed via the *multiple* option, the Radio’s value is the array of elements from the iterable *data* that are currently selected; if single choice is required, the Radio’s value is the selected element from the iterable *data*, or null if no choice has been made.
+A Radio allows the user to choose one of a given set of options (one of the given elements in the iterable *data*); or, if desired, multiple values may be chosen with checkboxes. Unlike a [Select](#Select), all of a Radio’s choices are visible up-front. If multiple choice is allowed via the *multiple* option, the Radio’s value is the array of elements from the iterable *data* that are currently selected; if single choice is required, the Radio’s value is the selected element from the iterable *data*, or null if no choice has been made.
 
-If *data* is a Map, the displayed options are the keys from the Map, while the Radio’s value is a value from the Map, or an array of values if multiple choice is allowed.
+To control the display of each option, *keyof* and *valueof* functions may be passed as options; the result of the *keyof* function for each element in the *data* is displayed to the user (and may be formatted via an optional *format* function), while the result of the *valueof* function is exposed as the view’s value when selected. If *data* is a Map, the *keyof* function defaults to the map entry’s key and the *valueof* function defaults to the map entry’s value; otherwise, both *keyof* and *valueof* default to the identity function. For example, to show color names to the user, but have the Radio’s value be hexadecimal colors:
+
+```js
+viewof color = Radio(new Map([["red", "#f00"], ["green", "#0f0"], ["blue", "#00f"]]))
+```
+
+Like the *label* option, the *format* function may return either a string or an HTML element.
 
 The available *options* are:
 
 * *label* - a label; either a string or an HTML element.
 * *multiple* - whether to allow multiple choice (checkboxes); defaults to false (radios).
+* *sort* - true, ascending, descending, or a comparator function to sort keys; defaults to false.
+* *unique* - true to only show unique keys; defaults to false.
 * *format* - a formatting function; defaults to the identity function.
-* *keyof* -
-* *valueof* -
-* *sort* -
-* *unique* -
+* *keyof* - a function to return the key for the given element in *data*.
+* *valueof* - a function to return the value of the given element in *data*.
 * *value* - the initial value, which must be an array if multiple choice is allowed; defaults to null (no selection).
 * *style* - additional styles as a {key: value} object.
 
