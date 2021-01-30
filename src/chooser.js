@@ -36,7 +36,8 @@ export function createChooser({render, selectedIndexes, select}) {
         size
       }
     );
-    const {input} = form.elements;
+    let {input} = form.elements;
+    if (input.nodeName === "INPUT") input = [input];
     form.onchange = dispatchInput;
     form.oninput = oninput;
     form.onsubmit = preventDefault;
