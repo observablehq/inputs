@@ -175,7 +175,7 @@ To customize the display of options, optional *keyof* and *valueof* functions ma
 viewof sportAthletes = Select(d3.group(athletes, d => d.sport))
 ```
 
-Keys may be sorted and uniqued via the *sort* and *unique* options, respectively, and formatted via an optional *format* function. As with the *label* option, the *format* function may return either a string or an HTML element.
+Keys may be sorted and uniqued via the *sort* and *unique* options, respectively, and formatted via an optional *format* function. While the *label* option may be either a string or an HTML element, the *format* function must return a string (unlike a Radio).
 
 The available *options* are:
 
