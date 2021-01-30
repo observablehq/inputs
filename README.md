@@ -129,14 +129,26 @@ The given *value* is clamped to the given extent, and rounded if *step* is defin
 viewof foundAthletes = Search(athletes, {label: "Athletes"})
 ```
 
-The Search input allows freeform full-text search of a tabular dataset using a simple (but extensible) query parser. It is often used in conjunction with a [Table](#Table). The value of the input is an array of elements from the iterable *data* that match the current search query. If the query is currently empty, the search input’s value is all elements in *data*.
+A Search input allows freeform full-text search of a tabular dataset using a simple (but extensible) query parser. It is often used in conjunction with a [Table](#Table). The value of a Search is an array of elements from the iterable *data* that match the current query. If the query is currently empty, the search input’s value is all elements in *data*.
+
+A Search input can work with either tabular data (an array of objects) or a column (an array of strings). For example, to search U.S. state names:
+
+```js
+viewof state = Search(["Alabama", "Alaska", "Arizona", "Arkansas", "California", …], {label: "State"})
+```
+
+When searching tabular input, all properties on each object in *data* are searched by default, but you can limit the search to a specific set of properties using the *column* option. For example, to only search the “sport” and “nationality” column:
+
+```js
+viewof foundAthletes = Search(athletes, {label: "Athletes", columns: ["sport", "nationality"]})
+```
 
 The available *options* are:
 
 * *label* - a label; either a string or an HTML element.
-* *query* - the initial search query; defaults to the empty string.
-* *placeholder* -
-* *columns* - an array of columns (property names) to search; defaults to *data*.columns. If not defined, all properties in each object in *data* will be searched.
+* *query* - the initial search terms; defaults to the empty string.
+* *placeholder* - a placeholder string for when the query is empty.
+* *columns* - an array of columns to search; defaults to *data*.columns.
 * *format* - a format function, receives the number of results when a query is entered; by default returns “{n} results”.
 * *spellcheck* - whether to activate the browser’s spell-checker.
 * *filter* - the filter factory: a function that receives the query and returns a filter.
