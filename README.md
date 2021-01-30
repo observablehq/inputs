@@ -55,6 +55,12 @@ viewof clicks = Button("OK", {label: "Click me"})
 
 A Button emits an *input* event when you click it. Buttons are often used to trigger the evaluation of cells, say to restart an animation. By default, the value of a Button is how many times it has been clicked. The given *content*, either a string or an HTML element, is displayed within the button. If *content* is not specified, it defaults to “≡”, but a more meaningful value is strongly encouraged for usability.
 
+The *reduce* function allows you to compute the new value of the Button when clicked, given the old value. For example, to set the value as the time of last click:
+
+```js
+viewof time = Button("Update", {value: null, reduce: () => Date.now()})
+```
+
 The available *options* are:
 
 * *label* - a label; either a string or an HTML element.
