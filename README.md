@@ -131,16 +131,16 @@ viewof foundAthletes = Search(athletes, {label: "Athletes"})
 
 A Search input allows freeform full-text search of a tabular dataset using a simple (but extensible) query parser. It is often used in conjunction with a [Table](#Table). The value of a Search is an array of elements from the iterable *data* that match the current query. If the query is currently empty, the search input’s value is all elements in *data*.
 
-A Search input can work with either tabular data (an array of objects) or a column (an array of strings). For example, to search U.S. state names:
-
-```js
-viewof state = Search(["Alabama", "Alaska", "Arizona", "Arkansas", "California", …], {label: "State"})
-```
-
-When searching tabular input, all properties on each object in *data* are searched by default, but you can limit the search to a specific set of properties using the *column* option. For example, to only search the “sport” and “nationality” column:
+A Search input can work with either tabular data (an array of objects) or a single column (an array of strings). When searching tabular input, all properties on each object in *data* are searched by default, but you can limit the search to a specific set of properties using the *column* option. For example, to only search the “sport” and “nationality” column:
 
 ```js
 viewof foundAthletes = Search(athletes, {label: "Athletes", columns: ["sport", "nationality"]})
+```
+
+For example, to search U.S. state names:
+
+```js
+viewof state = Search(["Alabama", "Alaska", "Arizona", "Arkansas", "California", …], {label: "State"})
 ```
 
 The available *options* are:
