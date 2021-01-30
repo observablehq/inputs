@@ -24,30 +24,20 @@ export const Radio = createChooser({
 // element if there is only one; we want these two cases to behave the same as
 // when there are two or more options, i.e., a RadioNodeList.
 function inputof(input, multiple) {
-  return input === undefined ? new (multiple ? MultipleOptionZero : OptionZero)()
+  return input === undefined ? new OptionZero(multiple ? [] : null)
     : typeof input.length === "undefined" ? new (multiple ? MultipleOptionOne : OptionOne)(input)
     : input;
 }
 
 class OptionZero {
+  constructor(value) {
+    this._value = value;
+  }
   get value() {
-    return null;
+    return this._value;
   }
   set value(v) {
     // ignore
-  }
-  *[Symbol.iterator]() {
-    // empty
-  }
-}
-
-class MultipleOptionZero {
-  constructor() {
-    const value = [];
-    Object.defineProperty(this, "value", {
-      get: () => value,
-      set: () => {} // ignore
-    });
   }
   *[Symbol.iterator]() {
     // empty
@@ -64,11 +54,12 @@ class OptionOne {
   }
   get value() {
     const {_input} = this;
-    return _input.checked ? _input.value : ""
+    return _input.checked ? _input.value : "";
   }
   set value(v) {
     const {_input} = this;
-    _input.checked = _input.checked || (v + "") === _input.value;
+    if (_input.checked) return;
+    _input.checked = (v + "") === _input.value;
   }
   *[Symbol.iterator]() {
     yield this._input;
@@ -85,9 +76,9 @@ class MultipleOptionOne {
   }
   set value(v) {
     const {_input} = this;
-    const checked = _input.checked || (v + "") === _input.value;
-    if (checked === _input.checked) return;
-    this._value = checked ? [_input.value] : [];
+    if (_input.checked) return;
+    _input.checked = (v + "") === _input.value;
+    this._value = _input.checked ? [_input.value] : [];
   }
   *[Symbol.iterator]() {
     yield this._input;
