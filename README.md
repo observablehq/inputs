@@ -160,28 +160,34 @@ If a *filter* function is specified, it is invoked whenever the query changes; t
 
 <img src="./img/select.png" alt="A Select input asking to choose a t-shirt size" width="640">
 
-The Select input allows the user to choose one of a given set of options; or, if desired, multiple values may be chosen. Unlike the [Radio](#Radio) input, only one (or a few) choices are visible up-front, affording a compact display even when many options are available.
-
-The Select input is designed to work well with data passed as arrays of values as well as groups of values represented by Map objects. Given an array, it allows the user to select one or several values in the array; given a Map, it allows the user to select a key (or multiple keys), and retrieve the associated values.
-
-For example, to create a menu that lists the sports in the athletes dataset:
 ```js
-viewof selection = Select(d3.group(athletes, d => d.sport));
+viewof size = Select(["Small", "Medium", "Large"], {label: "Size"})
+```
+```js
+viewof inks = Select(["cyan", "magenta", "yellow", "black"], {multiple: true, label: "Inks"})
 ```
 
-The *selection* will be the list of athletes practicing the selected sport.
+A Select allows the user to choose one of a given set of options (one of the given elements in the iterable *data*); or, if desired, multiple values may be chosen. Unlike a [Radio](#Radio), only one (or a few) choices are visible up-front, affording a compact display even when many options are available. If multiple choice is allowed via the *multiple* option, the Select’s value is an array of the elements from the iterable *data* that are currently selected; if single choice is required, the Select’s value is an element from the iterable *data*, or null if no choice has been made.
+
+To customize the display of options, optional *keyof* and *valueof* functions may be given; the result of the *keyof* function for each element in *data* is displayed to the user, while the result of the *valueof* function is exposed as the Select’s value when selected. If *data* is a Map, the *keyof* function defaults to the map entry’s key (`([key]) => key`) and the *valueof* function defaults to the map entry’s value (`([, value]) => value`); otherwise, both *keyof* and *valueof* default to the identity function (`d => d`). For example, with [d3.group](https://github.com/d3/d3-array/blob/master/README.md#group):
+
+```js
+viewof sportAthletes = Select(d3.group(athletes, d => d.sport))
+```
+
+Keys may be sorted and uniqued via the *sort* and *unique* options, respectively, and formatted via an optional *format* function. As with the *label* option, the *format* function may return either a string or an HTML element.
 
 The available *options* are:
 
 * *label* - a label; either a string or an HTML element.
-* *multiple* - a boolean allowing to select multiple values at once. Defaults to false.
-* *value* - the initial value of the select. If the data is a Map, use *key* instead.
-* *key* - the initial value of the select when data is a Map. If the data is an array, use *value* instead.
-* *format* - formats the option to display in the select.
-* *sort* - whether to sort the options. Defaults to false (no sorting). Possible values are *true* or "ascending", to sort the options in natural ascending order, and "descending", to sort the options in natural descending order.
-* *unique* - a boolean that indicates that the input should reduce the initial list of options computed from the data to a unique Set.
-* *keyof* - By default, if the data is a map, returns the selected key; if data is an array of values, returns the value.
-* *valueof* - creates the result. By default, if the data is a map, returns the elements associated to the selected key(s); if data is an array of values, returns the selected value(s).
+* *multiple* - whether to allow multiple choice; defaults to false.
+* *size* - if *multiple* is true, the number of options to show.
+* *sort* - true, “ascending”, “descending”, or a comparator function to sort keys; defaults to false.
+* *unique* - true to only show unique keys; defaults to false.
+* *format* - a format function; defaults to the identity function.
+* *keyof* - a function to return the key for the given element in *data*.
+* *valueof* - a function to return the value of the given element in *data*.
+* *value* - the initial value, which must be an array if multiple choice is allowed; defaults to null (no selection).
 * *style* - additional styles as a {key: value} object.
 
 <a name="Table" href="#Table">#</a> <b>Table</b>(<i>data</i>, <i>options</i>) · [Source](./src/table.js)
