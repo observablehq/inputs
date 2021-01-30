@@ -49,6 +49,10 @@ yarn add @observablehq/inputs
 
 <img src="./img/button.png" alt="A Button labeled OK" width="640">
 
+```js
+viewof clicks = Button("OK", {label: "Click me"})
+```
+
 A Button emits an *input* event when you click it. Buttons are often used to trigger the evaluation of cells, say to restart an animation. By default, the value of a Button is how many times it has been clicked. The given *content*, either a string or an HTML element, is displayed within the button. If *content* is not specified, it defaults to “≡”, but a more meaningful value is strongly encouraged for usability.
 
 The available *options* are:
@@ -62,15 +66,16 @@ The available *options* are:
 
 <img src="./img/radio.png" alt="A single-choice Radio input of colors" width="640">
 
-A Radio allows the user to choose one of a given set of options (one of the given elements in the iterable *data*); or, if desired, multiple values may be chosen with checkboxes. Unlike a [Select](#Select), all of a Radio’s choices are visible up-front. If multiple choice is allowed via the *multiple* option, the Radio’s value is the array of elements from the iterable *data* that are currently selected; if single choice is required, the Radio’s value is the selected element from the iterable *data*, or null if no choice has been made.
-
-To control the display of each option, *keyof* and *valueof* functions may be passed as options; the result of the *keyof* function for each element in the *data* is displayed to the user (and may be formatted via an optional *format* function), while the result of the *valueof* function is exposed as the view’s value when selected. If *data* is a Map, the *keyof* function defaults to the map entry’s key and the *valueof* function defaults to the map entry’s value; otherwise, both *keyof* and *valueof* default to the identity function. For example, to show color names to the user, but have the Radio’s value be hexadecimal colors:
-
 ```js
-viewof color = Radio(new Map([["red", "#f00"], ["green", "#0f0"], ["blue", "#00f"]]))
+viewof color = Radio(new Map([["red", "#f00"], ["green", "#0f0"], ["blue", "#00f"]]), {label: "Color"})
+```
+```js
+viewof flavor = Radio(["Salty", "Spicy", "Sour", "Umami"], {label: "Flavor", multiple: true})
 ```
 
-Like the *label* option, the *format* function may return either a string or an HTML element.
+A Radio allows the user to choose one of a given set of options (one of the given elements in the iterable *data*); or, if desired, multiple values may be chosen with checkboxes. Unlike a [Select](#Select), a Radio’s choices are all visible up-front. If multiple choice is allowed via the *multiple* option, the Radio’s value is an array of the elements from the iterable *data* that are currently selected; if single choice is required, the Radio’s value is an element from the iterable *data*, or null if no choice has been made.
+
+To customize the display of options, optional *keyof* and *valueof* functions may be given; the result of the *keyof* function for each element in *data* is displayed to the user (and may be formatted via an optional *format* function), while the result of the *valueof* function is exposed as the Radio’s value when selected. If *data* is a Map, the *keyof* function defaults to the map entry’s key (`([key]) => key`) and the *valueof* function defaults to the map entry’s value (`([, value]) => value`); otherwise, both *keyof* and *valueof* default to the identity function (`d => d`). (See the color example above.)
 
 The available *options* are:
 
@@ -83,6 +88,8 @@ The available *options* are:
 * *valueof* - a function to return the value of the given element in *data*.
 * *value* - the initial value, which must be an array if multiple choice is allowed; defaults to null (no selection).
 * *style* - additional styles as a {key: value} object.
+
+As with the *label* option, the *format* function may return either a string or an HTML element.
 
 <a name="Range" href="#Range">#</a> <b>Range</b>(<i>[*min*, *max*]</i> = [0, 1], <i>options</i>) · [Source](./src/range.js)
 
