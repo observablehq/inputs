@@ -45,11 +45,11 @@ document.body.appendChild(radio);
 
 ## Inputs
 
-<a name="Button" href="#Button">#</a> <b>Button</b>(<i>contents</i> = "≡", <i>options</i>) · [Source](./src/button.js)
+<a name="Button" href="#Button">#</a> <b>Button</b>(<i>content</i> = "≡", <i>options</i>) · [Source](./src/button.js)
 
 <img src="./img/button.png" alt="A Button labeled OK" width="640">
 
-Possibly the simplest input, a Button emits an *input* event when you click it. Buttons are often used to trigger the evaluation of cells, say to restart an animation. By default, the value of a Button is how many times it has been clicked. The given *contents*, either a string or an HTML element, are displayed within the button. If *contents* is not specified, it defaults to “≡”, but a more meaningful *contents* is strongly encouraged for usability.
+Possibly the simplest input, a Button emits an *input* event when you click it. Buttons are often used to trigger the evaluation of cells, say to restart an animation. By default, the value of a Button is how many times it has been clicked. The given *content*, either a string or an HTML element, is displayed within the button. If *content* is not specified, it defaults to “≡”, but a more meaningful value is strongly encouraged for usability.
 
 The available *options* are:
 
