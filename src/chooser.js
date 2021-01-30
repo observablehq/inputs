@@ -26,7 +26,7 @@ export function createChooser({render, selectedIndexes, select}) {
     if (multiple === true) size = Math.max(1, Math.min(10, data.length));
     else if (size > 0) multiple = true;
     else multiple = false, size = undefined;
-    const form = render(
+    const [form, input = form.elements.input] = render(
       data,
       keys,
       maybeSelection(data, value === undefined ? [] : multiple ? arrayify(value) : [value], valueof),
@@ -36,8 +36,6 @@ export function createChooser({render, selectedIndexes, select}) {
         size
       }
     );
-    let {input} = form.elements;
-    if (input.nodeName === "INPUT") input = [input];
     form.onchange = dispatchInput;
     form.oninput = oninput;
     form.onsubmit = preventDefault;
