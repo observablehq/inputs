@@ -101,7 +101,7 @@ The available *options* are:
 * *value* - the initial value, which must be an array if multiple choice is allowed; defaults to null (no selection).
 * *style* - additional styles as a {key: value} object.
 
-<a name="Range" href="#Range">#</a> <b>Range</b>(<i>[*min*, *max*]</i> = [0, 1], <i>options</i>) · [Source](./src/range.js)
+<a name="Range" href="#Range">#</a> <b>Range</b>([<i>min</i>, <i>max</i>] = [0, 1], <i>options</i>) · [Source](./src/range.js)
 
 <img src="./img/range.png" alt="A Range input of intensity, a number between 0 and 100" width="640">
 
