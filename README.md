@@ -93,9 +93,9 @@ The available *options* are:
 
 * *label* - a label; either a string or an HTML element.
 * *multiple* - whether to allow multiple choice (checkboxes); defaults to false (radios).
-* *sort* - true, ascending, descending, or a comparator function to sort keys; defaults to false.
+* *sort* - true, “ascending”, “descending”, or a comparator function to sort keys; defaults to false.
 * *unique* - true to only show unique keys; defaults to false.
-* *format* - a formatting function; defaults to the identity function.
+* *format* - a format function; defaults to the identity function.
 * *keyof* - a function to return the key for the given element in *data*.
 * *valueof* - a function to return the value of the given element in *data*.
 * *value* - the initial value, which must be an array if multiple choice is allowed; defaults to null (no selection).
@@ -105,19 +105,29 @@ The available *options* are:
 
 <img src="./img/range.png" alt="A Range input of intensity, a number between 0 and 100" width="640">
 
-The Range input allows the user to specify a numeric value between the given *min* and *max*. This value can be adjust roughly with a slider, or precisely by typing a number.
+```js
+viewof intensity = Range([0, 100], {step: 1, label: "Intensity"})
+```
+
+A Range input specifies a number between the given *min* and *max* (inclusive). This number can be adjusted roughly with a slider, or precisely by typing a number.
 
 The available *options* are:
 
 * *label* - a label; either a string or an HTML element.
-* *format* -
-* *step* - the step, or precision, of the slider. This does not constrain the number typed, but the browser may show a warning if the user types a decimal number when the step is integer.
-* *value* - the initial value. Clamped to the extent, and rounded to the closest possible if *step* is defined. Defaults to the middle of the extent.
+* *step* - the step (precision); the interval between adjacent values.
+* *format* - a format function; must return a valid number string.
+* *value* - the initial value; defaults to (*min* + *max*) / 2.
 * *style* - additional styles as a {key: value} object.
+
+The given *value* is clamped to the given extent, and rounded if *step* is defined. However, note that the *min*, *max* and *step* options do not constrain the number typed; these options affect the slider behavior, the number input’s buttons, and whether the browser shows a warning if a typed number is invalid.
 
 <a name="Search" href="#Search">#</a> <b>Search</b>(<i>data</i>, <i>options</i>) · [Source](./src/search.js)
 
 <img src="./img/search.png" alt="A Search input over a tabular dataset of athletes" width="640">
+
+```js
+viewof foundAthletes = Search(athletes, {label: "Athletes"})
+```
 
 The Search input allows freeform full-text search of a tabular dataset using a simple (but extensible) query parser. It is often used in conjunction with a [Table](#Table). The value of the input is an array of elements from the iterable *data* that match the current search query. If the query is currently empty, the search input’s value is all elements in *data*.
 
