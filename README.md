@@ -98,7 +98,7 @@ The available *options* are:
 * *format* - a format function; defaults to the identity function.
 * *keyof* - a function to return the key for the given element in *data*.
 * *valueof* - a function to return the value of the given element in *data*.
-* *value* - the initial value, which must be an array if multiple choice is allowed; defaults to null (no selection).
+* *value* - the initial value, an array if multiple choice is allowed; defaults to null (no selection).
 * *style* - additional styles as a {key: value} object.
 
 <a name="Range" href="#Range">#</a> <b>Range</b>([<i>min</i>, <i>max</i>] = [0, 1], <i>options</i>) · [Source](./src/range.js)
@@ -187,7 +187,7 @@ The available *options* are:
 * *format* - a format function; defaults to the identity function.
 * *keyof* - a function to return the key for the given element in *data*.
 * *valueof* - a function to return the value of the given element in *data*.
-* *value* - the initial value, which must be an array if multiple choice is allowed; defaults to null (no selection).
+* *value* - the initial value, an array if multiple choice is allowed; defaults to null (no selection).
 * *style* - additional styles as a {key: value} object.
 
 <a name="Table" href="#Table">#</a> <b>Table</b>(<i>data</i>, <i>options</i>) · [Source](./src/table.js)
