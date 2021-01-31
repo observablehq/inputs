@@ -66,7 +66,7 @@ The available *options* are:
 * *label* - a label; either a string or an HTML element.
 * *value* - the initial value; defaults to 0.
 * *reduce* - a function to update the value on click; by default returns *value* + 1.
-* *style* - additional styles as a {key: value} object.
+* *width* - the width of the input (not including the label).
 
 <a name="Radio" href="#Radio">#</a> <b>Radio</b>(<i>data</i>, <i>options</i>) · [Source](./src/radio.js)
 
@@ -99,7 +99,7 @@ The available *options* are:
 * *keyof* - a function to return the key for the given element in *data*.
 * *valueof* - a function to return the value of the given element in *data*.
 * *value* - the initial value, an array if multiple choice is allowed; defaults to null (no selection).
-* *style* - additional styles as a {key: value} object.
+* *width* - the width of the input (not including the label).
 
 <a name="Range" href="#Range">#</a> <b>Range</b>([<i>min</i>, <i>max</i>] = [0, 1], <i>options</i>) · [Source](./src/range.js)
 
@@ -117,7 +117,7 @@ The available *options* are:
 * *step* - the step (precision); the interval between adjacent values.
 * *format* - a format function; must return a valid number string.
 * *value* - the initial value; defaults to (*min* + *max*) / 2.
-* *style* - additional styles as a {key: value} object.
+* *width* - the width of the input (not including the label).
 
 The given *value* is clamped to the given extent, and rounded if *step* is defined. However, note that the *min*, *max* and *step* options do not constrain the number typed; these options affect the slider behavior, the number input’s buttons, and whether the browser shows a warning if a typed number is invalid.
 
@@ -152,7 +152,7 @@ The available *options* are:
 * *format* - a function to show the number of results.
 * *spellcheck* - whether to activate the browser’s spell-checker.
 * *filter* - the filter factory: a function that receives the query and returns a filter.
-* *style* - additional styles as a {key: value} object.
+* *width* - the width of the input (not including the label).
 
 If a *filter* function is specified, it is invoked whenever the query changes; the function it returns is then passed each element from *data*, along with its zero-based index, and should return a truthy value if the given element matches the query. The default filter splits the current query into space-separated tokens and checks that each token matches the beginning of at least one string in the data’s columns, case-insensitive. For example, the query [hello world] will match the string “Worldwide Hello Services” but not “hello”.
 
@@ -188,7 +188,7 @@ The available *options* are:
 * *keyof* - a function to return the key for the given element in *data*.
 * *valueof* - a function to return the value of the given element in *data*.
 * *value* - the initial value, an array if multiple choice is allowed; defaults to null (no selection).
-* *style* - additional styles as a {key: value} object.
+* *width* - the width of the input (not including the label).
 
 <a name="Table" href="#Table">#</a> <b>Table</b>(<i>data</i>, <i>options</i>) · [Source](./src/table.js)
 
@@ -207,7 +207,7 @@ The available *options* are:
 * *align* - an object of column name to left, right, or center.
 * *width* - an object of column name object of column name to width.
 * *layout* - sets the [table-layout](https://developer.mozilla.org/en-US/docs/Web/CSS/table-layout) CSS property: "fixed" or "auto". Defaults to "fixed" if the number of columns is greater than 12, "auto" if lower.
-* *style* - additional styles as a {key: value} object.
+* *width* - the width of the input (not including the label).
 
 <a name="Text" href="#Text">#</a> <b>Text</b>(<i>options</i>) · [Source](./src/text.js)
 
@@ -224,7 +224,7 @@ The available *options* are:
 * *spellcheck* - whether to activate the browser’s spell-checker on this input (defaults to false).
 * *minlength* - [minimum length](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/minlength) attribute. Defaults to null.
 * *maxlength* - [maximum length](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/maxlength) attribute. Defaults to null.
-* *style* - additional styles as a {key: value} object.
+* *width* - the width of the input (not including the label).
 
 ## Utilities
 
