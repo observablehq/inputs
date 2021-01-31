@@ -9,6 +9,7 @@ export function createChooser({render, selectedIndexes, select}) {
     multiple,
     key,
     value,
+    disabled = false,
     sort,
     unique,
     ...options
@@ -29,7 +30,8 @@ export function createChooser({render, selectedIndexes, select}) {
     const [form, input = form.elements.input] = render(
       data,
       keys,
-      maybeSelection(data, value === undefined ? [] : multiple ? arrayify(value) : [value], valueof),
+      maybeSelection(data, value, multiple, valueof),
+      maybeDisabled(data, disabled, valueof),
       {
         ...options,
         multiple,
@@ -68,16 +70,28 @@ export function createChooser({render, selectedIndexes, select}) {
   };
 }
 
-function maybeSelection(data, values, valueof) {
+function maybeSelection(data, value, multiple, valueof) {
+  const values = new Set(value === undefined ? [] : multiple ? arrayify(value) : [value]);
+  if (!values.size) return () => false;
   const index = new Set();
-  if (!values.length) return index;
-  values = new Set(values);
   for (let i = 0; i < data.length; ++i) {
     if (values.has(valueof(data[i], i, data))) {
       index.add(i);
     }
   }
-  return index;
+  return i => index.has(i);
+}
+
+function maybeDisabled(data, disabled, valueof) {
+  if (typeof disabled === "boolean") return disabled;
+  const values = new Set(arrayify(disabled));
+  const index = new Set();
+  for (let i = 0; i < data.length; ++i) {
+    if (values.has(valueof(data[i], i, data))) {
+      index.add(i);
+    }
+  }
+  return i => index.has(i);
 }
 
 function maybeSort(sort) {

@@ -7,11 +7,12 @@ export function Button(content = "≡", {
   label = "",
   value = 0,
   reduce = value => value + 1,
+  disabled,
   width
 } = {}) {
   if (typeof reduce !== "function") throw new TypeError("reduce is not a function");
   const form = html`<form class=__ns__ onsubmit=${preventDefault}>
-    ${maybeLabel(label)}<button onclick=${onclick} style=${{width: length(width)}}>${content}</button>
+    ${maybeLabel(label)}<button onclick=${onclick} disabled=${disabled} style=${{width: length(width)}}>${content}</button>
   </form>`;
   function onclick(event) {
     form.value = reduce(form.value);

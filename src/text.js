@@ -12,10 +12,11 @@ export function Text({
   spellcheck,
   minlength,
   maxlength,
+  disabled,
   width
 } = {}) {
   const form = html`<form class=__ns__ onsubmit=${preventDefault}>
-    ${maybeLabel(label)}<input type=text name=text minlength=${minlength} maxlength=${maxlength} pattern=${pattern} spellcheck=${spellcheck === undefined ? false : spellcheck + ""} placeholder=${placeholder} value=${stringify(value)} oninput=${oninput} style=${{width: length(width)}}>
+    ${maybeLabel(label)}<input type=text name=text disabled=${disabled} minlength=${minlength} maxlength=${maxlength} pattern=${pattern} spellcheck=${spellcheck === undefined ? false : spellcheck + ""} placeholder=${placeholder} value=${stringify(value)} oninput=${oninput} style=${{width: length(width)}}>
   </form>`;
   const {text} = form.elements;
   function oninput() {

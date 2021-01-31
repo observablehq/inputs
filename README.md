@@ -67,6 +67,7 @@ The available *options* are:
 * *value* - the initial value; defaults to 0.
 * *reduce* - a function to update the value on click; by default returns *value* + 1.
 * *width* - the width of the input (not including the label).
+* *disabled* - whether input is disabled; defaults to false.
 
 <a name="Radio" href="#Radio">#</a> <b>Radio</b>(<i>data</i>, <i>options</i>) · [Source](./src/radio.js)
 
@@ -100,6 +101,7 @@ The available *options* are:
 * *valueof* - a function to return the value of the given element in *data*.
 * *value* - the initial value, an array if multiple choice is allowed; defaults to null (no selection).
 * *width* - the width of the input (not including the label).
+* *disabled* - whether input is disabled, or the disabled values; defaults to false.
 
 <a name="Range" href="#Range">#</a> <b>Range</b>([<i>min</i>, <i>max</i>] = [0, 1], <i>options</i>) · [Source](./src/range.js)
 
@@ -118,6 +120,7 @@ The available *options* are:
 * *format* - a format function; must return a valid number string.
 * *value* - the initial value; defaults to (*min* + *max*) / 2.
 * *width* - the width of the input (not including the label).
+* *disabled* - whether input is disabled; defaults to false.
 
 The given *value* is clamped to the given extent, and rounded if *step* is defined. However, note that the *min*, *max* and *step* options do not constrain the number typed; these options affect the slider behavior, the number input’s buttons, and whether the browser shows a warning if a typed number is invalid.
 
@@ -153,6 +156,7 @@ The available *options* are:
 * *spellcheck* - whether to activate the browser’s spell-checker.
 * *filter* - the filter factory: a function that receives the query and returns a filter.
 * *width* - the width of the input (not including the label).
+* *disabled* - whether input is disabled; defaults to false.
 
 If a *filter* function is specified, it is invoked whenever the query changes; the function it returns is then passed each element from *data*, along with its zero-based index, and should return a truthy value if the given element matches the query. The default filter splits the current query into space-separated tokens and checks that each token matches the beginning of at least one string in the data’s columns, case-insensitive. For example, the query [hello world] will match the string “Worldwide Hello Services” but not “hello”.
 
@@ -189,6 +193,7 @@ The available *options* are:
 * *valueof* - a function to return the value of the given element in *data*.
 * *value* - the initial value, an array if multiple choice is allowed; defaults to null (no selection).
 * *width* - the width of the input (not including the label).
+* *disabled* - whether input is disabled, or the disabled values; defaults to false.
 
 <a name="Table" href="#Table">#</a> <b>Table</b>(<i>data</i>, <i>options</i>) · [Source](./src/table.js)
 
@@ -225,6 +230,7 @@ The available *options* are:
 * *minlength* - [minimum length](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/minlength) attribute. Defaults to null.
 * *maxlength* - [maximum length](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/maxlength) attribute. Defaults to null.
 * *width* - the width of the input (not including the label).
+* *disabled* - whether input is disabled; defaults to false.
 
 ## Utilities
 

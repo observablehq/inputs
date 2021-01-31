@@ -13,13 +13,14 @@ export function Search(data, {
   columns = data.columns,
   spellcheck,
   filter = columns === undefined ? searchFilter : columnFilter(columns), // returns the filter function given query
+  disabled,
   width
 } = {}) {
   let value = [];
   data = arrayify(data);
   const form = html`<form class=__ns__ onsubmit=${preventDefault}>
     ${maybeLabel(label)}<div class=__ns__-input>
-      <input name=input type=search spellcheck=${spellcheck === undefined ? false : spellcheck + ""} style=${{width: length(width)}} placeholder=${placeholder} value=${query} oninput=${oninput}>
+      <input name=input type=search disabled=${disabled} spellcheck=${spellcheck === undefined ? false : spellcheck + ""} style=${{width: length(width)}} placeholder=${placeholder} value=${query} oninput=${oninput}>
       <output name=output>
     </div>
   </form>`;
