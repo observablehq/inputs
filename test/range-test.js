@@ -59,6 +59,6 @@ tape("Range(…, {value}) sets the initial value", test => {
   test.equal(s.elements.number.value, "10");
 });
 
-tape("Range(…, {style}) applies additional styles", test => {
-  test.equal(Range([0, 100], {style: {width: "240px"}}).elements.range.style.width, "240px");
+tape("Range(…, {width}) sets the width", test => {
+  test.equal(Range([0, 100], {width: 240}).elements.range.style.width, "240px");
 });

@@ -29,14 +29,10 @@ export async function searchSpellcheck() {
   return Search(["red", "green", "blue"], {spellcheck: false});
 }
 
-export async function searchStyle() {
-  return Search(["red", "green", "blue"], {style: {background: "red"}});
-}
-
 export async function searchQuery() {
   return Search(["red", "green", "blue", "black"], {query: "bl"});
 }
 
 export async function searchWide() {
-  return Search(["red", "green", "blue"], {style: {width: "20em"}});
+  return Search(["red", "green", "blue"], {width: "20em"});
 }

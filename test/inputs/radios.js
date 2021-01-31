@@ -90,9 +90,5 @@ export async function radioValue() {
 }
 
 export async function radioWide() {
-  return Radio(["red", "green", "blue"], {style: {width: "20em"}});
-}
-
-export async function radioStyle() {
-  return Radio(["red", "green", "blue"], {style: {background: "reds"}});
+  return Radio(["red", "green", "blue"], {width: "20em"});
 }

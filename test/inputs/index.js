@@ -12,7 +12,6 @@ export {
   radioMultipleMapValue,
   radioMultipleSize,
   radioMultipleValue,
-  radioStyle,
   radioUnique,
   radioUniqueFormat,
   radioSortTrue,
@@ -30,7 +29,6 @@ export {
   rangeFixed,
   rangeLabel,
   rangeLabelHtml,
-  rangeStyle,
   rangeWide
 } from "./ranges.js";
 
@@ -42,7 +40,6 @@ export {
   searchLabelQuery,
   searchPlaceholder,
   searchSpellcheck,
-  searchStyle,
   searchQuery,
   searchWide
 } from "./searches.js";
@@ -61,7 +58,6 @@ export {
   selectMultipleMapValue,
   selectMultipleSize,
   selectMultipleValue,
-  selectStyle,
   selectUnique,
   selectUniqueFormat,
   selectSortTrue,

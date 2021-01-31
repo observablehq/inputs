@@ -90,9 +90,5 @@ export async function selectValue() {
 }
 
 export async function selectWide() {
-  return Select(["red", "green", "blue"], {style: {width: "20em"}});
-}
-
-export async function selectStyle() {
-  return Select(["red", "green", "blue"], {style: {background: "reds"}});
+  return Select(["red", "green", "blue"], {width: "20em"});
 }

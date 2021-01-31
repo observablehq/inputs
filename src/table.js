@@ -1,5 +1,6 @@
 import {html} from "htl";
 import {arrayify} from "./array.js";
+import {length} from "./css.js";
 import {formatDate, formatNumber, stringify} from "./format.js";
 import {defined, ascending, descending} from "./sort.js";
 
@@ -31,7 +32,7 @@ export function Table(
 
   const tbody = html`<tbody>`;
   const tr = html`<tr><td><input type=checkbox></td>${columns.map(column => html`<td style=${{textAlign: align[column]}}>`)}`;
-  const theadr = html`<tr><th><input type=checkbox onclick=${reselectAll}></th>${columns.map((column) => html`<th title=${column} style=${{width: width[column], textAlign: align[column]}} onclick=${event => resort(event, column)}><span></span>${column}</th>`)}</tr>`;
+  const theadr = html`<tr><th><input type=checkbox onclick=${reselectAll}></th>${columns.map((column) => html`<th title=${column} style=${{width: length(width[column]), textAlign: align[column]}} onclick=${event => resort(event, column)}><span></span>${column}</th>`)}</tr>`;
   const root = html`<div class="__ns__ __ns__-table" style="max-height: ${(rows + 1) * 24 - 1}px;">
   <table style=${{tableLayout: layout}}>
     <thead>${data.length || columns.length ? theadr : null}</thead>
@@ -179,7 +180,7 @@ export function Table(
   if (data.length) {
     tbody.append(...render(0, n));
   } else {
-    tbody.append(html`<tr>${columns.length ? html`<td>` : null}<td rowspan=${columns.length} style="padding-left: 1em; font-style: oblique;">No results.</td></tr>`);
+    tbody.append(html`<tr>${columns.length ? html`<td>` : null}<td rowspan=${columns.length} style="padding-left: 1em; font-variant: italic;">No results.</td></tr>`);
   }
 
   if (sort !== undefined) {
