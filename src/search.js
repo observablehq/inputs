@@ -19,8 +19,8 @@ export function Search(data, {
   let value = [];
   data = arrayify(data);
   const form = html`<form class=__ns__ onsubmit=${preventDefault}>
-    ${maybeLabel(label)}<div class=__ns__-input>
-      <input name=input type=search disabled=${disabled} spellcheck=${spellcheck === undefined ? false : spellcheck + ""} style=${{width: length(width)}} placeholder=${placeholder} value=${query} oninput=${oninput}>
+    ${maybeLabel(label)}<div class=__ns__-input style=${{width: length(width)}}>
+      <input name=input type=search disabled=${disabled} spellcheck=${spellcheck === undefined ? false : spellcheck + ""} placeholder=${placeholder} value=${query} oninput=${oninput}>
       <output name=output>
     </div>
   </form>`;

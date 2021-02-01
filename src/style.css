@@ -46,29 +46,40 @@ form.__ns__ {
   margin-right: var(--length2);
 }
 
-.__ns__ input[type=search] {
-  margin-right: var(--length2);
-  width: 180px;
+.__ns__-input {
+  display: flex;
+  align-items: center;
+  width: 240px;
 }
 
-.__ns__ input[type=text] {
-  width: 240px;
+.__ns__-input input,
+.__ns__-input button,
+.__ns__-input output {
+  width: inherit;
+  min-width: 0;
+}
+
+.__ns__-input button,
+.__ns__-input output,
+.__ns__-input input[type=number] {
+  flex-shrink: 2.5;
+}
+
+.__ns__-input button {
+  margin-left: var(--length1);
+}
+
+.__ns__ input[type=search] {
+  margin-right: var(--length2);
 }
 
 .__ns__ input[type=number] {
   margin-right: var(--length2);
   font-variant-numeric: tabular-nums;
-  width: 70px;
 }
 
 .__ns__ input[type=range] {
-  width: 163.5px;
   margin: 0;
-}
-
-.__ns__-input {
-  display: flex;
-  align-items: center;
 }
 
 .__ns__-table {
