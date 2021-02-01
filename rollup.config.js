@@ -23,7 +23,7 @@ const css = {
   transform(input, id) {
     if (id !== stylePath) return;
     return {
-      code: `if (typeof document !== 'undefined' && !document.querySelector('\.${styleNs}')) {
+      code: `if (typeof document !== 'undefined' && !document.querySelector('.${styleNs}')) {
 const style = document.createElement('style');
 style.className = '${styleNs}';
 style.textContent = '${jsesc(new CleanCSS().minify(input.replace(/\.__ns__\b/g, `.${styleNs}`)).styles)}';
