@@ -92,3 +92,11 @@ export async function radioValue() {
 export async function radioWide() {
   return Radio(["red", "green", "blue"], {width: "20em"});
 }
+
+export async function radioDisabled() {
+  return Radio(["red", "green", "blue"], {disabled: true});
+}
+
+export async function radioDisabledSome() {
+  return Radio(["red", "green", "blue"], {disabled: ["green"]});
+}

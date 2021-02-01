@@ -92,3 +92,11 @@ export async function selectValue() {
 export async function selectWide() {
   return Select(["red", "green", "blue"], {width: "20em"});
 }
+
+export async function selectDisabled() {
+  return Select(["red", "green", "blue"], {disabled: true});
+}
+
+export async function selectDisabledSome() {
+  return Select(["red", "green", "blue"], {disabled: ["green"]});
+}

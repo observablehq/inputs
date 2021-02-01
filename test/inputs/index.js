@@ -1,5 +1,17 @@
 export {
+  button,
+  buttonContent,
+  buttonContentHtml,
+  buttonLabel,
+  buttonLabelHtml,
+  buttonDisabled,
+  buttonWidth
+} from "./buttons.js";
+
+export {
   radio,
+  radioDisabled,
+  radioDisabledSome,
   radioFormat,
   radioLabel,
   radioLabelHtml,
@@ -34,6 +46,7 @@ export {
 
 export {
   search,
+  searchDisabled,
   searchFormat,
   searchLabel,
   searchLabelHtml,
@@ -46,6 +59,8 @@ export {
 
 export {
   select,
+  selectDisabled,
+  selectDisabledSome,
   selectFormat,
   selectLabel,
   selectLabelHtml,
@@ -72,3 +87,20 @@ export {
 export {
   table
 } from "./tables.js";
+
+export {
+  text,
+  textLabel,
+  textLabelHtml,
+  textValue,
+  textPlaceholder,
+  textSpellcheckFalse,
+  textSubmit,
+  textSubmitCustom,
+  textSubmitHtml,
+  textWide,
+  textMinlength,
+  textMaxlength,
+  textDatalist,
+  textDisabled
+} from "./texts.js";
