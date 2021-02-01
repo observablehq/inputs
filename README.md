@@ -223,13 +223,15 @@ The Text input allows freeform text input. See also the [Search](#Search) input.
 The available *options* are:
 
 * *label* - a label; either a string or an HTML element.
-* *value* - the initial value. Defaults to "".
+* *value* - the initial value; defaults to the empty string.
 * *placeholder* - the [placeholder](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/placeholder) attribute. Defaults to null.
 * *pattern* - the [pattern](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/pattern) attribute. Defaults to null.
 * *spellcheck* - whether to activate the browser’s spell-checker on this input (defaults to false).
 * *minlength* - [minimum length](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/minlength) attribute. Defaults to null.
 * *maxlength* - [maximum length](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/maxlength) attribute. Defaults to null.
 * *width* - the width of the input (not including the label).
+* *submit* - whether to require explicit submission before updating; defaults to false.
+* *datalist* - an iterable of suggested values.
 * *disabled* - whether input is disabled; defaults to false.
 
 ## Utilities
