@@ -9,6 +9,9 @@ import * as meta from "./package.json";
 
 const filename = meta.name.split("/").pop();
 
+// Resolve HTL dependency.
+const htl = require("htl/package.json");
+
 // Create a content-hashed namespace for our styles.
 const stylePath = path.resolve("./src/style.css");
 const styleHash = crypto.createHash("sha256").update(fs.readFileSync(stylePath, "utf8")).digest("hex").slice(0, 6);
@@ -63,7 +66,7 @@ export default [
       ...config.output,
       format: "es",
       file: `dist/${filename}.js`,
-      paths: {"htl": `https://cdn.jsdelivr.net/npm/htl@${require("htl/package.json").version}/src/index.js`}
+      paths: {"htl": `https://cdn.jsdelivr.net/npm/htl@${htl.version}/${htl.module}`}
     },
     plugins: [
       ...config.plugins,
@@ -84,7 +87,7 @@ export default [
       ...config.output,
       format: "umd",
       file: `dist/${filename}.umd.js`,
-      paths: {"htl": `htl@${meta.dependencies.htl}`}
+      paths: {"htl": `htl@${htl.version}/${htl.unpkg}`}
     }
   },
   {
@@ -93,7 +96,7 @@ export default [
       ...config.output,
       format: "umd",
       file: `dist/${filename}.umd.min.js`,
-      paths: {"htl": `htl@${meta.dependencies.htl}`}
+      paths: {"htl": `htl@${htl.version}/${htl.unpkg}`}
     },
     plugins: [
       ...config.plugins,
