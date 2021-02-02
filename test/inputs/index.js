@@ -41,7 +41,8 @@ export {
   rangeFixed,
   rangeLabel,
   rangeLabelHtml,
-  rangeWide
+  rangeWide,
+  rangePlaceholder
 } from "./ranges.js";
 
 export {

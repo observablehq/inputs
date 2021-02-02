@@ -10,12 +10,13 @@ export function Range([min, max] = [0, 1], {
   value,
   step,
   disabled,
+  placeholder,
   width
 } = {}) {
   if (typeof format !==  "function") throw new TypeError("format is not a function");
   const form = html`<form class=__ns__ onsubmit=${preventDefault}>
     ${maybeLabel(label)}<div class=__ns__-input style=${{width: length(width)}}>
-      <input type=number name=number oninput=${onnumber} disabled=${disabled}>
+      <input type=number name=number placeholder=${placeholder} oninput=${onnumber} disabled=${disabled}>
       <input type=range name=range oninput=${onrange} disabled=${disabled}>
     </div>
   </form>`;

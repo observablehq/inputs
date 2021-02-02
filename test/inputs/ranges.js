@@ -24,3 +24,7 @@ export async function rangeLabelHtml() {
 export async function rangeWide() {
   return Range([0, 1], {width: "20em"});
 }
+
+export async function rangePlaceholder() {
+  return Range([0, 1], {placeholder: "number"});
+}

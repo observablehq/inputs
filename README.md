@@ -118,6 +118,7 @@ The available *options* are:
 * *label* - a label; either a string or an HTML element.
 * *step* - the step (precision); the interval between adjacent values.
 * *format* - a format function; must return a valid number string.
+* *placeholder* - a placeholder string for when the query is empty.
 * *value* - the initial value; defaults to (*min* + *max*) / 2.
 * *width* - the width of the input (not including the label).
 * *disabled* - whether input is disabled; defaults to false.
@@ -132,7 +133,7 @@ The given *value* is clamped to the given extent, and rounded if *step* is defin
 viewof foundAthletes = Search(athletes, {label: "Athletes"})
 ```
 
-A Search input allows freeform full-text search of a tabular dataset using a simple (but extensible) query parser. It is often used in conjunction with a [Table](#Table). The value of a Search is an array of elements from the iterable *data* that match the current query. If the query is currently empty, the search input’s value is all elements in *data*.
+A Search input allows freeform, full-text search of an in-memory tabular dataset or an iterable (column) of values using a simple query parser. It is often used in conjunction with a [Table](#Table). The value of a Search is an array of elements from the iterable *data* that match the current query. If the query is currently empty, the search input’s value is all elements in *data*.
 
 A Search input can work with either tabular data (an array of objects) or a single column (an array of strings). When searching tabular input, all properties on each object in *data* are searched by default, but you can limit the search to a specific set of properties using the *column* option. For example, to only search the “sport” and “nationality” column:
 
@@ -218,7 +219,7 @@ The available *options* are:
 
 <img src="./img/text.png" alt="A Text input asking to enter your name" width="640">
 
-The Text input allows freeform text input. See also the [Search](#Search) input.
+A Text allows freeform text input.
 
 The available *options* are:
 
