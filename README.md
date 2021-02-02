@@ -230,9 +230,7 @@ The available *options* are:
 viewof name = Text({label: "Name", placeholder: "Enter your name"})
 ```
 
-A Text allows freeform text input. For example, a Text might be used to allow the user to enter a search query. (See also [Search](#Search).)
-
-By default, a Text will report its value immediately on input. If more deliberate input is desired, such as when performing an expensive computation or talking to a remote API, the *submit* option can be set to true to wait until a button is clicked or the Enter key is pressed.
+A Text allows freeform text input. For example, a Text might be used to allow the user to enter a search query. (See also [Search](#Search).) By default, a Text will report its value immediately on input. If more deliberate behavior is desired, say if the input will trigger an expensive computation or remote API, the *submit* option can be set to true to wait until a button is clicked or the Enter key is pressed.
 
 The available *options* are:
 
