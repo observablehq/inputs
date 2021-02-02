@@ -121,6 +121,7 @@ The available *options* are:
 * *step* - the step (precision); the interval between adjacent values.
 * *format* - a format function; must return a valid number string.
 * *placeholder* - a placeholder string for when the input is empty.
+* *transform* - an optional non-linear transform.
 * *value* - the initial value; defaults to (*min* + *max*) / 2.
 * *width* - the width of the input (not including the label).
 * *disabled* - whether input is disabled; defaults to false.

@@ -32,13 +32,8 @@ export function Range([min, max] = [0, 1], {
   range.min = transform.invert(number.min = min = +min);
   range.max = transform.invert(number.max = max = +max);
   number.step = range.step = step === undefined ? "any" : step = +step;
-  if (value === undefined) {
-    range.value = (+range.min + +range.max) / 2;
-    number.value = transform(range.valueAsNumber);
-  } else {
-    number.value = +value;
-    range.value = transform.invert(number.value);
-  }
+  number.value = value === undefined ? (min + max) / 2 : +value;
+  range.value = transform.invert(number.value);
   
   function onrange() {
     number.value = format(value = transform(range.valueAsNumber));
