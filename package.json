@@ -49,5 +49,8 @@
   },
   "dependencies": {
     "htl": "^0.2.3"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
