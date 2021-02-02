@@ -8,6 +8,7 @@
   },
   "license": "ISC",
   "main": "dist/inputs.cjs.js",
+  "jsdelivr": "dist/inputs.umd.min.js",
   "unpkg": "dist/inputs.umd.min.js",
   "repository": {
     "type": "git",
