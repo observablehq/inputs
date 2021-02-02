@@ -20,6 +20,7 @@ export function Table(
 ) {
   data = arrayify(data);
   if (columns === undefined) columns = columnsof(data);
+  else columns = arrayify(columns);
   if (layout === undefined) layout = columns.length >= 12 ? "auto" : "fixed";
   format = formatof(format, data, columns);
   align = alignof(align, data, columns);

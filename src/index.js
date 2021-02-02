@@ -10,3 +10,4 @@ export {Text} from "./text.js";
 export {Input} from "./input.js";
 export {bind} from "./bind.js";
 export {disposal} from "./disposal.js";
+export {formatNumber, formatDate} from "./format.js";

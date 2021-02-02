@@ -12,11 +12,13 @@ Now you can reference the live value of *x* in any cell, *e.g.*:
 md`The value of *x* is ${x}.`
 ```
 
-Thanks to [dataflow](https://observablehq.com/@observablehq/how-observable-runs), any cell that references *x* will run automatically when the *viewof x* slider is moved.
+Any cell that references *x* will run automatically when the *viewof x* slider is moved. For live examples, see:
+
+https://observablehq.com/@observablehq/inputs
 
 Observable Inputs provides basic inputs:
 
-* [Button](#Button) - click a button
+* [Button](#Button) - do something when a button is clicked
 * [Radio](#Radio) - choose one or many from a set (radio or checkbox)
 * [Range](#Range) - choose a numeric value in a range (slider)
 * [Select](#Select) - choose one or many from a set (drop-down menu)
@@ -37,7 +39,7 @@ Observable Inputs are released under the [ISC license](./LICENSE) and depend onl
 
 ## Installing
 
-In the future, these components will be incorporated into the [Observable standard library](https://github.com/observablehq/stdlib) and available in notebooks by default; to use on Observable now:
+In the near future, these components will be incorporated into the [Observable standard library](https://github.com/observablehq/stdlib) and available in notebooks by default. To use on Observable now:
 
 ```js
 import {Radio, Range, Select, Table} from "@observablehq/inputs"
@@ -200,22 +202,25 @@ The available *options* are:
 
 <img src="./img/table.png" alt="A Table input showing rows of Olympic athletes" width="988">
 
-A Table displays a tabular dataset; *data* should be an iterable of objects. For performance on large datasets, the rows of the table are lazily rendered on scroll.
+A Table displays a tabular dataset; *data* should be an iterable of objects, such as the result of loading a CSV file. Each object corresponds to a row, while each field corresponds to a column. To improve performance with large datasets, the rows of the table are lazily rendered on scroll. Rows may be sorted by clicking column headers (once for ascending, then again for descending).
 
-The value of the Table is the selected rows, a filtered (and possibly sorted) view of the input data: rows can be selected by clicking or shift-clicking checkboxes.
+While intended primarily for display, a Table also serves as an input. The value of the Table is its selected rows: a filtered (and possibly sorted) view of the *data*. Rows can be selected by clicking or shift-clicking checkboxes. See also [Search](#Search), which can be used for rapid filtering of the table’s rows.
+
+By default, the Table infers the type of each column by inspecting values, assuming that non-null values in each column have consistent types. Numbers are formatted in English; dates are formatted in ISO 8601 UTC. Numbers columns are further right-aligned with [tabular figures](https://practicaltypography.com/alternate-figures.html) to assist comparison. The *format* and *align* of each column can be customized as options if desired.
+
+By default, the Table uses fixed layout if *data* has fewer than twelve columns. This improves performance and avoids reflow when scrolling due to lazily-rendered rows. If *data* has twelve or more columns, the auto layout is used instead, which automatically sizes columns based on the content. This behavior can be changed by specifying the *layout* option explicitly.
 
 The available *options* are:
 
-* *columns* - the list of columns (or property names) that contain text to display. Defaults to data.columns, which makes it work out of the box with csv data obtained from d3-array or observable’s FileAttachement's csv method.
-* *value* - a subset of data to use as the initial selection. Defaults to null.
-* *rows* - maximum number of rows to show. Defaults to 11.5.
-* *sort* - name of column to sort by. Defaults to null (no sort).
-* *reverse* - boolean indicating whether the sorting should be reversed (for column sort, true indicates the descending natural order, and false the ascending natural order).
+* *columns* - the columns (property names) to show; defaults to *data*.columns.
+* *value* - a subset of *data* to use as the initial selection (checked rows).
+* *rows* - the maximum number of rows to show; defaults to 11.5.
+* *sort* - the column to sort by; defaults to null (input order).
+* *reverse* - whether to reverse the initial sort (descending instead of ascending).
 * *format* - an object of column name to format function.
-* *align* - an object of column name to left, right, or center.
-* *width* - an object of column name object of column name to width.
-* *layout* - sets the [table-layout](https://developer.mozilla.org/en-US/docs/Web/CSS/table-layout) CSS property: "fixed" or "auto". Defaults to "fixed" if the number of columns is greater than 12, "auto" if lower.
-* *width* - the width of the input (not including the label).
+* *align* - an object of column name to “left”, “right”, or “center”.
+* *width* - an object of column name to width.
+* *layout* - the [layout](https://developer.mozilla.org/en-US/docs/Web/CSS/table-layout); defaults to fixed for ≤12 columns.
 
 <a name="Text" href="#Text">#</a> <b>Text</b>(<i>options</i>) · [Source](./src/text.js)
 
@@ -257,3 +262,11 @@ The bind function allows a *target* input to be bound to a *source* input, synch
 The disposal promise is a heuristic for detecting when an input has been removed from the DOM, say to detach synchronized inputs. It is used by [bind](#bind) by default as the invalidation promise, but is exported here for convenience.
 
 …
+
+<a name="formatNumber" href="#formatNumber">#</a> <b>formatNumber</b>(<i>number</i>) · [Source](./src/format.js)
+
+The default number formatter used by [Table](#Table).
+
+<a name="formatDate" href="#formatDate">#</a> <b>formatDate</b>(<i>date</i>) · [Source](./src/format.js)
+
+The default date formatter used by [Table](#Table).
