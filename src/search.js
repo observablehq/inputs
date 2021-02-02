@@ -3,9 +3,8 @@ import {arrayify} from "./array.js";
 import {length} from "./css.js";
 import {preventDefault} from "./event.js";
 import {formatNumber, stringify} from "./format.js";
+import {newId} from "./id.js";
 import {maybeLabel} from "./label.js";
-
-let nextListId = 0;
 
 export function Search(data, {
   format = length => `${formatNumber(length)} result${length === 1 ? "" : "s"}`, // length format
@@ -21,7 +20,7 @@ export function Search(data, {
 } = {}) {
   let value = [];
   data = arrayify(data);
-  const listId = datalist !== undefined ? `__ns__-S${++nextListId}` : null;
+  const listId = datalist !== undefined ? newId() : null;
   const form = html`<form class=__ns__ onsubmit=${preventDefault}>
     ${maybeLabel(label)}<div class=__ns__-input style=${{width: length(width)}}>
       <input name=input type=search list=${listId} disabled=${disabled} spellcheck=${spellcheck === undefined ? false : spellcheck + ""} placeholder=${placeholder} value=${query} oninput=${oninput}>
