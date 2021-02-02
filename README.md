@@ -60,7 +60,7 @@ A Button emits an *input* event when you click it. Buttons may be used to trigge
 By default, the value of a Button is how many times it has been clicked. The *reduce* function allows you to compute the new value of the Button when clicked, given the old value. For example, to set the value as the time of last click:
 
 ```js
-viewof time = Button("Update", {value: null, reduce: () => Date.now()})
+viewof time = Button("Refresh", {value: null, reduce: () => Date.now()})
 ```
 
 The available *options* are:
@@ -194,7 +194,7 @@ The available *options* are:
 * *format* - a format function; defaults to the identity function.
 * *keyof* - a function to return the key for the given element in *data*.
 * *valueof* - a function to return the value of the given element in *data*.
-* *value* - the initial value, an array if multiple choice is allowed; defaults to null (no selection).
+* *value* - the initial value, an array if multiple choice is allowed.
 * *width* - the width of the input (not including the label).
 * *disabled* - whether input is disabled, or the disabled values; defaults to false.
 
