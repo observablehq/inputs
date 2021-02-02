@@ -220,24 +220,30 @@ The available *options* are:
 * *format* - an object of column name to format function.
 * *align* - an object of column name to “left”, “right”, or “center”.
 * *width* - an object of column name to width.
-* *layout* - the [layout](https://developer.mozilla.org/en-US/docs/Web/CSS/table-layout); defaults to fixed for ≤12 columns.
+* *layout* - the [table layout](https://developer.mozilla.org/en-US/docs/Web/CSS/table-layout); defaults to fixed for ≤12 columns.
 
 <a name="Text" href="#Text">#</a> <b>Text</b>(<i>options</i>) · [Source](./src/text.js)
 
 <img src="./img/text.png" alt="A Text input asking to enter your name" width="640">
 
-A Text allows freeform text input.
+```js
+viewof name = Text({label: "Name", placeholder: "Enter your name"})
+```
+
+A Text allows freeform text input. For example, a Text might be used to allow the user to enter a search query. (See also [Search](#Search).)
+
+By default, a Text will report its value immediately on input. If more deliberate input is desired, such as when performing an expensive computation or talking to a remote API, the *submit* option can be set to true to wait until a button is clicked or the Enter key is pressed.
 
 The available *options* are:
 
 * *label* - a label; either a string or an HTML element.
-* *type* - the [input type](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#input_types); defaults to text.
+* *type* - the [input type](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#input_types), such as “password” or “email”; defaults to “text”.
 * *value* - the initial value; defaults to the empty string.
-* *placeholder* - the [placeholder](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/placeholder) attribute. Defaults to null.
-* *pattern* - the [pattern](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/pattern) attribute. Defaults to null.
-* *spellcheck* - whether to activate the browser’s spell-checker on this input (defaults to false).
-* *minlength* - [minimum length](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/minlength) attribute. Defaults to null.
-* *maxlength* - [maximum length](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/maxlength) attribute. Defaults to null.
+* *placeholder* - the [placeholder](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/placeholder) attribute.
+* *pattern* - the [pattern](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/pattern) attribute.
+* *spellcheck* - whether to activate the browser’s spell-checker.
+* *minlength* - [minimum length](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/minlength) attribute.
+* *maxlength* - [maximum length](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/maxlength) attribute.
 * *width* - the width of the input (not including the label).
 * *submit* - whether to require explicit submission before updating; defaults to false.
 * *datalist* - an iterable of suggested values.
@@ -247,21 +253,15 @@ The available *options* are:
 
 <a name="Input" href="#Input">#</a> <b>Input</b>(<i>value</i>) · [Source](./src/input.js)
 
-The base Input class extends EventTarget to provide a view-compatible store. This is typically used in conjunction with [bind](#bind) to synchronize multiple inputs, with the Input being the primary state store.
-
-…
+The base Input class extends EventTarget to provide a view-compatible store. This is typically used in conjunction with [bind](#bind) to synchronize multiple inputs, with the Input being the primary state store. An Input is similar to a [mutable](https://observablehq.com/@observablehq/introduction-to-mutable-state), except that it allows listeners.
 
 <a name="bind" href="#bind">#</a> <b>bind</b>(<i>target</i>, <i>source</i>, <i>invalidation</i>) · [Source](./src/bind.js)
 
 The bind function allows a *target* input to be bound to a *source* input, synchronizing the two: interaction with the *source* input will propagate to the *target* input and *vice versa*.
 
-…
-
 <a name="disposal" href="#disposal">#</a> <b>disposal</b>(<i>element</i>) · [Source](./src/disposal.js)
 
 The disposal promise is a heuristic for detecting when an input has been removed from the DOM, say to detach synchronized inputs. It is used by [bind](#bind) by default as the invalidation promise, but is exported here for convenience.
-
-…
 
 <a name="formatNumber" href="#formatNumber">#</a> <b>formatNumber</b>(<i>number</i>) · [Source](./src/format.js)
 
