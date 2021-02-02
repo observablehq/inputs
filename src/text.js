@@ -8,6 +8,7 @@ let nextListId = 0;
 
 export function Text({
   label,
+  type = "text",
   value = "",
   placeholder,
   pattern,
@@ -24,7 +25,7 @@ export function Text({
   const button = submit ? html`<button type=submit disabled>${submit}` : null;
   const form = html`<form class=__ns__ onsubmit=${onsubmit}>
     ${maybeLabel(label)}<div class=__ns__-input style=${{width: length(width)}}>
-      <input type=text name=text list=${listId} disabled=${disabled} minlength=${minlength} maxlength=${maxlength} pattern=${pattern} spellcheck=${spellcheck === undefined ? false : spellcheck + ""} placeholder=${placeholder} value=${stringify(value)} oninput=${oninput}>${button}
+      <input type=${type} name=text list=${listId} disabled=${disabled} minlength=${minlength} maxlength=${maxlength} pattern=${pattern} spellcheck=${spellcheck === undefined ? false : spellcheck + ""} placeholder=${placeholder} value=${stringify(value)} oninput=${oninput}>${button}
     </div>${datalist !== undefined ? html`<datalist id=${listId}>${Array.from(datalist, value => html`<option value=${stringify(value)}>`)}` : null}
   </form>`;
   const {text} = form.elements;

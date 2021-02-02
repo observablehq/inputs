@@ -103,5 +103,6 @@ export {
   textMinlength,
   textMaxlength,
   textDatalist,
-  textDisabled
+  textDisabled,
+  textPassword
 } from "./texts.js";
