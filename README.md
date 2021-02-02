@@ -261,6 +261,10 @@ The bind function allows a *target* input to be bound to a *source* input, synch
 
 The disposal promise is a heuristic for detecting when an input has been removed from the DOM, say to detach synchronized inputs. It is used by [bind](#bind) by default as the invalidation promise, but is exported here for convenience.
 
+<a name="searchFilter" href="#searchFilter">#</a> <b>searchFilter</b>(<i>query</i>) · [Source](./src/search.js)
+
+The default query parser used by [Search](#Search).
+
 <a name="formatNumber" href="#formatNumber">#</a> <b>formatNumber</b>(<i>number</i>) · [Source](./src/format.js)
 
 The default number formatter used by [Table](#Table).
