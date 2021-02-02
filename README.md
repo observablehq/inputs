@@ -1,14 +1,34 @@
 # Observable Inputs
 
-**Observable Inputs** are lightweight user interface components — buttons, sliders, dropdowns, tables, and the like — to help you explore data and build interactive displays in [Observable notebooks](https://observablehq.com). (Although intended for use as [Observable views](https://observablehq.com/@observablehq/introduction-to-views), this vanilla JavaScript library creates plain old HTML elements, so you can use them anywhere on the web!)
+**Observable Inputs** are lightweight user interface components — buttons, sliders, dropdowns, tables, and the like — to help you explore data and build interactive displays in [Observable notebooks](https://observablehq.com). Each input can be used as an [Observable view](https://observablehq.com/@observablehq/introduction-to-views). For example, to allow the value of *x* to be controlled by a slider:
+
+```js
+viewof x = Range([0, 100])
+```
+
+Now to reference the live value of *x* in any cell:
+
+```js
+md`The value of *x* is ${x}.`
+```
+
+Thanks to [dataflow](https://observablehq.com/@observablehq/how-observable-runs), any cell that references *x* will run automatically when the *viewof x* slider is moved.
+
+Observable Inputs provides basic inputs:
 
 * [Button](#Button) - click a button
 * [Radio](#Radio) - choose one or many from a set (radio or checkbox)
 * [Range](#Range) - choose a numeric value in a range (slider)
-* [Search](#Search) - query a tabular dataset
 * [Select](#Select) - choose one or many from a set (drop-down menu)
-* [Table](#Table) - browse a tabular dataset
 * [Text](#Text) - freeform text input
+
+Observable Inputs also provides tools for working with tabular data:
+
+* [Search](#Search) - query a tabular dataset
+* [Table](#Table) - browse a tabular dataset
+
+Lastly, Inputs provides low-level utilities for advanced usage:
+
 * [Input](#Input) - a programmatic interface for storing input state
 * [bind](#bind) - synchronize two or more inputs
 * [disposal](#disposal) - detect when an input is discarded
@@ -21,26 +41,6 @@ In the future, these components will be incorporated into the [Observable standa
 
 ```js
 import {Radio, Range, Select, Table} from "@observablehq/inputs"
-```
-
-To use in vanilla JavaScript:
-
-```html
-<script type="module">
-
-import {Radio, Range, Select, Table} from "https://cdn.jsdelivr.net/npm/@observablehq/inputs@0.1/dist/inputs.js";
-
-const radio = Radio(["red", "green", "blue"]);
-radio.addEventListener("input", () => console.log(`you picked ${radio.value}`));
-document.body.appendChild(radio);
-
-</script>
-```
-
-To install on Node:
-
-```
-yarn add @observablehq/inputs
 ```
 
 ## Inputs
