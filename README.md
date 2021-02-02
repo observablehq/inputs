@@ -42,7 +42,7 @@ Observable Inputs are released under the [ISC license](./LICENSE) and depend onl
 In the near future, these components will be incorporated into the [Observable standard library](https://github.com/observablehq/stdlib) and available in notebooks by default. To use on Observable now:
 
 ```js
-import {Radio, Range, Select, Table} from "@observablehq/inputs"
+import {Button, Radio, Range, Select, Text, Search, Table} from "@observablehq/inputs"
 ```
 
 ## Inputs
