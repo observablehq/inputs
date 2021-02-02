@@ -22,7 +22,7 @@ Observable Inputs provides basic inputs:
 * [Select](#Select) - choose one or many from a set (drop-down menu)
 * [Text](#Text) - freeform text input
 
-Observable Inputs also provides tools for working with tabular data:
+Observable Inputs provides fancy inputs for tabular data:
 
 * [Search](#Search) - query a tabular dataset
 * [Table](#Table) - browse a tabular dataset
