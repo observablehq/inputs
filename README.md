@@ -122,11 +122,14 @@ The available *options* are:
 * *format* - a format function; must return a valid number string.
 * *placeholder* - a placeholder string for when the input is empty.
 * *transform* - an optional non-linear transform.
+* *invert* - the inverse transform.
 * *value* - the initial value; defaults to (*min* + *max*) / 2.
 * *width* - the width of the input (not including the label).
 * *disabled* - whether input is disabled; defaults to false.
 
 The given *value* is clamped to the given extent, and rounded if *step* is defined. However, note that the *min*, *max* and *step* options affect only the slider behavior, the number input’s buttons, and whether the browser shows a warning if a typed number is invalid; they do not constrain the typed number.
+
+If a *transform* function is specified, an inverse transform function *invert* is strongly recommended. If one is not provided, the Range will fallback to Newton’s method, but this may be slow or inaccurate. Passing Math.sqrt, Math.log, or Math.exp as a *transform* is supported.
 
 <a name="Search" href="#Search">#</a> <b>Search</b>(<i>data</i>, <i>options</i>) · [Source](./src/search.js)
 

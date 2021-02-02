@@ -10,6 +10,7 @@ const identity = x => x;
 export function Range([min, max] = [0, 1], {
   format = d => formatNumber(d).replace(/,/g, ""), // number is strict!
   transform = identity,
+  invert = transform.invert === undefined ? solver(transform) : transform.invert,
   label = "",
   value,
   step,
@@ -25,8 +26,7 @@ export function Range([min, max] = [0, 1], {
     </div>
   </form>`;
   if (typeof transform !== "function") throw new TypeError("transform is not a function");
-  const invert = transform.invert === undefined ? solver(transform) : transform.invert;
-  if (typeof invert !== "function") throw new TypeError("transform.invert is not a function");
+  if (typeof invert !== "function") throw new TypeError("invert is not a function");
   const {range, number} = form.elements;
   range.min = invert(number.min = min = +min);
   range.max = invert(number.max = max = +max);
@@ -55,6 +55,7 @@ function solver(f) {
   if (f === identity) return identity;
   if (f === Math.sqrt) return x => x * x;
   if (f === Math.log) return Math.exp;
+  if (f === Math.exp) return Math.log;
   return x => solve(f, x, x);
 }
 
