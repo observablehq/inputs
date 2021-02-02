@@ -1,9 +1,9 @@
 import {html} from "htl";
 import {arrayify} from "./array.js";
 import {length} from "./css.js";
+import {maybeDatalist} from "./datalist.js";
 import {preventDefault} from "./event.js";
 import {formatNumber, stringify} from "./format.js";
-import {newId} from "./id.js";
 import {maybeLabel} from "./label.js";
 
 export function Search(data, {
@@ -20,12 +20,12 @@ export function Search(data, {
 } = {}) {
   let value = [];
   data = arrayify(data);
-  const listId = datalist !== undefined ? newId() : null;
+  const [list, listId] = maybeDatalist(datalist);
   const form = html`<form class=__ns__ onsubmit=${preventDefault}>
     ${maybeLabel(label)}<div class=__ns__-input style=${{width: length(width)}}>
       <input name=input type=search list=${listId} disabled=${disabled} spellcheck=${spellcheck === undefined ? false : spellcheck + ""} placeholder=${placeholder} value=${query} oninput=${oninput}>
       <output name=output>
-    </div>${datalist !== undefined ? html`<datalist id=${listId}>${Array.from(datalist, value => html`<option value=${stringify(value)}>`)}` : null}
+    </div>${list}
   </form>`;
   const {input, output} = form.elements;
   function oninput() {
