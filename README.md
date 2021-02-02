@@ -1,12 +1,12 @@
 # Observable Inputs
 
-**Observable Inputs** are lightweight user interface components — buttons, sliders, dropdowns, tables, and the like — to help you explore data and build interactive displays in [Observable notebooks](https://observablehq.com). Each input can be used as an [Observable view](https://observablehq.com/@observablehq/introduction-to-views). For example, to allow the value of *x* to be controlled by a slider:
+**Observable Inputs** are lightweight user interface components — buttons, sliders, dropdowns, tables, and the like — to help you explore data and build interactive displays in [Observable notebooks](https://observablehq.com). Each input can be used as an [Observable view](https://observablehq.com/@observablehq/introduction-to-views). For example, to allow a number *x* to be manipulated by a slider:
 
 ```js
 viewof x = Range([0, 100])
 ```
 
-Now to reference the live value of *x* in any cell:
+Now you can reference the live value of *x* in any cell, *e.g.*:
 
 ```js
 md`The value of *x* is ${x}.`
