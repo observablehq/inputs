@@ -2,10 +2,10 @@ import {html} from "htl";
 import {length} from "./css.js";
 import {preventDefault} from "./event.js";
 import {formatNumber} from "./format.js";
+import {identity} from "./identity.js";
 import {maybeLabel} from "./label.js";
 
 const epsilon = 1e-6;
-const identity = x => x;
 
 export function Range([min, max] = [0, 1], {
   format = d => formatNumber(d).replace(/,/g, ""), // number is strict!
@@ -51,9 +51,13 @@ export function Range([min, max] = [0, 1], {
   });
 }
 
+function square(x) {
+  return x * x;
+}
+
 function solver(f) {
   if (f === identity) return identity;
-  if (f === Math.sqrt) return x => x * x;
+  if (f === Math.sqrt) return square;
   if (f === Math.log) return Math.exp;
   if (f === Math.exp) return Math.log;
   return x => solve(f, x, x);

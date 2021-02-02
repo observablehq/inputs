@@ -1,11 +1,12 @@
 import {arrayify} from "./array.js";
 import {dispatchInput, preventDefault} from "./event.js";
+import {identity} from "./identity.js";
 import {ascending, descending} from "./sort.js";
 
 export function createChooser({render, selectedIndexes, select}) {
   return function Chooser(data, {
-    keyof = data instanceof Map ? ([key]) => key : d => d,
-    valueof = data instanceof Map ? ([, value]) => value : d => d,
+    keyof = data instanceof Map ? ([key]) => key : identity,
+    valueof = data instanceof Map ? ([, value]) => value : identity,
     multiple,
     key,
     value,

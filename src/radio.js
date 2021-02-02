@@ -1,9 +1,10 @@
 import {html} from "htl";
 import {createChooser} from "./chooser.js";
+import {identity} from "./identity.js";
 import {maybeLabel} from "./label.js";
 
 export const Radio = createChooser({
-  render(data, keys, selected, disabled, {format = d => d, multiple, label}) {
+  render(data, keys, selected, disabled, {format = identity, multiple, label}) {
     if (typeof format !== "function") throw new TypeError("format is not a function");
     const form = html`<form class=__ns__>
     ${maybeLabel(label)}<div>
