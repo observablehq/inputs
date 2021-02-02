@@ -22,3 +22,16 @@ yarn dev
 ```
 
 Now you can edit scratch/index.html to see your changes.
+
+To run the tests:
+
+```
+yarn test
+```
+
+Inputs has both unit tests and snapshot tests. To generate new snapshots, simply delete the current snapshots and then run the tests.
+
+```
+rm -rf test/output
+yarn test
+```
