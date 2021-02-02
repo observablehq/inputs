@@ -9,7 +9,7 @@ import {withJsdom} from "./jsdom.js";
   for (const [name, input] of Object.entries(inputs)) {
     tape(`input ${name}`, async test => {
       const element = await withJsdom(input);
-      const actual = beautify(element.outerHTML.replace(/(?<=\bclass="[^"]*)\boi-[a-f0-9]{6}\b/g, `__ns__`), {indent_size: 2});
+      const actual = beautify(element.outerHTML.replace(/(?<=="[^"]*)\boi-[a-f0-9]{6}\b/g, `__ns__`), {indent_size: 2});
       const outfile = path.resolve("./test/output", path.basename(name, ".js") + ".html");
       let expected;
       try {

@@ -47,6 +47,7 @@ export {
 
 export {
   search,
+  searchDatalist,
   searchDisabled,
   searchFormat,
   searchLabel,

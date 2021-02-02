@@ -1,6 +1,7 @@
 import {html} from "htl";
 import {arrayify} from "./array.js";
 import {length} from "./css.js";
+import {maybeDatalist} from "./datalist.js";
 import {preventDefault} from "./event.js";
 import {formatNumber, stringify} from "./format.js";
 import {maybeLabel} from "./label.js";
@@ -13,16 +14,18 @@ export function Search(data, {
   columns = data.columns,
   spellcheck,
   filter = columns === undefined ? searchFilter : columnFilter(columns), // returns the filter function given query
+  datalist,
   disabled,
   width
 } = {}) {
   let value = [];
   data = arrayify(data);
+  const [list, listId] = maybeDatalist(datalist);
   const form = html`<form class=__ns__ onsubmit=${preventDefault}>
     ${maybeLabel(label)}<div class=__ns__-input style=${{width: length(width)}}>
-      <input name=input type=search disabled=${disabled} spellcheck=${spellcheck === undefined ? false : spellcheck + ""} placeholder=${placeholder} value=${query} oninput=${oninput}>
+      <input name=input type=search list=${listId} disabled=${disabled} spellcheck=${spellcheck === undefined ? false : spellcheck + ""} placeholder=${placeholder} value=${query} oninput=${oninput}>
       <output name=output>
-    </div>
+    </div>${list}
   </form>`;
   const {input, output} = form.elements;
   function oninput() {
