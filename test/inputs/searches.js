@@ -37,6 +37,10 @@ export async function searchWide() {
   return Search(["red", "green", "blue"], {width: "20em"});
 }
 
+export async function searchDatalist() {
+  return Search(["red", "green", "blue"], {datalist: ["red", "green", "blue"]});
+}
+
 export async function searchDisabled() {
   return Search(["red", "green", "blue"], {disabled: true});
 }
