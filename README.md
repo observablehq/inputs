@@ -27,7 +27,7 @@ Observable Inputs provides fancy inputs for tabular data:
 * [Search](#Search) - query a tabular dataset
 * [Table](#Table) - browse a tabular dataset
 
-Lastly, Inputs provides low-level utilities for advanced usage:
+Lastly, Inputs provides low-level utilities for more advanced usage:
 
 * [Input](#Input) - a programmatic interface for storing input state
 * [bind](#bind) - synchronize two or more inputs
