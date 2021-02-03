@@ -65,6 +65,10 @@ form.__ns__ {
   flex-shrink: 2.5;
 }
 
+.__ns__-input output {
+  white-space: pre;
+}
+
 .__ns__-input button {
   margin-left: var(--length1);
 }
