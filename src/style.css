@@ -49,6 +49,10 @@ form.__ns__ {
 .__ns__-input {
   display: flex;
   align-items: center;
+}
+
+.__ns__-input,
+.__ns__ select {
   width: 240px;
 }
 
