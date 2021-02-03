@@ -4,14 +4,10 @@ export function bind(target, source, invalidation = disposal(target)) {
   const onsource = () => set(target, source);
   const ontarget = () => (set(source, target), source.dispatchEvent(new CustomEvent("input")));
   const sourceEvent = eventof(source);
-  const targetEvent = eventof(target);
   onsource();
-  target.addEventListener(targetEvent, ontarget);
+  target.addEventListener(eventof(target), ontarget);
   source.addEventListener(sourceEvent, onsource);
-  invalidation.then(() => {
-    target.removeEventListener(targetEvent, ontarget);
-    source.removeEventListener(sourceEvent, onsource);
-  });
+  invalidation.then(() => source.removeEventListener(sourceEvent, onsource));
   return target;
 }
 
