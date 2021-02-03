@@ -6,7 +6,7 @@ import {ascending, descending} from "./sort.js";
 const first = ([x]) => x;
 const second = ([, x]) => x;
 
-export function createChooser({render, selectedIndexes, select}) {
+export function createChooser({multiple: fixedMultiple, render, selectedIndexes, select}) {
   return function Chooser(data, {
     keyof = data instanceof Map ? first : identity,
     valueof = data instanceof Map ? second : identity,
@@ -22,6 +22,7 @@ export function createChooser({render, selectedIndexes, select}) {
     if (typeof keyof !== "function") throw new TypeError("keyof is not a function");
     if (typeof valueof !== "function") throw new TypeError("valueof is not a function");
     if (typeof format !== "function") throw new TypeError("format is not a function");
+    if (fixedMultiple !== undefined) multiple = fixedMultiple;
     sort = maybeSort(sort);
     let size = +multiple;
     if (value === undefined) value = key !== undefined && data instanceof Map ? (size > 0 ? Array.from(key, k => data.get(k)) : data.get(key)) : undefined;

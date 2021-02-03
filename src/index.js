@@ -1,7 +1,7 @@
 import "./style.css";
 
 export {Button} from "./button.js";
-export {Radio} from "./radio.js";
+export {Checkbox, Radio} from "./checkbox.js";
 export {Range} from "./range.js";
 export {Search, searchFilter} from "./search.js";
 export {Select} from "./select.js";

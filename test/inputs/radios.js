@@ -33,30 +33,6 @@ export async function radioMapValue() {
   return Radio(new Map([["red", "#f00"], ["green", "#0f0"], ["blue", "#00f"]]), {value: "#0f0"});
 }
 
-export async function radioMultiple() {
-  return Radio(["red", "green", "blue"], {label: "colors", multiple: true});
-}
-
-export async function radioMultipleValue() {
-  return Radio(["red", "green", "blue"], {label: "colors", multiple: true, value: ["red", "blue"]});
-}
-
-export async function radioMultipleMapKey() {
-  return Radio(new Map([["red", "#f00"], ["green", "#0f0"], ["blue", "#00f"]]), {multiple: true, key: ["red", "blue"]});
-}
-
-export async function radioMultipleMapValue() {
-  return Radio(new Map([["red", "#f00"], ["green", "#0f0"], ["blue", "#00f"]]), {multiple: true, value: ["#f00", "#00f"]});
-}
-
-export async function radioMultipleLong() {
-  return Radio("ABCDEFGHIJKLMNOPQRSTUVWXYZ", {multiple: true});
-}
-
-export async function radioMultipleSize() {
-  return Radio(["red", "green", "blue"], {label: "colors", multiple: 5});
-}
-
 export async function radioUnique() {
   return Radio(["red", "red", "green", "Green", "blue", "blue"], {unique: true});
 }
@@ -91,10 +67,6 @@ export async function radioSortFormat() {
 
 export async function radioValue() {
   return Radio(["red", "green", "blue"], {value: "green"});
-}
-
-export async function radioWide() {
-  return Radio(["red", "green", "blue"], {width: "20em"});
 }
 
 export async function radioDisabled() {

@@ -19,7 +19,8 @@ https://observablehq.com/@observablehq/inputs
 Observable Inputs provides basic inputs:
 
 * [Button](#Button) - do something when a button is clicked
-* [Radio](#Radio) - choose one or many from a set (radio or checkbox)
+* [Checkbox](#Checkbox) - choose any from a set
+* [Radio](#Radio) - choose one from a set
 * [Range](#Range) - choose a numeric value in a range (slider)
 * [Select](#Select) - choose one or many from a set (drop-down menu)
 * [Text](#Text) - freeform text input
@@ -42,7 +43,7 @@ Observable Inputs are released under the [ISC license](./LICENSE) and depend onl
 In the near future, these components will be incorporated into the [Observable standard library](https://github.com/observablehq/stdlib) and available in notebooks by default. To use on Observable now:
 
 ```js
-import {Button, Radio, Range, Select, Text, Search, Table} from "@observablehq/inputs"
+import {Button, Checkbox, Radio, Range, Select, Text, Search, Table} from "@observablehq/inputs"
 ```
 
 ## Inputs
@@ -71,18 +72,45 @@ The available *options* are:
 * *width* - the width of the input (not including the label).
 * *disabled* - whether input is disabled; defaults to false.
 
-<a name="Radio" href="#Radio">#</a> <b>Radio</b>(<i>data</i>, <i>options</i>) · [Source](./src/radio.js)
+<a name="Checkbox" href="#Checkbox">#</a> <b>Checkbox</b>(<i>data</i>, <i>options</i>) · [Source](./src/checkbox.js)
+
+<img src="./img/checkbox.png" alt="A multi-choice Checkbox input of flavors" width="640">
+
+```js
+viewof flavor = Checkbox(["Salty", "Spicy", "Sour", "Umami"], {label: "Flavor"})
+```
+
+A Checkbox allows the user to choose any of a given set of values (any of the given elements in the iterable *data*). Unlike a [Select](#Select), a Checkbox’s choices are all visible up-front. The Checkbox’s value is an array of the elements from *data* that are currently selected.
+
+The elements in *data* need not be strings; they can be anything. To customize display, optional *keyof* and *valueof* functions may be given; the result of the *keyof* function for each element in *data* is displayed to the user, while the result of the *valueof* function is exposed in the Checkbox’s value when selected. If *data* is a Map, the *keyof* function defaults to the map entry’s key (`([key]) => key`) and the *valueof* function defaults to the map entry’s value (`([, value]) => value`); otherwise, both *keyof* and *valueof* default to the identity function (`d => d`). For example, with [d3.group](https://github.com/d3/d3-array/blob/master/README.md#group):
+
+```js
+viewof sportAthletes = Checkbox(d3.group(athletes, d => d.sport))
+```
+
+Keys may be sorted and uniqued via the *sort* and *unique* options, respectively. Elements in *data* are formatted via an optional *format* function which has the same defaults as *keyof*. As with the *label* option, the *format* function may return either a string or an HTML element.
+
+The available *options* are:
+
+* *label* - a label; either a string or an HTML element.
+* *sort* - true, “ascending”, “descending”, or a comparator function to sort keys; defaults to false.
+* *unique* - true to only show unique keys; defaults to false.
+* *format* - a format function.
+* *keyof* - a function to return the key for the given element in *data*.
+* *valueof* - a function to return the value of the given element in *data*.
+* *value* - the initial value, an array if multiple choice is allowed; defaults to null (no selection).
+* *width* - the width of the input (not including the label).
+* *disabled* - whether input is disabled, or the disabled values; defaults to false.
+
+<a name="Radio" href="#Radio">#</a> <b>Radio</b>(<i>data</i>, <i>options</i>) · [Source](./src/checkbox.js)
 
 <img src="./img/radio.png" alt="A single-choice Radio input of colors" width="640">
 
 ```js
 viewof color = Radio(new Map([["red", "#f00"], ["green", "#0f0"], ["blue", "#00f"]]), {label: "Color"})
 ```
-```js
-viewof flavor = Radio(["Salty", "Spicy", "Sour", "Umami"], {label: "Flavor", multiple: true})
-```
 
-A Radio allows the user to choose one of a given set of values (one of the given elements in the iterable *data*); or, if desired, multiple values may be chosen with checkboxes. Unlike a [Select](#Select), a Radio’s choices are all visible up-front. If multiple choice is allowed via the *multiple* option, the Radio’s value is an array of the elements from *data* that are currently selected; if single choice is required, the Radio’s value is an element from *data*, or null if no choice has been made.
+A Radio allows the user to choose one of a given set of values. Unlike a [Select](#Select), a Radio’s choices are all visible up-front. The Radio’s value is an element from *data*, or null if no choice has been made.
 
 The elements in *data* need not be strings; they can be anything. To customize display, optional *keyof* and *valueof* functions may be given; the result of the *keyof* function for each element in *data* is displayed to the user, while the result of the *valueof* function is exposed as the Radio’s value when selected. If *data* is a Map, the *keyof* function defaults to the map entry’s key (`([key]) => key`) and the *valueof* function defaults to the map entry’s value (`([, value]) => value`); otherwise, both *keyof* and *valueof* default to the identity function (`d => d`). For example, with [d3.group](https://github.com/d3/d3-array/blob/master/README.md#group):
 
@@ -95,7 +123,6 @@ Keys may be sorted and uniqued via the *sort* and *unique* options, respectively
 The available *options* are:
 
 * *label* - a label; either a string or an HTML element.
-* *multiple* - whether to allow multiple choice (checkboxes); defaults to false (radios).
 * *sort* - true, “ascending”, “descending”, or a comparator function to sort keys; defaults to false.
 * *unique* - true to only show unique keys; defaults to false.
 * *format* - a format function.

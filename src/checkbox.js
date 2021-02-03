@@ -2,22 +2,29 @@ import {html} from "htl";
 import {createChooser} from "./chooser.js";
 import {maybeLabel} from "./label.js";
 
-export const Radio = createChooser({
-  render(data, index, selected, disabled, {format, multiple, label}) {
-    const form = html`<form class=__ns__>
-    ${maybeLabel(label)}<div>
-      ${index.map(i => html`<label><input type=${multiple ? "checkbox" : "radio"} disabled=${typeof disabled === "function" ? disabled(i) : disabled} name=input value=${i} checked=${selected(i)}>${format(data[i], i, data)}`)}
-    </div>
-  </form>`;
-    return [form, inputof(form.elements.input, multiple)];
-  },
-  selectedIndexes(input) {
-    return Array.from(input).filter(i => i.checked).map(i => +i.value);
-  },
-  select(input, selected) {
-    input.checked = selected;
-  }
-});
+function createCheckbox(multiple, type) {
+  return createChooser({
+    multiple,
+    render(data, index, selected, disabled, {format, label}) {
+      const form = html`<form class=__ns__>
+      ${maybeLabel(label)}<div>
+        ${index.map(i => html`<label><input type=${type} disabled=${typeof disabled === "function" ? disabled(i) : disabled} name=input value=${i} checked=${selected(i)}>${format(data[i], i, data)}`)}
+      </div>
+    </form>`;
+      return [form, inputof(form.elements.input, multiple)];
+    },
+    selectedIndexes(input) {
+      return Array.from(input).filter(i => i.checked).map(i => +i.value);
+    },
+    select(input, selected) {
+      input.checked = selected;
+    }
+  });
+}
+
+export const Radio = createCheckbox(false, "radio");
+
+export const Checkbox = createCheckbox(true, "checkbox");
 
 // The input is undefined if there are no options, or an individual input
 // element if there is only one; we want these two cases to behave the same as

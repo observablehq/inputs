@@ -8,15 +8,6 @@ tape("Radio([]) handles empty options", test => {
   test.equal(r.value, null);
 });
 
-tape("Radio([], {multiple: true}) handles empty options", test => {
-  const r = Radio([], {multiple: true});
-  test.deepEqual(r.value, []);
-  test.strictEqual(r.value, r.value);
-  r.value = ["red"];
-  test.deepEqual(r.value, []);
-  test.strictEqual(r.value, r.value);
-});
-
 tape("Radio([value]) handles singular option", test => {
   const r = Radio(["red"]);
   test.equal(r.value, null);
@@ -26,19 +17,6 @@ tape("Radio([value]) handles singular option", test => {
   test.equal(r.value, "red");
   r.value = "blue"; // ignores invalid value
   test.equal(r.value, "red");
-});
-
-tape("Radio([value], {multiple: true}) handles singular option", test => {
-  const r = Radio(["red"], {multiple: true});
-  test.deepEqual(r.value, []);
-  test.strictEqual(r.value, r.value);
-  r.value = ["blue"];
-  test.deepEqual(r.value, []);
-  r.value = ["red"];
-  test.deepEqual(r.value, ["red"]);
-  test.strictEqual(r.value, r.value);
-  r.value = ["blue"];
-  test.deepEqual(r.value, []);
 });
 
 // JSDOM doesn’t support RadioNodeList…

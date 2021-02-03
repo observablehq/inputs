@@ -9,6 +9,28 @@ export {
 } from "./buttons.js";
 
 export {
+  checkbox,
+  checkboxDisabled,
+  checkboxDisabledSome,
+  checkboxFormat,
+  checkboxLabel,
+  checkboxLabelHtml,
+  checkboxMap,
+  checkboxMapFormat,
+  checkboxMapKey,
+  checkboxMapValue,
+  checkboxUnique,
+  checkboxUniqueFormat,
+  checkboxSortTrue,
+  checkboxSortFalse,
+  checkboxSortAscending,
+  checkboxSortDescending,
+  checkboxSortFunction,
+  checkboxSortFormat,
+  checkboxValue
+} from "./checkboxes.js";
+
+export {
   radio,
   radioDisabled,
   radioDisabledSome,
@@ -19,12 +41,6 @@ export {
   radioMapFormat,
   radioMapKey,
   radioMapValue,
-  radioMultiple,
-  radioMultipleLong,
-  radioMultipleMapKey,
-  radioMultipleMapValue,
-  radioMultipleSize,
-  radioMultipleValue,
   radioUnique,
   radioUniqueFormat,
   radioSortTrue,
