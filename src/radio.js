@@ -1,14 +1,12 @@
 import {html} from "htl";
 import {createChooser} from "./chooser.js";
-import {identity} from "./identity.js";
 import {maybeLabel} from "./label.js";
 
 export const Radio = createChooser({
-  render(data, keys, selected, disabled, {format = identity, multiple, label}) {
-    if (typeof format !== "function") throw new TypeError("format is not a function");
+  render(data, index, selected, disabled, {format, multiple, label}) {
     const form = html`<form class=__ns__>
     ${maybeLabel(label)}<div>
-      ${keys.map(([key, i]) => html`<label><input type=${multiple ? "checkbox" : "radio"} disabled=${typeof disabled === "function" ? disabled(i) : disabled} name=input value=${i} checked=${selected(i)}>${format(key, i, data)}`)}
+      ${index.map(i => html`<label><input type=${multiple ? "checkbox" : "radio"} disabled=${typeof disabled === "function" ? disabled(i) : disabled} name=input value=${i} checked=${selected(i)}>${format(data[i], i, data)}`)}
     </div>
   </form>`;
     return [form, inputof(form.elements.input, multiple)];

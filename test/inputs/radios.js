@@ -21,6 +21,10 @@ export async function radioMap() {
   return Radio(new Map([["red", "#f00"], ["green", "#0f0"], ["blue", "#00f"]]));
 }
 
+export async function radioMapFormat() {
+  return Radio(new Map([["red", "#f00"], ["green", "#0f0"], ["blue", "#00f"]]), {format: ([key, value]) => `${key} (${value})`});
+}
+
 export async function radioMapKey() {
   return Radio(new Map([["red", "#f00"], ["green", "#0f0"], ["blue", "#00f"]]), {key: "green"});
 }

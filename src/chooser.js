@@ -3,10 +3,14 @@ import {dispatchInput, preventDefault} from "./event.js";
 import {identity} from "./identity.js";
 import {ascending, descending} from "./sort.js";
 
+const first = ([x]) => x;
+const second = ([, x]) => x;
+
 export function createChooser({render, selectedIndexes, select}) {
   return function Chooser(data, {
-    keyof = data instanceof Map ? ([key]) => key : identity,
-    valueof = data instanceof Map ? ([, value]) => value : identity,
+    keyof = data instanceof Map ? first : identity,
+    valueof = data instanceof Map ? second : identity,
+    format = data instanceof Map ? first : identity,
     multiple,
     key,
     value,
@@ -17,6 +21,7 @@ export function createChooser({render, selectedIndexes, select}) {
   } = {}) {
     if (typeof keyof !== "function") throw new TypeError("keyof is not a function");
     if (typeof valueof !== "function") throw new TypeError("valueof is not a function");
+    if (typeof format !== "function") throw new TypeError("format is not a function");
     sort = maybeSort(sort);
     let size = +multiple;
     if (value === undefined) value = key !== undefined && data instanceof Map ? (size > 0 ? Array.from(key, k => data.get(k)) : data.get(key)) : undefined;
@@ -30,11 +35,12 @@ export function createChooser({render, selectedIndexes, select}) {
     else multiple = false, size = undefined;
     const [form, input = form.elements.input] = render(
       data,
-      keys,
+      keys.map(second),
       maybeSelection(data, value, multiple, valueof),
       maybeDisabled(data, disabled, valueof),
       {
         ...options,
+        format,
         multiple,
         size
       }

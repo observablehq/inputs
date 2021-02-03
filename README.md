@@ -90,7 +90,7 @@ The elements in *data* need not be strings; they can be anything. To customize d
 viewof sportAthletes = Radio(d3.group(athletes, d => d.sport))
 ```
 
-Keys may be sorted and uniqued via the *sort* and *unique* options, respectively, and formatted via an optional *format* function. As with the *label* option, the *format* function may return either a string or an HTML element.
+Keys may be sorted and uniqued via the *sort* and *unique* options, respectively. Elements in *data* are formatted via an optional *format* function which has the same defaults as *keyof*. As with the *label* option, the *format* function may return either a string or an HTML element.
 
 The available *options* are:
 
@@ -98,7 +98,7 @@ The available *options* are:
 * *multiple* - whether to allow multiple choice (checkboxes); defaults to false (radios).
 * *sort* - true, “ascending”, “descending”, or a comparator function to sort keys; defaults to false.
 * *unique* - true to only show unique keys; defaults to false.
-* *format* - a format function; defaults to the identity function.
+* *format* - a format function.
 * *keyof* - a function to return the key for the given element in *data*.
 * *valueof* - a function to return the value of the given element in *data*.
 * *value* - the initial value, an array if multiple choice is allowed; defaults to null (no selection).
@@ -187,7 +187,7 @@ The elements in *data* need not be strings; they can be anything. To customize d
 viewof sportAthletes = Select(d3.group(athletes, d => d.sport))
 ```
 
-Keys may be sorted and uniqued via the *sort* and *unique* options, respectively, and formatted via an optional *format* function. While the *label* option may be either a string or an HTML element, the *format* function must return a string (unlike a Radio).
+Keys may be sorted and uniqued via the *sort* and *unique* options, respectively. Elements in *data* are formatted via an optional *format* function which has the same defaults as *keyof*. While the *label* option may be either a string or an HTML element, the *format* function must return a string (unlike a Radio).
 
 The available *options* are:
 
@@ -196,7 +196,7 @@ The available *options* are:
 * *size* - if *multiple* is true, the number of options to show.
 * *sort* - true, “ascending”, “descending”, or a comparator function to sort keys; defaults to false.
 * *unique* - true to only show unique keys; defaults to false.
-* *format* - a format function; defaults to the identity function.
+* *format* - a format function.
 * *keyof* - a function to return the key for the given element in *data*.
 * *valueof* - a function to return the value of the given element in *data*.
 * *value* - the initial value, an array if multiple choice is allowed.

@@ -21,6 +21,10 @@ export async function selectMap() {
   return Select(new Map([["red", "#f00"], ["green", "#0f0"], ["blue", "#00f"]]));
 }
 
+export async function selectMapFormat() {
+  return Select(new Map([["red", "#f00"], ["green", "#0f0"], ["blue", "#00f"]]), {format: ([key, value]) => `${key} (${value})`});
+}
+
 export async function selectMapKey() {
   return Select(new Map([["red", "#f00"], ["green", "#0f0"], ["blue", "#00f"]]), {key: "green"});
 }
