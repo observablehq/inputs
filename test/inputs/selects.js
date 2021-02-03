@@ -65,6 +65,10 @@ export async function selectUniqueFormat() {
   return Select(["red", "Red", "green", "Green", "blue", "Blue"], {format: x => x.toLowerCase(), unique: true});
 }
 
+export async function selectUniqueMultiple() {
+  return Select(["red", "red", "green", "Green", "blue", "blue"], {unique: true, multiple: true});
+}
+
 export async function selectSortTrue() {
   return Select([..."CXQZALORBNHTMJDVFGWSKEUPYI"], {sort: true});
 }

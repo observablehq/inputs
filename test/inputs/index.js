@@ -79,6 +79,7 @@ export {
   selectMultipleValue,
   selectUnique,
   selectUniqueFormat,
+  selectUniqueMultiple,
   selectSortTrue,
   selectSortFalse,
   selectSortAscending,

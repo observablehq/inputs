@@ -30,14 +30,15 @@ export function createChooser({render, selectedIndexes, select}) {
     let keys = data.map((d, i) => [keyof(d, i, data), i]);
     if (sort !== undefined) keys.sort(([a], [b]) => sort(a, b));
     if (unique) keys = [...new Map(keys.map(o => [intern(o[0]), o])).values()];
-    if (multiple === true) size = Math.max(1, Math.min(10, data.length));
+    const index = keys.map(second);
+    if (multiple === true) size = Math.max(1, Math.min(10, index.length));
     else if (size > 0) multiple = true;
     else multiple = false, size = undefined;
     const [form, input = form.elements.input] = render(
       data,
-      keys.map(second),
-      maybeSelection(data, value, multiple, valueof),
-      maybeDisabled(data, disabled, valueof),
+      index,
+      maybeSelection(data, index, value, multiple, valueof),
+      maybeDisabled(data, index, disabled, valueof),
       {
         ...options,
         format,
@@ -65,11 +66,12 @@ export function createChooser({render, selectedIndexes, select}) {
       set(v) {
         if (multiple) {
           const selection = new Set(v);
-          for (const i of input) {
-            select(i, selection.has(data[i.value]));
+          for (const e of input) {
+            const i = +e.value;
+            select(e, selection.has(valueof(data[i], i, data)));
           }
         } else {
-          input.value = data.indexOf(v);
+          input.value = index.find(i => v === valueof(data[i], i, data));
         }
         oninput();
       }
@@ -77,28 +79,28 @@ export function createChooser({render, selectedIndexes, select}) {
   };
 }
 
-function maybeSelection(data, value, multiple, valueof) {
+function maybeSelection(data, index, value, multiple, valueof) {
   const values = new Set(value === undefined ? [] : multiple ? arrayify(value) : [value]);
   if (!values.size) return () => false;
-  const index = new Set();
-  for (let i = 0; i < data.length; ++i) {
+  const selection = new Set();
+  for (const i of index) {
     if (values.has(valueof(data[i], i, data))) {
-      index.add(i);
+      selection.add(i);
     }
   }
-  return i => index.has(i);
+  return i => selection.has(i);
 }
 
-function maybeDisabled(data, disabled, valueof) {
-  if (typeof disabled === "boolean") return disabled;
-  const values = new Set(arrayify(disabled));
-  const index = new Set();
-  for (let i = 0; i < data.length; ++i) {
+function maybeDisabled(data, index, value, valueof) {
+  if (typeof value === "boolean") return value;
+  const values = new Set(arrayify(value));
+  const disabled = new Set();
+  for (const i of index) {
     if (values.has(valueof(data[i], i, data))) {
-      index.add(i);
+      disabled.add(i);
     }
   }
-  return i => index.has(i);
+  return i => disabled.has(i);
 }
 
 function maybeSort(sort) {
