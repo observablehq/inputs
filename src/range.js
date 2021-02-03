@@ -30,9 +30,7 @@ export function Range([min, max] = [0, 1], {
   const {range, number} = form.elements;
   min = +min, max = +max;
   if (min > max) [min, max] = [max, min];
-  number.min = min = +min;
-  number.max = max = +max;
-  let tmin = +transform(min), tmax = +transform(max);
+  let tmin = +transform(number.min = min), tmax = +transform(number.max = max);
   if (tmin > tmax) [tmin, tmax] = [tmax, tmin];
   range.min = tmin;
   range.max = tmax;
