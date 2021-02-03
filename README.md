@@ -98,8 +98,7 @@ The available *options* are:
 * *format* - a format function.
 * *keyof* - a function to return the key for the given element in *data*.
 * *valueof* - a function to return the value of the given element in *data*.
-* *value* - the initial value, an array if multiple choice is allowed; defaults to null (no selection).
-* *width* - the width of the input (not including the label).
+* *value* - the initial value, an array; defaults to an empty array (no selection).
 * *disabled* - whether input is disabled, or the disabled values; defaults to false.
 
 <a name="Radio" href="#Radio">#</a> <b>Radio</b>(<i>data</i>, <i>options</i>) · [Source](./src/checkbox.js)
@@ -128,8 +127,7 @@ The available *options* are:
 * *format* - a format function.
 * *keyof* - a function to return the key for the given element in *data*.
 * *valueof* - a function to return the value of the given element in *data*.
-* *value* - the initial value, an array if multiple choice is allowed; defaults to null (no selection).
-* *width* - the width of the input (not including the label).
+* *value* - the initial value; defaults to null (no selection).
 * *disabled* - whether input is disabled, or the disabled values; defaults to false.
 
 <a name="Range" href="#Range">#</a> <b>Range</b>([<i>min</i>, <i>max</i>] = [0, 1], <i>options</i>) · [Source](./src/range.js)
