@@ -107,7 +107,7 @@ The available *options* are:
 <img src="./img/radio.png" alt="A single-choice Radio input of colors" width="640">
 
 ```js
-viewof color = Radio(new Map([["red", "#f00"], ["green", "#0f0"], ["blue", "#00f"]]), {label: "Color"})
+viewof color = Radio(["red", "green", "blue"]), {label: "Color"})
 ```
 
 A Radio allows the user to choose one of a given set of values. Unlike a [Select](#Select), a Radio’s choices are all visible up-front. The Radio’s value is an element from *data*, or null if no choice has been made.
