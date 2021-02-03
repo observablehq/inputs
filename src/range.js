@@ -28,20 +28,22 @@ export function Range([min, max] = [0, 1], {
   if (typeof transform !== "function") throw new TypeError("transform is not a function");
   if (typeof invert !== "function") throw new TypeError("invert is not a function");
   const {range, number} = form.elements;
+  min = +min, max = +max;
+  if (min > max) [min, max] = [max, min];
   number.min = min = +min;
   number.max = max = +max;
-  const imin = invert(min);
-  const imax = invert(max);
-  range.min = Math.min(imin, imax);
-  range.max = Math.max(imin, imax);
+  let tmin = +transform(min), tmax = +transform(max);
+  if (tmin > tmax) [tmin, tmax] = [tmax, tmin];
+  range.min = tmin;
+  range.max = tmax;
   number.step = range.step = step === undefined ? "any" : step = +step;
-  number.value = value === undefined ? (min + max) / 2 : +value;
-  range.value = invert(number.value);
+  if (value === undefined) number.value = invert(range.value = (tmin + tmax) / 2);
+  else number.value = value, range.value = transform(+value);
   function onrange() {
-    number.value = format(value = transform(range.valueAsNumber));
+    number.value = format(value = +invert(range.valueAsNumber));
   }
   function onnumber() {
-    range.value = invert(value = number.valueAsNumber);
+    range.value = transform(value = number.valueAsNumber);
   }
   onrange();
   return Object.defineProperty(form, "value", {
