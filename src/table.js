@@ -34,11 +34,13 @@ export function Table(
   const tbody = html`<tbody>`;
   const tr = html`<tr><td><input type=checkbox></td>${columns.map(column => html`<td style=${{textAlign: align[column]}}>`)}`;
   const theadr = html`<tr><th><input type=checkbox onclick=${reselectAll}></th>${columns.map((column) => html`<th title=${column} style=${{width: length(width[column]), textAlign: align[column]}} onclick=${event => resort(event, column)}><span></span>${column}</th>`)}</tr>`;
+  const spacer = html`<div>`;
   const root = html`<div class="__ns__ __ns__-table" style="max-height: ${(rows + 1) * 24 - 1}px;">
   <table style=${{tableLayout: layout}}>
     <thead>${data.length || columns.length ? theadr : null}</thead>
     ${tbody}
   </table>
+  ${spacer}
 </div>`;
 
   function render(i, j) {
@@ -58,6 +60,13 @@ export function Table(
       }
       return itr;
     });
+  }
+
+  function updateSpacer() {
+    const averageRowHeight = tbody.clientHeight / (n - 1);
+    const estimatedHeight =
+      averageRowHeight * (data.length - tbody.children.length);
+    spacer.style.height = length(estimatedHeight);
   }
 
   function unselect(i) {
@@ -164,8 +173,9 @@ export function Table(
   }
 
   root.onscroll = () => {
-    if (root.scrollHeight - root.scrollTop < 400 && n < data.length) {
+    while (root.scrollHeight - root.scrollTop - spacer.clientHeight < 400 && n < data.length) {
       tbody.append(...render(n, n += rows));
+      updateSpacer();
     }
   };
 
@@ -193,6 +203,8 @@ export function Table(
   }
 
   revalue();
+
+  setTimeout(updateSpacer, 25);
 
   return Object.defineProperty(root, "value", {
     get() {
