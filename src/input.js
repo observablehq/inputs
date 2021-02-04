@@ -1,6 +1,5 @@
-export class Input extends EventTarget {
-  constructor(value) {
-    super();
-    this.value = value;
-  }
+export function Input(value) {
+  const input = new EventTarget();
+  input.value = value;
+  return input;
 }
