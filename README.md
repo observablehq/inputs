@@ -43,7 +43,7 @@ Observable Inputs are released under the [ISC license](./LICENSE) and depend onl
 In the near future, these components will be incorporated into the [Observable standard library](https://github.com/observablehq/stdlib) and available in notebooks by default. To use on Observable now:
 
 ```js
-import {Button, Checkbox, Radio, Range, Select, Text, Search, Table} from "@observablehq/inputs"
+import {Button, Checkbox, Toggle, Radio, Range, Select, Text, Search, Table} from "@observablehq/inputs"
 ```
 
 ## Inputs
@@ -100,6 +100,21 @@ The available *options* are:
 * *valueof* - a function to return the value of the given element in *data*.
 * *value* - the initial value, an array; defaults to an empty array (no selection).
 * *disabled* - whether input is disabled, or the disabled values; defaults to false.
+
+<a name="Toggle" href="#Toggle">#</a> <b>Toggle</b>(<i>options</i>) · [Source](./src/checkbox.js)
+
+```js
+viewof mute = Toggle({label: "Mute"})
+```
+
+A Toggle is a solitary checkbox. By default, the Toggle’s value is whether the checkbox is checked (true or false); a *values* = [*on*, *off*] option can be specified to toggle between two arbitrary values.
+
+The available *options* are:
+
+* *label* - a label; either a string or an HTML element.
+* *values* - the two values to toggle between; defaults to [true, false].
+* *value* - the initial value; defaults to the second value (false).
+* *disabled* - whether input is disabled; defaults to false.
 
 <a name="Radio" href="#Radio">#</a> <b>Radio</b>(<i>data</i>, <i>options</i>) · [Source](./src/checkbox.js), [Examples](https://observablehq.com/@observablehq/input-radio)
 

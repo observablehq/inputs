@@ -26,6 +26,23 @@ export const Radio = createCheckbox(false, "radio");
 
 export const Checkbox = createCheckbox(true, "checkbox");
 
+export function Toggle({label, value, values, disabled} = {}) {
+  const form = html`<form class=__ns__>
+    ${maybeLabel(label)}<input class=__ns__-input type=checkbox name=input disabled=${disabled}>
+  </form>`;
+  const {input} = form.elements;
+  Object.defineProperty(form, "value", {
+    get() {
+      return values === undefined ? input.checked : values[!input.checked];
+    },
+    set(v) {
+      input.checked = values === undefined ? !!v : v === values[0];
+    }
+  });
+  if (value !== undefined) form.value = value;
+  return form;
+}
+
 // The input is undefined if there are no options, or an individual input
 // element if there is only one; we want these two cases to behave the same as
 // when there are two or more options, i.e., a RadioNodeList.
