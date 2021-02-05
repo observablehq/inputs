@@ -48,7 +48,7 @@ import {Button, Checkbox, Radio, Range, Select, Text, Search, Table} from "@obse
 
 ## Inputs
 
-<a name="Button" href="#Button">#</a> <b>Button</b>(<i>content</i> = "≡", <i>options</i>) · [Source](./src/button.js)
+<a name="Button" href="#Button">#</a> <b>Button</b>(<i>content</i> = "≡", <i>options</i>) · [Source](./src/button.js), [Examples](https://observablehq.com/@observablehq/input-button)
 
 <img src="./img/button.png" alt="A Button labeled OK" width="640">
 
@@ -72,7 +72,7 @@ The available *options* are:
 * *width* - the width of the input (not including the label).
 * *disabled* - whether input is disabled; defaults to false.
 
-<a name="Checkbox" href="#Checkbox">#</a> <b>Checkbox</b>(<i>data</i>, <i>options</i>) · [Source](./src/checkbox.js)
+<a name="Checkbox" href="#Checkbox">#</a> <b>Checkbox</b>(<i>data</i>, <i>options</i>) · [Source](./src/checkbox.js), [Examples](https://observablehq.com/@observablehq/input-checkbox)
 
 <img src="./img/checkbox.png" alt="A multi-choice Checkbox input of flavors" width="640">
 
@@ -101,7 +101,7 @@ The available *options* are:
 * *value* - the initial value, an array; defaults to an empty array (no selection).
 * *disabled* - whether input is disabled, or the disabled values; defaults to false.
 
-<a name="Radio" href="#Radio">#</a> <b>Radio</b>(<i>data</i>, <i>options</i>) · [Source](./src/checkbox.js)
+<a name="Radio" href="#Radio">#</a> <b>Radio</b>(<i>data</i>, <i>options</i>) · [Source](./src/checkbox.js), [Examples](https://observablehq.com/@observablehq/input-radio)
 
 <img src="./img/radio.png" alt="A single-choice Radio input of colors" width="640">
 
@@ -130,7 +130,7 @@ The available *options* are:
 * *value* - the initial value; defaults to null (no selection).
 * *disabled* - whether input is disabled, or the disabled values; defaults to false.
 
-<a name="Range" href="#Range">#</a> <b>Range</b>([<i>min</i>, <i>max</i>] = [0, 1], <i>options</i>) · [Source](./src/range.js)
+<a name="Range" href="#Range">#</a> <b>Range</b>([<i>min</i>, <i>max</i>] = [0, 1], <i>options</i>) · [Source](./src/range.js), [Examples](https://observablehq.com/@observablehq/input-range)
 
 <img src="./img/range.png" alt="A Range input of intensity, a number between 0 and 100" width="640">
 
@@ -156,7 +156,7 @@ The given *value* is clamped to the given extent, and rounded if *step* is defin
 
 If a *transform* function is specified, an inverse transform function *invert* is strongly recommended. If one is not provided, the Range will fallback to Newton’s method, but this may be slow or inaccurate. Passing Math.sqrt, Math.log, or Math.exp as a *transform* is supported.
 
-<a name="Search" href="#Search">#</a> <b>Search</b>(<i>data</i>, <i>options</i>) · [Source](./src/search.js)
+<a name="Search" href="#Search">#</a> <b>Search</b>(<i>data</i>, <i>options</i>) · [Source](./src/search.js), [Examples](https://observablehq.com/@observablehq/input-search)
 
 <img src="./img/search.png" alt="A Search input over a tabular dataset of athletes" width="640">
 
@@ -193,7 +193,7 @@ The available *options* are:
 
 If a *filter* function is specified, it is invoked whenever the query changes; the function it returns is then passed each element from *data*, along with its zero-based index, and should return a truthy value if the given element matches the query. The default filter splits the current query into space-separated tokens and checks that each token matches the beginning of at least one string in the data’s columns, case-insensitive. For example, the query [hello world] will match the string “Worldwide Hello Services” but not “hello”.
 
-<a name="Select" href="#Select">#</a> <b>Select</b>(<i>data</i>, <i>options</i>) · [Source](./src/select.js)
+<a name="Select" href="#Select">#</a> <b>Select</b>(<i>data</i>, <i>options</i>) · [Source](./src/select.js), [Examples](https://observablehq.com/@observablehq/input-select)
 
 <img src="./img/select.png" alt="A Select input asking to choose a t-shirt size" width="640">
 
@@ -228,7 +228,7 @@ The available *options* are:
 * *width* - the width of the input (not including the label).
 * *disabled* - whether input is disabled, or the disabled values; defaults to false.
 
-<a name="Table" href="#Table">#</a> <b>Table</b>(<i>data</i>, <i>options</i>) · [Source](./src/table.js)
+<a name="Table" href="#Table">#</a> <b>Table</b>(<i>data</i>, <i>options</i>) · [Source](./src/table.js), [Examples](https://observablehq.com/@observablehq/input-table)
 
 <img src="./img/table.png" alt="A Table input showing rows of Olympic athletes" width="988">
 
@@ -252,7 +252,7 @@ The available *options* are:
 * *width* - an object of column name to width.
 * *layout* - the [table layout](https://developer.mozilla.org/en-US/docs/Web/CSS/table-layout); defaults to fixed for ≤12 columns.
 
-<a name="Text" href="#Text">#</a> <b>Text</b>(<i>options</i>) · [Source](./src/text.js)
+<a name="Text" href="#Text">#</a> <b>Text</b>(<i>options</i>) · [Source](./src/text.js), [Examples](https://observablehq.com/@observablehq/input-text)
 
 <img src="./img/text.png" alt="A Text input asking to enter your name" width="640">
 
@@ -283,11 +283,11 @@ If *validate* is not defined, [*text*.checkValidity](https://html.spec.whatwg.or
 
 ## Utilities
 
-<a name="Input" href="#Input">#</a> <b>Input</b>(<i>value</i>) · [Source](./src/input.js)
+<a name="Input" href="#Input">#</a> <b>Input</b>(<i>value</i>) · [Source](./src/input.js), [Examples](https://observablehq.com/@observablehq/synchronized-inputs)
 
 Returns an [EventTarget](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget) with the specified *value*. This is typically used in conjunction with [bind](#bind) to synchronize multiple inputs, with the Input being the primary state store. An Input is similar to a [mutable](https://observablehq.com/@observablehq/introduction-to-mutable-state), except that it allows listeners.
 
-<a name="bind" href="#bind">#</a> <b>bind</b>(<i>target</i>, <i>source</i>, <i>invalidation</i>) · [Source](./src/bind.js)
+<a name="bind" href="#bind">#</a> <b>bind</b>(<i>target</i>, <i>source</i>, <i>invalidation</i>) · [Source](./src/bind.js), [Examples](https://observablehq.com/@observablehq/synchronized-inputs)
 
 The bind function allows a *target* input to be bound to a *source* input, synchronizing the two: interaction with the *source* input will propagate to the *target* input and *vice versa*.
 
