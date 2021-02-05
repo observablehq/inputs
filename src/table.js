@@ -24,21 +24,20 @@ export function Table(
   align = alignof(align, data, columns);
 
   const N = lengthof(data); // total number of rows
-  let n = rows * 2; // number of currently-shown rows
+  let n = Math.floor(rows * 2); // number of currently-shown rows
   let currentSortHeader = null, currentReverse = false;
   let selected = new Set();
   let anchor = null, head = null;
-  let index = Uint32Array.from({length: N}, (_, i) => i);
 
-  // Defer materializing data into an array for as long as we can.
+  let index;
   let iterator = data[Symbol.iterator]();
   let iterindex = 0;
 
+  // Defer materializing index and data arrays until needed.
   function materialize() {
     if (iterindex >= 0) {
-      iterindex = -1;
-      iterator = undefined;
-      data = arrayify(data);
+      iterindex = iterator = undefined;
+      index = Uint32Array.from(data = arrayify(data), (_, i) => i);
     }
   }
 
@@ -52,27 +51,39 @@ export function Table(
   </table>
 </div>`;
 
-  function render(i, j) {
-    return Array.from(index.subarray(i, j), i => {
-      const d = iterindex === i ? (++iterindex, iterator.next().value) : (materialize(), data[i]);
-      const itr = tr.cloneNode(true);
-      const input = inputof(itr);
-      input.onclick = reselect;
-      input.checked = selected.has(i);
-      input.name = i;
-      for (let j = 0; j < columns.length; ++j) {
-        let column = columns[j];
-        let value = d[column];
-        if (!defined(value)) continue;
-        value = format[column](value);
-        if (!(value instanceof Node)) value = document.createTextNode(value);
-        itr.childNodes[j + 1].appendChild(value);
+  function appendRows(i, j) {
+    if (iterindex === i) {
+      for (; i < j; ++i) {
+        appendRow(iterator.next().value, i);
       }
-      return itr;
-    });
+      iterindex = j;
+    } else {
+      for (let k; i < j; ++i) {
+        k = index[i];
+        appendRow(data[k], k);
+      }
+    }
+  }
+
+  function appendRow(d, i) {
+    const itr = tr.cloneNode(true);
+    const input = inputof(itr);
+    input.onclick = reselect;
+    input.checked = selected.has(i);
+    input.name = i;
+    for (let j = 0; j < columns.length; ++j) {
+      let column = columns[j];
+      let value = d[column];
+      if (!defined(value)) continue;
+      value = format[column](value);
+      if (!(value instanceof Node)) value = document.createTextNode(value);
+      itr.childNodes[j + 1].appendChild(value);
+    }
+    tbody.append(itr);
   }
 
   function unselect(i) {
+    materialize();
     let j = index.indexOf(i);
     if (j < tbody.childNodes.length) {
       const tr = tbody.childNodes[j];
@@ -82,6 +93,7 @@ export function Table(
   }
 
   function select(i) {
+    materialize();
     let j = index.indexOf(i);
     if (j < tbody.childNodes.length) {
       const tr = tbody.childNodes[j];
@@ -91,6 +103,7 @@ export function Table(
   }
 
   function* range(i, j) {
+    materialize();
     i = index.indexOf(i), j = index.indexOf(j);
     if (i < j) while (i <= j) yield index[i++];
     else while (j <= i) yield index[j++];
@@ -101,6 +114,7 @@ export function Table(
   }
 
   function reselectAll(event) {
+    materialize();
     if (selected.size) {
       for (let i of selected) unselect(i);
       anchor = head = null;
@@ -115,6 +129,7 @@ export function Table(
   }
 
   function reselect(event) {
+    materialize();
     let i = +this.name;
     if (event.shiftKey) {
       if (anchor === null) anchor = selected.size ? first(selected) : index[0];
@@ -135,6 +150,7 @@ export function Table(
   }
 
   function resort(event, column) {
+    materialize();
     const th = event.currentTarget;
     let compare;
     if (currentSortHeader === th && currentReverse) {
@@ -154,13 +170,12 @@ export function Table(
       const order = currentReverse ? descending : ascending;
       compare = (a, b) => order(data[a][column], data[b][column]);
       orderof(th).textContent = currentReverse ? "▾"  : "▴";
-      materialize();
     }
     index.sort(compare);
     selected = new Set(Array.from(selected).sort(compare));
     root.scrollTo(0, 0);
     while (tbody.firstChild) tbody.firstChild.remove();
-    tbody.append(...render(0, n = rows * 2));
+    appendRows(0, n = Math.floor(rows * 2));
     anchor = head = null;
     reinput();
   }
@@ -173,11 +188,12 @@ export function Table(
 
   root.onscroll = () => {
     if (root.scrollHeight - root.scrollTop < 400 && n < N) {
-      tbody.append(...render(n, n += rows));
+      appendRows(n, n += Math.floor(rows));
     }
   };
 
   if (sort === undefined && reverse) {
+    materialize();
     index.reverse();
   }
 
@@ -189,7 +205,7 @@ export function Table(
   }
 
   if (N) {
-    tbody.append(...render(0, n));
+    appendRows(0, n);
   } else {
     tbody.append(html`<tr>${columns.length ? html`<td>` : null}<td rowspan=${columns.length} style="padding-left: 1em; font-variant: italic;">No results.</td></tr>`);
   }
