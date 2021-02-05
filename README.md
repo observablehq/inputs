@@ -268,14 +268,18 @@ The available *options* are:
 * *type* - the [input type](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#input_types), such as “password” or “email”; defaults to “text”.
 * *value* - the initial value; defaults to the empty string.
 * *placeholder* - the [placeholder](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/placeholder) attribute.
-* *pattern* - the [pattern](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/pattern) attribute.
 * *spellcheck* - whether to activate the browser’s spell-checker.
+* *pattern* - the [pattern](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/pattern) attribute.
 * *minlength* - [minimum length](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/minlength) attribute.
 * *maxlength* - [maximum length](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/maxlength) attribute.
+* *required* - if true, the input must be non-empty; defaults to *minlength* > 0.
+* *validate* - a function to check whether the text input is valid.
 * *width* - the width of the input (not including the label).
 * *submit* - whether to require explicit submission before updating; defaults to false.
 * *datalist* - an iterable of suggested values.
 * *disabled* - whether input is disabled; defaults to false.
+
+If *validate* is not defined, [*text*.checkValidity](https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#dom-cva-checkvalidity) is used. While the input is not considered valid, changes to the input will not be reported.
 
 ## Utilities
 
