@@ -1,9 +1,9 @@
 import {disposal} from "./disposal.js";
 
 export function bind(target, source, invalidation = disposal(target)) {
-  const onsource = () => set(target, source);
-  const ontarget = () => (set(source, target), source.dispatchEvent(new CustomEvent("input")));
   const sourceEvent = eventof(source);
+  const onsource = () => set(target, source);
+  const ontarget = () => (set(source, target), source.dispatchEvent(new CustomEvent(sourceEvent)));
   onsource();
   target.addEventListener(eventof(target), ontarget);
   source.addEventListener(sourceEvent, onsource);
