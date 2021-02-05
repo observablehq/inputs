@@ -7,7 +7,7 @@ import {defined, ascending, descending} from "./sort.js";
 export function Table(
   data,
   {
-    columns = data.columns, // array of column names
+    columns, // array of column names
     value, // initial selection
     rows = 11.5, // maximum number of rows to show
     sort, // name of column to sort by, if any
@@ -18,31 +18,43 @@ export function Table(
     layout // "fixed" or "auto"
   } = {}
 ) {
-  data = arrayify(data);
-  if (columns === undefined) columns = columnsof(data);
-  else columns = arrayify(columns);
+  columns = columns === undefined ? columnsof(data) : arrayify(columns);
   if (layout === undefined) layout = columns.length >= 12 ? "auto" : "fixed";
   format = formatof(format, data, columns);
   align = alignof(align, data, columns);
 
-  let n = rows * 2;
+  const N = lengthof(data); // total number of rows
+  let n = rows * 2; // number of currently-shown rows
   let currentSortHeader = null, currentReverse = false;
   let selected = new Set();
   let anchor = null, head = null;
-  let index = Uint32Array.from(data, (_, i) => i);
+  let index = Uint32Array.from({length: N}, (_, i) => i);
+
+  // Defer materializing data into an array for as long as we can.
+  let iterator = data[Symbol.iterator]();
+  let iterindex = 0;
+
+  function materialize() {
+    if (iterindex >= 0) {
+      iterindex = -1;
+      iterator = undefined;
+      data = arrayify(data);
+    }
+  }
 
   const tbody = html`<tbody>`;
   const tr = html`<tr><td><input type=checkbox></td>${columns.map(column => html`<td style=${{textAlign: align[column]}}>`)}`;
   const theadr = html`<tr><th><input type=checkbox onclick=${reselectAll}></th>${columns.map((column) => html`<th title=${column} style=${{width: length(width[column]), textAlign: align[column]}} onclick=${event => resort(event, column)}><span></span>${column}</th>`)}</tr>`;
   const root = html`<div class="__ns__ __ns__-table" style="max-height: ${(rows + 1) * 24 - 1}px;">
   <table style=${{tableLayout: layout}}>
-    <thead>${data.length || columns.length ? theadr : null}</thead>
+    <thead>${N || columns.length ? theadr : null}</thead>
     ${tbody}
   </table>
 </div>`;
 
   function render(i, j) {
     return Array.from(index.subarray(i, j), i => {
+      const d = iterindex === i ? (++iterindex, iterator.next().value) : (materialize(), data[i]);
       const itr = tr.cloneNode(true);
       const input = inputof(itr);
       input.onclick = reselect;
@@ -50,7 +62,7 @@ export function Table(
       input.name = i;
       for (let j = 0; j < columns.length; ++j) {
         let column = columns[j];
-        let value = data[i][column];
+        let value = d[column];
         if (!defined(value)) continue;
         value = format[column](value);
         if (!(value instanceof Node)) value = document.createTextNode(value);
@@ -142,6 +154,7 @@ export function Table(
       const order = currentReverse ? descending : ascending;
       compare = (a, b) => order(data[a][column], data[b][column]);
       orderof(th).textContent = currentReverse ? "▾"  : "▴";
+      materialize();
     }
     index.sort(compare);
     selected = new Set(Array.from(selected).sort(compare));
@@ -154,17 +167,12 @@ export function Table(
 
   function reinput() {
     inputof(theadr).checked = selected.size;
-    revalue();
+    value = undefined; // lazily computed
     root.dispatchEvent(new CustomEvent("input"));
   }
 
-  function revalue() {
-    value = Array.from(selected.size ? selected : index, i => data[i]);
-    value.columns = columns;
-  }
-
   root.onscroll = () => {
-    if (root.scrollHeight - root.scrollTop < 400 && n < data.length) {
+    if (root.scrollHeight - root.scrollTop < 400 && n < N) {
       tbody.append(...render(n, n += rows));
     }
   };
@@ -174,11 +182,13 @@ export function Table(
   }
 
   if (value !== undefined) {
+    materialize();
     const values = new Set(value);
     selected = new Set(index.filter(i => values.has(data[i])));
+    value = undefined; // lazily computed
   }
 
-  if (data.length) {
+  if (N) {
     tbody.append(...render(0, n));
   } else {
     tbody.append(html`<tr>${columns.length ? html`<td>` : null}<td rowspan=${columns.length} style="padding-left: 1em; font-variant: italic;">No results.</td></tr>`);
@@ -192,18 +202,22 @@ export function Table(
     }
   }
 
-  revalue();
-
   return Object.defineProperty(root, "value", {
     get() {
+      if (value === undefined) {
+        materialize();
+        value = Array.from(selected.size ? selected : index, i => data[i]);
+        value.columns = columns;
+      }
       return value;
     },
     set(v) {
+      materialize();
       const values = new Set(v);
       const selection = new Set(index.filter(i => values.has(data[i])));
       for (const i of selected) if (!selection.has(i)) unselect(i);
       for (const i of selection) if (!selected.has(i)) select(i);
-      revalue();
+      value = undefined; // lazily computed
     }
   });
 }
@@ -254,12 +268,23 @@ function type(data, column) {
   }
 }
 
+function lengthof(data) {
+  if (typeof data.length === "number") return data.length; // array or array-like
+  if (typeof data.size === "number") return data.size; // map, set
+  if (typeof data.numRows === "function") return data.numRows(); // arquero
+  let size = 0;
+  for (const d of data) ++size; // eslint-disable-line no-unused-vars
+  return size;
+}
+
 function columnsof(data) {
-  const columns = {};
+  if (typeof data.columnNames === "function") return data.columnNames(); // arquero
+  if (data.columns !== undefined) return data.columns; // d3-dsv, FileAttachment
+  const columns = new Set();
   for (const row of data) {
     for (const name in row) {
-      columns[name] = true;
+      columns.add(name);
     }
   }
-  return Object.keys(columns);
+  return Array.from(columns);
 }
