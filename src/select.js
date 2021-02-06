@@ -6,7 +6,7 @@ import {maybeLabel} from "./label.js";
 
 export const Select = createChooser({
   render(data, index, selected, disabled, {format, multiple, size, label, width}) {
-    const select = html`<select disabled=${disabled === true} style=${{width: length(width)}} multiple=${multiple} size=${size} name=input>
+    const select = html`<select class=__ns__-input disabled=${disabled === true} style=${{width: length(width)}} multiple=${multiple} size=${size} name=input>
       ${index.map(i => html`<option value=${i} disabled=${typeof disabled === "function" ? disabled(i) : false} selected=${selected(i)}>${stringify(format(data[i], i, data))}`)}
     </select>`;
     const form = html`<form class=__ns__>${maybeLabel(label, select)}${select}`;

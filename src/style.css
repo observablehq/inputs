@@ -1,33 +1,50 @@
+/* The root namespace; either a form (for inputs) or a div (for Table). */
 .__ns__ {
   --length1: 3.25px;
   --length2: 6.5px;
   --length3: 13px;
+  --label-width: 120px;
+  --input-width: 240px;
 }
 
+/* The minimum height of a form should match the minimum allowed cell height.
+ * Note that the font here is currently 1px smaller than the Table font; not
+ * sure if it’s necessary to make the two exactly the same. */
 form.__ns__ {
   min-height: 25.5px;
   font: 13px var(--sans-serif);
 }
 
-label.__ns__ {
+/* On narrow screens, the label is drawn as a block element on top of the
+ * inputs, and a small amount of vertical padding is desired for separation. */
+form.__ns__ > label {
   padding-bottom: 3px;
 }
 
 @media only screen and (min-width: 30em) {
+  /* On wide screens, the label and inputs are side-by-side, with the label
+   * having a fixed width for consistent layout across cells. */
   form.__ns__ {
     display: flex;
     align-items: center;
   }
-  label.__ns__ {
+  /* On wide screens, we need to handle: the label being taller than the inputs;
+   * the inputs being taller than the label; or both being a single line . In
+   * the last case (the common case), we want the single line to be vertically-
+   * centered within the minimum cell height of 25.5px. In the other cases, we
+   * want the two to be vertically-aligned at the top. In all cases we also want
+   * a small amount of horizontal separation. */
+  form.__ns__ > label {
     flex-shrink: 0;
     align-self: start;
     padding-top: 5px;
     padding-bottom: 0;
-    width: 120px;
+    width: var(--label-width);
     margin-right: var(--length2);
   }
 }
 
+/* A kind of “reset.css” to make these elements well-behaved. */
 .__ns__ button,
 .__ns__ input,
 .__ns__ select {
@@ -35,59 +52,65 @@ label.__ns__ {
   box-sizing: border-box;
 }
 
+/* Consistent horizontal spacing for labeled radios and checkboxes. */
 .__ns__ input[type=radio],
 .__ns__ input[type=checkbox] {
   margin-right: var(--length2);
 }
 
+/* For compound inputs (e.g., text input + submit), use flex to ensure vertical
+ * alignment and to allow responsive sizing. For all inputs except Checkbox,
+ * Radio, and Button, we want the inputs to span the full width of the form. */
 .__ns__-input {
   display: flex;
   align-items: center;
+  width: var(--input-width);
 }
 
-.__ns__-input,
-.__ns__ select {
-  width: 240px;
-}
-
-.__ns__-checkbox label {
-  display: inline-flex;
-  align-items: center;
-  margin-right: var(--length3);
-}
-
-.__ns__-input input,
-.__ns__-input button,
-.__ns__-input output {
+/* Have these elements observe flex layout, per above. */
+.__ns__-input > input,
+.__ns__-input > button,
+.__ns__-input > output {
   width: inherit;
   min-width: 0;
 }
 
-.__ns__-input button,
-.__ns__-input output,
-.__ns__-input input[type=number] {
+/* Tell the secondary element to shrink more; e.g., the submit button should be
+ * smaller than the text input, but both should grow proportionally. */
+.__ns__-input > button,
+.__ns__-input > output,
+.__ns__-input > input[type=number] {
   flex-shrink: 2.5;
 }
 
-.__ns__-input output {
+/* Don’t allow text to wrap in search result counts (unless intended), and
+ * separate the output from the preceding input. */
+.__ns__-input > output {
   white-space: pre;
+  margin-left: var(--length2);
 }
 
-.__ns__-input button {
+/* Separate the submit button from the preceding text input. */
+.__ns__-input > button {
   margin-left: var(--length1);
 }
 
-.__ns__ input[type=search] {
-  margin-right: var(--length2);
-}
-
-.__ns__ input[type=number] {
-  margin-right: var(--length2);
+/* Use tabular-nums to avoid jitter when moving the range slider. */
+.__ns__-input > input[type=number] {
   font-variant-numeric: tabular-nums;
 }
 
-.__ns__ input[type=range] {
+/* Separate the range input from the preceding number input. */
+.__ns__-input > input[type=range] {
   margin: 0;
+  margin-left: var(--length2);
+}
+
+/* Vertically-align the label contents, and give ample horizontal separation. */
+.__ns__-checkbox > label {
+  display: inline-flex;
+  align-items: center;
+  margin-right: var(--length3);
 }
 
 .__ns__-table {
@@ -95,7 +118,7 @@ label.__ns__ {
   margin: 0 -14px;
 }
 
-.__ns__ table {
+.__ns__-table table {
   max-width: initial;
   min-height: 33px;
   margin: 0;
@@ -105,49 +128,49 @@ label.__ns__ {
   line-height: inherit;
 }
 
-.__ns__ thead th span {
+.__ns__-table thead th span {
   display: inline-block;
   width: 0.5em;
   margin-left: -0.5em;
 }
 
-.__ns__ td,
-.__ns__ th {
+.__ns__-table td,
+.__ns__-table th {
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
   border-bottom: solid 1px #eee;
 }
 
-.__ns__ tr > :not(:first-of-type) {
+.__ns__-table tr > :not(:first-of-type) {
   padding-left: var(--length2);
 }
 
-.__ns__ tr > :last-of-type {
+.__ns__-table tr > :last-of-type {
   padding-right: var(--length3);
 }
 
-.__ns__ tr > :first-of-type {
+.__ns__-table tr > :first-of-type {
   width: 19px;
 }
 
-.__ns__ tr,
-.__ns__ tr:last-child td {
+.__ns__-table tr,
+.__ns__-table tr:last-child td {
   border-bottom: none;
 }
 
-.__ns__ tr > :first-of-type input {
+.__ns__-table tr > :first-of-type input {
   opacity: 0;
   margin: 0 3px 3px 4px;
 }
 
-.__ns__ tr:hover > :first-of-type input,
-.__ns__ tr > :first-of-type input:focus,
-.__ns__ tr > :first-of-type input:checked {
+.__ns__-table tr:hover > :first-of-type input,
+.__ns__-table tr > :first-of-type input:focus,
+.__ns__-table tr > :first-of-type input:checked {
   opacity: inherit;
 }
 
-.__ns__ thead th {
+.__ns__-table thead th {
   position: sticky;
   top: 0;
   background: white;
