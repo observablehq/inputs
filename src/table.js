@@ -294,8 +294,8 @@ function lengthof(data) {
 }
 
 function columnsof(data) {
+  if (Array.isArray(data.columns)) return data.columns; // d3-dsv, FileAttachment
   if (typeof data.columnNames === "function") return data.columnNames(); // arquero
-  if (data.columns !== undefined) return data.columns; // d3-dsv, FileAttachment
   const columns = new Set();
   for (const row of data) {
     for (const name in row) {
