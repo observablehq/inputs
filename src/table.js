@@ -168,8 +168,8 @@ export function Table(
     root.scrollTo(0, 0);
     currentChunk = 0;
     repad();
-    for (let i = 0; i < rows * 2; i++) {
-      // render(i, row);
+    for (let i = 0; i < chunkRowCount * 2; i++) {
+      render(i, tbody.children[i + 1]);
     }
     anchor = head = null;
     reinput();
