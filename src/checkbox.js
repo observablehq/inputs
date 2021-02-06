@@ -31,7 +31,7 @@ export function Toggle({label, value, values, disabled} = {}) {
   const form = html`<form class=__ns__>${maybeLabel(label, input)}${input}`;
   Object.defineProperty(form, "value", {
     get() {
-      return values === undefined ? input.checked : values[!input.checked];
+      return values === undefined ? input.checked : values[input.checked ? 0 : 1];
     },
     set(v) {
       input.checked = values === undefined ? !!v : v === values[0];
