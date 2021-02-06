@@ -19,15 +19,15 @@ export function Range([min, max] = [0, 1], {
   width
 } = {}) {
   if (typeof format !== "function") throw new TypeError("format is not a function");
+  const number = html`<input type=number name=number placeholder=${placeholder} oninput=${onnumber} disabled=${disabled}>`;
+  const range = html`<input type=range name=range oninput=${onrange} disabled=${disabled}>`;
   const form = html`<form class=__ns__ onsubmit=${preventDefault}>
-    ${maybeLabel(label)}<div class=__ns__-input style=${{width: length(width)}}>
-      <input type=number name=number placeholder=${placeholder} oninput=${onnumber} disabled=${disabled}>
-      <input type=range name=range oninput=${onrange} disabled=${disabled}>
+    ${maybeLabel(label, number)}<div class=__ns__-input style=${{width: length(width)}}>
+      ${number}${range}
     </div>
   </form>`;
   if (typeof transform !== "function") throw new TypeError("transform is not a function");
   if (typeof invert !== "function") throw new TypeError("invert is not a function");
-  const {range, number} = form.elements;
   min = +min, max = +max;
   if (min > max) [min, max] = [max, min];
   let tmin = +transform(number.min = min), tmax = +transform(number.max = max);

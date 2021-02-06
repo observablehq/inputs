@@ -11,9 +11,8 @@ export function Button(content = "≡", {
   width
 } = {}) {
   if (typeof reduce !== "function") throw new TypeError("reduce is not a function");
-  const form = html`<form class=__ns__ onsubmit=${preventDefault}>
-    ${maybeLabel(label)}<button onclick=${onclick} disabled=${disabled} style=${{width: length(width)}}>${content}</button>
-  </form>`;
+  const button = html`<button onclick=${onclick} disabled=${disabled} style=${{width: length(width)}}>${content}`;
+  const form = html`<form class=__ns__ onsubmit=${preventDefault}>${maybeLabel(label, button)}${button}`;
   function onclick(event) {
     form.value = reduce(form.value);
     dispatchInput(event);
