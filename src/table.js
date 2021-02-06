@@ -98,7 +98,9 @@ export function Table(
       if (!defined(value)) continue;
       value = format[column](value);
       if (!(value instanceof Node)) value = document.createTextNode(value);
-      itr.childNodes[j + 1].replaceChildren(value);
+      const cell = itr.childNodes[j + 1];
+      while (cell.firstChild) cell.firstChild.remove();
+      cell.appendChild(value);
     }
   }
 
