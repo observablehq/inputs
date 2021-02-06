@@ -9,7 +9,7 @@ form.__ns__ {
   font: 13px var(--sans-serif);
 }
 
-.__ns__-label {
+label.__ns__ {
   padding-bottom: 3px;
 }
 
@@ -18,7 +18,7 @@ form.__ns__ {
     display: flex;
     align-items: center;
   }
-  .__ns__-label {
+  label.__ns__ {
     flex-shrink: 0;
     align-self: start;
     padding-top: 5px;
@@ -35,12 +35,6 @@ form.__ns__ {
   box-sizing: border-box;
 }
 
-.__ns__ label {
-  display: inline-flex;
-  align-items: center;
-  margin-right: var(--length3);
-}
-
 .__ns__ input[type=radio],
 .__ns__ input[type=checkbox] {
   margin-right: var(--length2);
@@ -54,6 +48,12 @@ form.__ns__ {
 .__ns__-input,
 .__ns__ select {
   width: 240px;
+}
+
+.__ns__-checkbox label {
+  display: inline-flex;
+  align-items: center;
+  margin-right: var(--length3);
 }
 
 .__ns__-input input,

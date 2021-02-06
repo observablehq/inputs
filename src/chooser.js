@@ -35,7 +35,7 @@ export function createChooser({multiple: fixedMultiple, render, selectedIndexes,
     if (multiple === true) size = Math.max(1, Math.min(10, index.length));
     else if (size > 0) multiple = true;
     else multiple = false, size = undefined;
-    const [form, input = form.elements.input] = render(
+    const [form, input] = render(
       data,
       index,
       maybeSelection(data, index, value, multiple, valueof),

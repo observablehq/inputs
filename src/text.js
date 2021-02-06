@@ -24,15 +24,15 @@ export function Text({
   submit = submit === true ? "Submit" : submit || null;
   const [list, listId] = maybeDatalist(datalist);
   const button = submit ? html`<button type=submit disabled>${submit}` : null;
+  const input = html`<input type=${type} name=text list=${listId} disabled=${disabled} required=${required} minlength=${minlength} maxlength=${maxlength} pattern=${pattern} spellcheck=${spellcheck === undefined ? false : spellcheck + ""} placeholder=${placeholder} value=${stringify(value)} oninput=${oninput}>`;
   const form = html`<form class=__ns__ onsubmit=${onsubmit}>
-    ${maybeLabel(label)}<div class=__ns__-input style=${{width: length(width)}}>
-      <input type=${type} name=text list=${listId} disabled=${disabled} required=${required} minlength=${minlength} maxlength=${maxlength} pattern=${pattern} spellcheck=${spellcheck === undefined ? false : spellcheck + ""} placeholder=${placeholder} value=${stringify(value)} oninput=${oninput}>${button}
+    ${maybeLabel(label, input)}<div class=__ns__-input style=${{width: length(width)}}>
+      ${input}${button}
     </div>${list}
   </form>`;
-  const {text} = form.elements;
   function update() {
-    if (validate(text)) {
-      value = text.value;
+    if (validate(input)) {
+      value = input.value;
       return true;
     }
   }
@@ -45,7 +45,7 @@ export function Text({
   }
   function oninput(event) {
     if (submit) {
-      button.disabled = value === text.value;
+      button.disabled = value === input.value;
       event.stopPropagation();
     } else if (!update()) {
       event.stopPropagation();
@@ -56,11 +56,11 @@ export function Text({
       return value;
     },
     set(v) {
-      text.value = value = v;
+      input.value = value = v;
     }
   });
 }
 
-function checkValidity(text) {
-  return text.checkValidity();
+function checkValidity(input) {
+  return input.checkValidity();
 }

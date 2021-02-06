@@ -7,7 +7,7 @@ function createCheckbox(multiple, type) {
     multiple,
     render(data, index, selected, disabled, {format, label}) {
       const form = html`<form class=__ns__>
-      ${maybeLabel(label)}<div>
+      ${maybeLabel(label)}<div class=__ns__-checkbox>
         ${index.map(i => html`<label><input type=${type} disabled=${typeof disabled === "function" ? disabled(i) : disabled} name=input value=${i} checked=${selected(i)}>${format(data[i], i, data)}`)}
       </div>
     </form>`;
@@ -25,6 +25,21 @@ function createCheckbox(multiple, type) {
 export const Radio = createCheckbox(false, "radio");
 
 export const Checkbox = createCheckbox(true, "checkbox");
+
+export function Toggle({label, value, values, disabled} = {}) {
+  const input = html`<input class=__ns__-input type=checkbox name=input disabled=${disabled}>`;
+  const form = html`<form class=__ns__>${maybeLabel(label, input)}${input}`;
+  Object.defineProperty(form, "value", {
+    get() {
+      return values === undefined ? input.checked : values[input.checked ? 0 : 1];
+    },
+    set(v) {
+      input.checked = values === undefined ? !!v : v === values[0];
+    }
+  });
+  if (value !== undefined) form.value = value;
+  return form;
+}
 
 // The input is undefined if there are no options, or an individual input
 // element if there is only one; we want these two cases to behave the same as

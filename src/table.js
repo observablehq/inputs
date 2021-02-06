@@ -14,7 +14,7 @@ const ROW_HEIGHT = 24;
 export function Table(
   data,
   {
-    columns = data.columns, // array of column names
+    columns, // array of column names
     value, // initial selection
     rows = 11.5, // maximum number of rows to show
     sort, // name of column to sort by, if any
@@ -25,28 +25,42 @@ export function Table(
     layout // "fixed" or "auto"
   } = {}
 ) {
-  data = arrayify(data);
-  if (columns === undefined) columns = columnsof(data);
-  else columns = arrayify(columns);
+  columns = columns === undefined ? columnsof(data) : arrayify(columns);
   if (layout === undefined) layout = columns.length >= 12 ? "auto" : "fixed";
   format = formatof(format, data, columns);
   align = alignof(align, data, columns);
 
+  const N = lengthof(data); // total number of rows
   const chunkRowCount = rows * 2;
-  const lastChunk = Math.floor(data.length / chunkRowCount);
+  const lastChunk = Math.floor(N / chunkRowCount);
 
   let currentChunk = 0;
   let currentSortHeader = null, currentReverse = false;
   let selected = new Set();
   let anchor = null, head = null;
-  let index = Uint32Array.from(data, (_, i) => i);
+
+  let index;
+  let iterator = data[Symbol.iterator]();
+  let cache = Array.isArray(data) ? data : Array(N);
+  let iterindex = Array.isArray(data) ? N : 0;
+
+  window._cache = cache;
+
+  // Defer materializing index and data arrays until needed.
+  function materialize() {
+    if (iterindex >= 0) {
+      iterindex = iterator = undefined;
+      index = Uint32Array.from(data = arrayify(data), (_, i) => i);
+      cache = null;
+    }
+  }
 
   const paddingRow = html`<tr>`;
   const tbody = html`<tbody>${paddingRow}`;
   const tr = html`<tr><td><input type=checkbox></td>${columns.map(column => html`<td style=${{textAlign: align[column]}}>`)}`;
   const theadr = html`<tr><th><input type=checkbox onclick=${reselectAll}></th>${columns.map((column) => html`<th title=${column} style=${{width: length(width[column]), textAlign: align[column]}} onclick=${event => resort(event, column)}><span></span>${column}</th>`)}</tr>`;
   const table = html`<table style=${{tableLayout: layout}}>
-    <thead>${data.length || columns.length ? theadr : null}</thead>
+    <thead>${N || columns.length ? theadr : null}</thead>
     ${tbody}
   </table>`;
   const root = html`<div class="__ns__ __ns__-table" style="max-height: ${(rows + 1) * ROW_HEIGHT - 1}px;">
@@ -61,11 +75,19 @@ export function Table(
   }
 
   function render(i, itr) {
-    if (i >= index.length) {
+    if (i >= N) {
       itr.hidden = true;
       return;
     }
-    const row = data[index[i]];
+    let row;
+    if (index) {
+      row = data[index[i]];
+    } else {
+      for (; iterindex <= i; iterindex++) {
+        cache[iterindex] = iterator.next().value;
+      }
+      row = cache[i];
+    }
     const input = inputof(itr);
     input.checked = selected.has(i);
     input.name = i;
@@ -81,6 +103,7 @@ export function Table(
   }
 
   function unselect(i) {
+    materialize();
     let j = index.indexOf(i);
     if (j < tbody.childNodes.length) {
       const tr = tbody.childNodes[j];
@@ -90,6 +113,7 @@ export function Table(
   }
 
   function select(i) {
+    materialize();
     let j = index.indexOf(i);
     if (j < tbody.childNodes.length) {
       const tr = tbody.childNodes[j];
@@ -99,6 +123,7 @@ export function Table(
   }
 
   function* range(i, j) {
+    materialize();
     i = index.indexOf(i), j = index.indexOf(j);
     if (i < j) while (i <= j) yield index[i++];
     else while (j <= i) yield index[j++];
@@ -109,6 +134,7 @@ export function Table(
   }
 
   function reselectAll(event) {
+    materialize();
     if (selected.size) {
       for (let i of selected) unselect(i);
       anchor = head = null;
@@ -123,6 +149,7 @@ export function Table(
   }
 
   function reselect(event) {
+    materialize();
     let i = +this.name;
     if (event.shiftKey) {
       if (anchor === null) anchor = selected.size ? first(selected) : index[0];
@@ -143,6 +170,7 @@ export function Table(
   }
 
   function resort(event, column) {
+    materialize();
     const th = event.currentTarget;
     let compare;
     if (currentSortHeader === th && currentReverse) {
@@ -177,19 +205,14 @@ export function Table(
 
   function reinput() {
     inputof(theadr).checked = selected.size;
-    revalue();
+    value = undefined; // lazily computed
     root.dispatchEvent(new CustomEvent("input"));
-  }
-
-  function revalue() {
-    value = Array.from(selected.size ? selected : index, i => data[i]);
-    value.columns = columns;
   }
 
   function repad() {
     paddingRow.style.height = `${currentChunk * chunkRowCount * ROW_HEIGHT}px`;
     const lastRenderedRowIdx = (currentChunk + 2) * chunkRowCount;
-    table.style.paddingBottom = `${Math.max((data.length - lastRenderedRowIdx) * ROW_HEIGHT, 0)}px`;
+    table.style.paddingBottom = `${Math.max((N - lastRenderedRowIdx) * ROW_HEIGHT, 0)}px`;
   }
 
   root.onscroll = () => {
@@ -220,15 +243,18 @@ export function Table(
   };
 
   if (sort === undefined && reverse) {
+    materialize();
     index.reverse();
   }
 
   if (value !== undefined) {
+    materialize();
     const values = new Set(value);
     selected = new Set(index.filter(i => values.has(data[i])));
+    value = undefined; // lazily computed
   }
 
-  if (data.length) {
+  if (N) {
     for (let i = 0; i < chunkRowCount * 2; i++) {
       const row = createRow();
       render(i, row);
@@ -246,20 +272,24 @@ export function Table(
     }
   }
 
-  revalue();
-
   setTimeout(repad, 25);
 
   return Object.defineProperty(root, "value", {
     get() {
+      if (value === undefined) {
+        materialize();
+        value = Array.from(selected.size ? selected : index, i => data[i]);
+        value.columns = columns;
+      }
       return value;
     },
     set(v) {
+      materialize();
       const values = new Set(v);
       const selection = new Set(index.filter(i => values.has(data[i])));
       for (const i of selected) if (!selection.has(i)) unselect(i);
       for (const i of selection) if (!selected.has(i)) select(i);
-      revalue();
+      value = undefined; // lazily computed
     }
   });
 }
@@ -310,12 +340,23 @@ function type(data, column) {
   }
 }
 
+function lengthof(data) {
+  if (typeof data.length === "number") return data.length; // array or array-like
+  if (typeof data.size === "number") return data.size; // map, set
+  if (typeof data.numRows === "function") return data.numRows(); // arquero
+  let size = 0;
+  for (const d of data) ++size; // eslint-disable-line no-unused-vars
+  return size;
+}
+
 function columnsof(data) {
-  const columns = {};
+  if (Array.isArray(data.columns)) return data.columns; // d3-dsv, FileAttachment
+  if (typeof data.columnNames === "function") return data.columnNames(); // arquero
+  const columns = new Set();
   for (const row of data) {
     for (const name in row) {
-      columns[name] = true;
+      columns.add(name);
     }
   }
-  return Object.keys(columns);
+  return Array.from(columns);
 }

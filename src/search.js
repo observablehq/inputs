@@ -21,13 +21,13 @@ export function Search(data, {
   let value = [];
   data = arrayify(data);
   const [list, listId] = maybeDatalist(datalist);
+  const input = html`<input name=input type=search list=${listId} disabled=${disabled} spellcheck=${spellcheck === undefined ? false : spellcheck + ""} placeholder=${placeholder} value=${query} oninput=${oninput}>`;
+  const output = html`<output name=output>`;
   const form = html`<form class=__ns__ onsubmit=${preventDefault}>
-    ${maybeLabel(label)}<div class=__ns__-input style=${{width: length(width)}}>
-      <input name=input type=search list=${listId} disabled=${disabled} spellcheck=${spellcheck === undefined ? false : spellcheck + ""} placeholder=${placeholder} value=${query} oninput=${oninput}>
-      <output name=output>
+    ${maybeLabel(label, input)}<div class=__ns__-input style=${{width: length(width)}}>
+      ${input}${output}
     </div>${list}
   </form>`;
-  const {input, output} = form.elements;
   function oninput() {
     value = data.filter(filter(input.value));
     if (columns !== undefined) value.columns = columns;
