@@ -4,6 +4,8 @@ import {length} from "./css.js";
 import {formatDate, formatNumber, stringify} from "./format.js";
 import {defined, ascending, descending} from "./sort.js";
 
+const ROW_HEIGHT = 24;
+
 export function Table(
   data,
   {
@@ -34,13 +36,12 @@ export function Table(
   const tbody = html`<tbody>`;
   const tr = html`<tr><td><input type=checkbox></td>${columns.map(column => html`<td style=${{textAlign: align[column]}}>`)}`;
   const theadr = html`<tr><th><input type=checkbox onclick=${reselectAll}></th>${columns.map((column) => html`<th title=${column} style=${{width: length(width[column]), textAlign: align[column]}} onclick=${event => resort(event, column)}><span></span>${column}</th>`)}</tr>`;
-  const spacer = html`<div>`;
-  const root = html`<div class="__ns__ __ns__-table" style="max-height: ${(rows + 1) * 24 - 1}px;">
-  <table style=${{tableLayout: layout}}>
+  const table = html`<table style=${{tableLayout: layout}}>
     <thead>${data.length || columns.length ? theadr : null}</thead>
     ${tbody}
-  </table>
-  ${spacer}
+  </table>`;
+  const root = html`<div class="__ns__ __ns__-table" style="max-height: ${(rows + 1) * ROW_HEIGHT - 1}px;">
+  ${table}
 </div>`;
 
   function render(i, j) {
@@ -63,10 +64,9 @@ export function Table(
   }
 
   function updateSpacer() {
-    const averageRowHeight = tbody.clientHeight / (n - 1);
-    const estimatedHeight =
-      averageRowHeight * (data.length - tbody.children.length);
-    spacer.style.height = length(estimatedHeight);
+    const remainingHeight =
+      ROW_HEIGHT * (data.length - tbody.children.length);
+    table.style.paddingBottom = `${remainingHeight}px`;
   }
 
   function unselect(i) {
@@ -173,7 +173,7 @@ export function Table(
   }
 
   root.onscroll = () => {
-    while (root.scrollHeight - root.scrollTop - spacer.clientHeight < 400 && n < data.length) {
+    while (root.scrollHeight - root.scrollTop - parseInt(table.style.paddingBottom) < 400 && n < data.length) {
       tbody.append(...render(n, n += rows));
       updateSpacer();
     }
