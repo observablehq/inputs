@@ -20,6 +20,7 @@ Observable Inputs provides basic inputs:
 
 * [Button](#Button) - do something when a button is clicked
 * [Checkbox](#Checkbox) - choose any from a set
+* [Toggle](#Toggle) - toggle between two values (on or off)
 * [Radio](#Radio) - choose one from a set
 * [Range](#Range) - choose a numeric value in a range (slider)
 * [Select](#Select) - choose one or many from a set (drop-down menu)
