@@ -24,7 +24,7 @@ export function Table(
   align = alignof(align, data, columns);
 
   const N = lengthof(data); // total number of rows
-  let n = Math.floor(rows * 2); // number of currently-shown rows
+  let n = Math.min(N, Math.floor(rows * 2)); // number of currently-shown rows
   let currentSortHeader = null, currentReverse = false;
   let selected = new Set();
   let anchor = null, head = null;
@@ -175,7 +175,7 @@ export function Table(
     selected = new Set(Array.from(selected).sort(compare));
     root.scrollTo(0, 0);
     while (tbody.firstChild) tbody.firstChild.remove();
-    appendRows(0, n = Math.floor(rows * 2));
+    appendRows(0, n = Math.min(N, Math.floor(rows * 2)));
     anchor = head = null;
     reinput();
   }
@@ -188,7 +188,7 @@ export function Table(
 
   root.onscroll = () => {
     if (root.scrollHeight - root.scrollTop < 400 && n < N) {
-      appendRows(n, n += Math.floor(rows));
+      appendRows(n, n = Math.min(N, n + Math.floor(rows)));
     }
   };
 
