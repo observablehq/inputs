@@ -120,11 +120,11 @@ form.__ns__ {
 }
 
 .__ns__ tr > :not(:first-of-type) {
-  padding-left: 0.7em;
+  padding-left: var(--length2);
 }
 
 .__ns__ tr > :last-of-type {
-  padding-right: 1em;
+  padding-right: var(--length3);
 }
 
 .__ns__ tr > :first-of-type {
