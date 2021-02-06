@@ -29,11 +29,11 @@ form.__ns__ > label {
     align-items: center;
   }
   /* On wide screens, we need to handle: the label being taller than the inputs;
-   * the inputs being taller than the label; or both being a single line . In
-   * the last case (the common case), we want the single line to be vertically-
-   * centered within the minimum cell height of 25.5px. In the other cases, we
-   * want the two to be vertically-aligned at the top. In all cases we also want
-   * a small amount of horizontal separation. */
+   * the inputs being taller than the label; or both being a single line. In the
+   * last (common) case, we want the single line to be vertically-centered
+   * within the minimum cell height of 25.5px. In the other cases, we want the
+   * two to be vertically-aligned at the top. In all cases we also want a small
+   * amount of horizontal separation. */
   form.__ns__ > label {
     flex-shrink: 0;
     align-self: start;
