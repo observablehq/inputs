@@ -7,7 +7,7 @@ function createCheckbox(multiple, type) {
     multiple,
     render(data, index, selected, disabled, {format, label}) {
       const form = html`<form class=__ns__>
-      ${maybeLabel(label)}<div>
+      ${maybeLabel(label)}<div class=__ns__-checkbox>
         ${index.map(i => html`<label><input type=${type} disabled=${typeof disabled === "function" ? disabled(i) : disabled} name=input value=${i} checked=${selected(i)}>${format(data[i], i, data)}`)}
       </div>
     </form>`;
