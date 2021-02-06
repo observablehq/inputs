@@ -102,7 +102,7 @@ The available *options* are:
 * *value* - the initial value, an array; defaults to an empty array (no selection).
 * *disabled* - whether input is disabled, or the disabled values; defaults to false.
 
-<a name="Toggle" href="#Toggle">#</a> <b>Toggle</b>(<i>options</i>) · [Source](./src/checkbox.js)
+<a name="Toggle" href="#Toggle">#</a> <b>Toggle</b>(<i>options</i>) · [Source](./src/checkbox.js), [Examples](https://observablehq.com/@observablehq/input-toggle)
 
 ```js
 viewof mute = Toggle({label: "Mute"})
