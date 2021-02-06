@@ -6,6 +6,11 @@ import {defined, ascending, descending} from "./sort.js";
 
 const ROW_HEIGHT = 24;
 
+/**
+ * We render two “chunks” of cells at once. Each chunk is twice the height of the table.
+ *
+ */
+
 export function Table(
   data,
   {
@@ -27,13 +32,17 @@ export function Table(
   format = formatof(format, data, columns);
   align = alignof(align, data, columns);
 
-  let n = rows * 2;
+  let currentChunk = 0;
+  const chunkRowCount = rows * 2;
+  const chunkHeight = chunkRowCount * ROW_HEIGHT;
+  const lastChunk = Math.floor(data.length / chunkRowCount);
   let currentSortHeader = null, currentReverse = false;
   let selected = new Set();
   let anchor = null, head = null;
   let index = Uint32Array.from(data, (_, i) => i);
 
-  const tbody = html`<tbody>`;
+  const paddingRow = html`<tr>`;
+  const tbody = html`<tbody>${paddingRow}`;
   const tr = html`<tr><td><input type=checkbox></td>${columns.map(column => html`<td style=${{textAlign: align[column]}}>`)}`;
   const theadr = html`<tr><th><input type=checkbox onclick=${reselectAll}></th>${columns.map((column) => html`<th title=${column} style=${{width: length(width[column]), textAlign: align[column]}} onclick=${event => resort(event, column)}><span></span>${column}</th>`)}</tr>`;
   const table = html`<table style=${{tableLayout: layout}}>
@@ -44,29 +53,31 @@ export function Table(
   ${table}
 </div>`;
 
-  function render(i, j) {
-    return Array.from(index.subarray(i, j), i => {
-      const itr = tr.cloneNode(true);
-      const input = inputof(itr);
-      input.onclick = reselect;
-      input.checked = selected.has(i);
-      input.name = i;
-      for (let j = 0; j < columns.length; ++j) {
-        let column = columns[j];
-        let value = data[i][column];
-        if (!defined(value)) continue;
-        value = format[column](value);
-        if (!(value instanceof Node)) value = document.createTextNode(value);
-        itr.childNodes[j + 1].appendChild(value);
-      }
-      return itr;
-    });
+  function createRow() {
+    const itr = tr.cloneNode(true);
+    const input = inputof(itr);
+    input.onclick = reselect;
+    return itr;
   }
 
-  function updateSpacer() {
-    const remainingHeight =
-      ROW_HEIGHT * (data.length - tbody.children.length);
-    table.style.paddingBottom = `${remainingHeight}px`;
+  function render(i, itr) {
+    if (i >= index.length) {
+      itr.hidden = true;
+      return;
+    }
+    const row = data[index[i]];
+    const input = inputof(itr);
+    input.checked = selected.has(i);
+    input.name = i;
+    itr.hidden = false;
+    for (let j = 0; j < columns.length; ++j) {
+      let column = columns[j];
+      let value = row[column];
+      if (!defined(value)) continue;
+      value = format[column](value);
+      if (!(value instanceof Node)) value = document.createTextNode(value);
+      itr.childNodes[j + 1].replaceChildren(value);
+    }
   }
 
   function unselect(i) {
@@ -155,8 +166,11 @@ export function Table(
     index.sort(compare);
     selected = new Set(Array.from(selected).sort(compare));
     root.scrollTo(0, 0);
-    while (tbody.firstChild) tbody.firstChild.remove();
-    tbody.append(...render(0, n = rows * 2));
+    currentChunk = 0;
+    repad();
+    for (let i = 0; i < rows * 2; i++) {
+      // render(i, row);
+    }
     anchor = head = null;
     reinput();
   }
@@ -172,10 +186,37 @@ export function Table(
     value.columns = columns;
   }
 
+  function repad() {
+    paddingRow.style.height = `${currentChunk * chunkHeight}px`;
+    const lastRenderedRowIdx = (currentChunk + 2) * chunkRowCount;
+    console.log(data.length - lastRenderedRowIdx);
+    table.style.paddingBottom = `${Math.max((data.length - lastRenderedRowIdx) * ROW_HEIGHT, 0)}px`;
+  }
+
   root.onscroll = () => {
-    while (root.scrollHeight - root.scrollTop - parseInt(table.style.paddingBottom) < 400 && n < data.length) {
-      tbody.append(...render(n, n += rows));
-      updateSpacer();
+    const chunk = Math.min(Math.max(0, Math.floor(root.scrollTop / ROW_HEIGHT / (rows * 2))), lastChunk);
+    if (chunk !== currentChunk) {
+      if (chunk === currentChunk - 1) {
+        // scrolling up normally; reuse top half
+        for (let i = 0; i < chunkRowCount; i++) {
+          const row = tbody.lastChild;
+          render(chunk * chunkRowCount + i, row);
+          tbody.firstChild.insertAdjacentElement('afterend', row);
+        }
+      } else if (chunk === currentChunk + 1) {
+        // scrolling down normally; reuse bottom half
+        for (let i = 0; i < chunkRowCount; i++) {
+          const row = tbody.children[1];
+          render(chunk * chunkRowCount + i, row);
+          tbody.append(row);
+        }
+      } else {
+        for (let i = 0; i < chunkRowCount * 2; i++) {
+          render((chunk * chunkRowCount) + i, tbody.children[i + 1]);
+        }
+      }
+      currentChunk = chunk;
+      repad();
     }
   };
 
@@ -189,7 +230,11 @@ export function Table(
   }
 
   if (data.length) {
-    tbody.append(...render(0, n));
+    for (let i = 0; i < chunkRowCount * 2; i++) {
+      const row = createRow();
+      render(i, row);
+      tbody.append(row);
+    }
   } else {
     tbody.append(html`<tr>${columns.length ? html`<td>` : null}<td rowspan=${columns.length} style="padding-left: 1em; font-variant: italic;">No results.</td></tr>`);
   }
@@ -204,7 +249,7 @@ export function Table(
 
   revalue();
 
-  setTimeout(updateSpacer, 25);
+  setTimeout(repad, 25);
 
   return Object.defineProperty(root, "value", {
     get() {
