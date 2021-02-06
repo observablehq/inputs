@@ -220,24 +220,8 @@ export function Table(
   root.onscroll = () => {
     const chunk = Math.min(Math.max(0, Math.floor(root.scrollTop / ROW_HEIGHT / (rows * 2))), lastChunk);
     if (chunk !== currentChunk) {
-      if (chunk === currentChunk - 1) {
-        // scrolling up normally; reuse top half
-        for (let i = 0; i < chunkRowCount; i++) {
-          const row = tbody.lastChild;
-          render(chunk * chunkRowCount + i, row);
-          tbody.firstChild.insertAdjacentElement('afterend', row);
-        }
-      } else if (chunk === currentChunk + 1) {
-        // scrolling down normally; reuse bottom half
-        for (let i = 0; i < chunkRowCount; i++) {
-          const row = tbody.children[1];
-          render(chunk * chunkRowCount + i, row);
-          tbody.append(row);
-        }
-      } else {
-        for (let i = 0; i < chunkRowCount * 2; i++) {
-          render((chunk * chunkRowCount) + i, tbody.children[i + 1]);
-        }
+      for (let i = 0; i < chunkRowCount * 2; i++) {
+        render((chunk * chunkRowCount) + i, tbody.children[i + 1]);
       }
       currentChunk = chunk;
       repad();
