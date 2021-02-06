@@ -32,10 +32,10 @@ export function Table(
   format = formatof(format, data, columns);
   align = alignof(align, data, columns);
 
-  let currentChunk = 0;
   const chunkRowCount = rows * 2;
-  const chunkHeight = chunkRowCount * ROW_HEIGHT;
   const lastChunk = Math.floor(data.length / chunkRowCount);
+
+  let currentChunk = 0;
   let currentSortHeader = null, currentReverse = false;
   let selected = new Set();
   let anchor = null, head = null;
@@ -187,9 +187,8 @@ export function Table(
   }
 
   function repad() {
-    paddingRow.style.height = `${currentChunk * chunkHeight}px`;
+    paddingRow.style.height = `${currentChunk * chunkRowCount * ROW_HEIGHT}px`;
     const lastRenderedRowIdx = (currentChunk + 2) * chunkRowCount;
-    console.log(data.length - lastRenderedRowIdx);
     table.style.paddingBottom = `${Math.max((data.length - lastRenderedRowIdx) * ROW_HEIGHT, 0)}px`;
   }
 
