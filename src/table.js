@@ -2,6 +2,8 @@ import {html} from "htl";
 import {arrayify} from "./array.js";
 import {length} from "./css.js";
 import {formatDate, formatNumber, stringify} from "./format.js";
+import {newId} from "./id.js";
+import {identity} from "./identity.js";
 import {defined, ascending, descending} from "./sort.js";
 
 export function Table(
@@ -42,14 +44,21 @@ export function Table(
     }
   }
 
+  const id = newId();
   const tbody = html`<tbody>`;
-  const tr = html`<tr><td><input type=checkbox></td>${columns.map(column => html`<td style=${{textAlign: align[column]}}>`)}`;
-  const theadr = html`<tr><th><input type=checkbox onclick=${reselectAll}></th>${columns.map((column) => html`<th title=${column} style=${{width: length(width[column]), textAlign: align[column]}} onclick=${event => resort(event, column)}><span></span>${column}</th>`)}</tr>`;
-  const root = html`<div class="__ns__ __ns__-table" style="max-height: ${(rows + 1) * 24 - 1}px;">
+  const tr = html`<tr><td><input type=checkbox></td>${columns.map(() => html`<td>`)}`;
+  const theadr = html`<tr><th><input type=checkbox onclick=${reselectAll}></th>${columns.map((column) => html`<th title=${column} onclick=${event => resort(event, column)}><span></span>${column}</th>`)}</tr>`;
+  const root = html`<div class="__ns__ __ns__-table" id=${id} style="max-height: ${(rows + 1) * 24 - 1}px;">
   <table style=${{tableLayout: layout}}>
     <thead>${N || columns.length ? theadr : null}</thead>
     ${tbody}
   </table>
+  <style>${columns.map((column, i) => {
+    const rules = [];
+    if (align[column]) rules.push(`text-align:${align[column]}`);
+    if (width[column]) rules.push(`width:${length(width[column])}`);
+    if (rules.length) return `#${id} tr>:nth-child(${i + 1}){${rules.join(";")}}`;
+  }).filter(identity).join("\n")}</style>
 </div>`;
 
   function appendRows(i, j) {
@@ -208,7 +217,7 @@ export function Table(
   if (N) {
     appendRows(0, n);
   } else {
-    tbody.append(html`<tr>${columns.length ? html`<td>` : null}<td rowspan=${columns.length} style="padding-left: 1em; font-variant: italic;">No results.</td></tr>`);
+    tbody.append(html`<tr>${columns.length ? html`<td>` : null}<td rowspan=${columns.length} style="padding-left: var(--length3); font-style: italic;">No results.</td></tr>`);
   }
 
   if (sort !== undefined) {
