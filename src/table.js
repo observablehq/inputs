@@ -29,6 +29,7 @@ export function Table(
   let selected = new Set();
   let anchor = null, head = null;
 
+  let array;
   let index;
   let iterator = data[Symbol.iterator]();
   let iterindex = 0;
@@ -37,7 +38,7 @@ export function Table(
   function materialize() {
     if (iterindex >= 0) {
       iterindex = iterator = undefined;
-      index = Uint32Array.from(data = arrayify(data), (_, i) => i);
+      index = Uint32Array.from(array = arrayify(data), (_, i) => i);
     }
   }
 
@@ -60,7 +61,7 @@ export function Table(
     } else {
       for (let k; i < j; ++i) {
         k = index[i];
-        appendRow(data[k], k);
+        appendRow(array[k], k);
       }
     }
   }
@@ -75,7 +76,7 @@ export function Table(
       let column = columns[j];
       let value = d[column];
       if (!defined(value)) continue;
-      value = format[column](value);
+      value = format[column](value, i, data);
       if (!(value instanceof Node)) value = document.createTextNode(value);
       itr.childNodes[j + 1].appendChild(value);
     }
@@ -168,7 +169,7 @@ export function Table(
         currentSortHeader = th, currentReverse = false;
       }
       const order = currentReverse ? descending : ascending;
-      compare = (a, b) => order(data[a][column], data[b][column]);
+      compare = (a, b) => order(array[a][column], array[b][column]);
       orderof(th).textContent = currentReverse ? "▾"  : "▴";
     }
     index.sort(compare);
@@ -200,7 +201,7 @@ export function Table(
   if (value !== undefined) {
     materialize();
     const values = new Set(value);
-    selected = new Set(index.filter(i => values.has(data[i])));
+    selected = new Set(index.filter(i => values.has(array[i])));
     value = undefined; // lazily computed
   }
 
@@ -222,7 +223,7 @@ export function Table(
     get() {
       if (value === undefined) {
         materialize();
-        value = Array.from(selected.size ? selected : index, i => data[i]);
+        value = Array.from(selected.size ? selected : index, i => array[i]);
         value.columns = columns;
       }
       return value;
@@ -230,7 +231,7 @@ export function Table(
     set(v) {
       materialize();
       const values = new Set(v);
-      const selection = new Set(index.filter(i => values.has(data[i])));
+      const selection = new Set(index.filter(i => values.has(array[i])));
       for (const i of selected) if (!selection.has(i)) unselect(i);
       for (const i of selection) if (!selected.has(i)) select(i);
       value = undefined; // lazily computed
