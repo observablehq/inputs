@@ -175,7 +175,8 @@ export function Table(
         if (currentSortHeader) {
           orderof(currentSortHeader).textContent = "";
         }
-        currentSortHeader = th, currentReverse = false;
+        currentSortHeader = th;
+        currentReverse = event.altKey;
       }
       const order = currentReverse ? descending : ascending;
       compare = (a, b) => order(array[a][column], array[b][column]);
