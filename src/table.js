@@ -193,7 +193,7 @@ export function Table(
   function reinput() {
     inputof(theadr).checked = selected.size;
     value = undefined; // lazily computed
-    root.dispatchEvent(new CustomEvent("input"));
+    root.dispatchEvent(new Event("input"));
   }
 
   root.onscroll = () => {

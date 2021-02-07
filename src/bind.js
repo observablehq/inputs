@@ -3,7 +3,7 @@ import {disposal} from "./disposal.js";
 export function bind(target, source, invalidation = disposal(target)) {
   const sourceEvent = eventof(source);
   const onsource = () => set(target, source);
-  const ontarget = () => (set(source, target), source.dispatchEvent(new CustomEvent(sourceEvent)));
+  const ontarget = () => (set(source, target), source.dispatchEvent(new Event(sourceEvent)));
   onsource();
   target.addEventListener(eventof(target), ontarget);
   source.addEventListener(sourceEvent, onsource);
