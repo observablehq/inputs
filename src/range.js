@@ -9,8 +9,8 @@ const epsilon = 1e-6;
 
 export function Range([min, max] = [0, 1], {
   format = d => formatNumber(d).replace(/,/g, ""), // number is strict!
-  transform = identity,
-  invert = transform.invert === undefined ? solver(transform) : transform.invert,
+  transform,
+  invert,
   label = "",
   value,
   step,
@@ -26,10 +26,12 @@ export function Range([min, max] = [0, 1], {
       ${number}${range}
     </div>
   </form>`;
-  if (typeof transform !== "function") throw new TypeError("transform is not a function");
-  if (typeof invert !== "function") throw new TypeError("invert is not a function");
   min = +min, max = +max;
-  if (min > max) [min, max] = [max, min];
+  if (min > max) [min, max] = [max, min], transform === undefined && (transform = negate);
+  if (transform === undefined) transform = identity;
+  if (typeof transform !== "function") throw new TypeError("transform is not a function");
+  if (invert === undefined) invert = transform.invert === undefined ? solver(transform) : transform.invert;
+  if (typeof invert !== "function") throw new TypeError("invert is not a function");
   let tmin = +transform(number.min = min), tmax = +transform(number.max = max);
   if (tmin > tmax) [tmin, tmax] = [tmax, tmin];
   range.min = tmin;
@@ -55,12 +57,16 @@ export function Range([min, max] = [0, 1], {
   });
 }
 
+function negate(x) {
+  return -x;
+}
+
 function square(x) {
   return x * x;
 }
 
 function solver(f) {
-  if (f === identity) return identity;
+  if (f === identity || f === negate) return f;
   if (f === Math.sqrt) return square;
   if (f === Math.log) return Math.exp;
   if (f === Math.exp) return Math.log;
