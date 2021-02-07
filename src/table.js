@@ -173,7 +173,7 @@ export function Table(
     }
     index.sort(compare);
     selected = new Set(Array.from(selected).sort(compare));
-    root.scrollTo(0, 0);
+    root.scrollTo(root.scrollLeft, 0);
     while (tbody.firstChild) tbody.firstChild.remove();
     appendRows(0, n = Math.min(N, Math.floor(rows * 2)));
     anchor = head = null;
