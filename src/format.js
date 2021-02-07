@@ -3,7 +3,7 @@ export function stringify(x) {
 }
 
 export function formatNumber(value) {
-  return value.toLocaleString("en");
+  return value === 0 ? "0" : value.toLocaleString("en"); // handle negative zero
 }
 
 export function formatDate(date) {
