@@ -57,7 +57,7 @@ export function Table(
     const rules = [];
     if (align[column]) rules.push(`text-align:${align[column]}`);
     if (width[column]) rules.push(`width:${length(width[column])}`);
-    if (rules.length) return `#${id} tr>:nth-child(${i + 1}){${rules.join(";")}}`;
+    if (rules.length) return `#${id} tr>:nth-child(${i}){${rules.join(";")}}`;
   }).filter(identity).join("\n")}</style>
 </div>`;
 
