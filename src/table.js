@@ -2,6 +2,8 @@ import {html} from "htl";
 import {arrayify} from "./array.js";
 import {length} from "./css.js";
 import {formatDate, formatNumber, stringify} from "./format.js";
+import {newId} from "./id.js";
+import {identity} from "./identity.js";
 import {defined, ascending, descending} from "./sort.js";
 
 const ROW_HEIGHT = 24;
@@ -39,6 +41,7 @@ export function Table(
   let selected = new Set();
   let anchor = null, head = null;
 
+  let array;
   let index;
   let iterator = data[Symbol.iterator]();
   let cache = Array.isArray(data) ? data : Array(N);
@@ -50,21 +53,28 @@ export function Table(
   function materialize() {
     if (iterindex >= 0) {
       iterindex = iterator = undefined;
-      index = Uint32Array.from(data = arrayify(data), (_, i) => i);
-      cache = null;
+      index = Uint32Array.from(array = arrayify(data), (_, i) => i);
+      cache = undefined;
     }
   }
 
+  const id = newId();
   const paddingRow = html`<tr>`;
   const tbody = html`<tbody>${paddingRow}`;
-  const tr = html`<tr><td><input type=checkbox></td>${columns.map(column => html`<td style=${{textAlign: align[column]}}>`)}`;
-  const theadr = html`<tr><th><input type=checkbox onclick=${reselectAll}></th>${columns.map((column) => html`<th title=${column} style=${{width: length(width[column]), textAlign: align[column]}} onclick=${event => resort(event, column)}><span></span>${column}</th>`)}</tr>`;
+  const tr = html`<tr><td><input type=checkbox></td>${columns.map(() => html`<td>`)}`;
+  const theadr = html`<tr><th><input type=checkbox onclick=${reselectAll}></th>${columns.map((column) => html`<th title=${column} onclick=${event => resort(event, column)}><span></span>${column}</th>`)}</tr>`;
   const table = html`<table style=${{tableLayout: layout}}>
     <thead>${N || columns.length ? theadr : null}</thead>
     ${tbody}
   </table>`;
-  const root = html`<div class="__ns__ __ns__-table" style="max-height: ${(rows + 1) * ROW_HEIGHT - 1}px;">
+  const root = html`<div class="__ns__ __ns__-table" id=${id} style="max-height: ${(rows + 1) * ROW_HEIGHT - 1}px;">
   ${table}
+  <style>${columns.map((column, i) => {
+    const rules = [];
+    if (align[column]) rules.push(`text-align:${align[column]}`);
+    if (width[column]) rules.push(`width:${length(width[column])}`);
+    if (rules.length) return `#${id} tr>:nth-child(${i + 2}){${rules.join(";")}}`;
+  }).filter(identity).join("\n")}</style>
 </div>`;
 
   function createRow() {
@@ -81,7 +91,7 @@ export function Table(
     }
     let row;
     if (index) {
-      row = data[index[i]];
+      row = array[index[i]];
     } else {
       for (; iterindex <= i; iterindex++) {
         cache[iterindex] = iterator.next().value;
@@ -96,7 +106,7 @@ export function Table(
       let column = columns[j];
       let value = row[column];
       if (!defined(value)) continue;
-      value = format[column](value);
+      value = format[column](value, i, data);
       if (!(value instanceof Node)) value = document.createTextNode(value);
       const cell = itr.childNodes[j + 1];
       while (cell.firstChild) cell.firstChild.remove();
@@ -175,27 +185,28 @@ export function Table(
     materialize();
     const th = event.currentTarget;
     let compare;
-    if (currentSortHeader === th && currentReverse) {
+    if (currentSortHeader === th && event.metaKey) {
       orderof(currentSortHeader).textContent = "";
       currentSortHeader = null;
       currentReverse = false;
       compare = ascending;
     } else {
       if (currentSortHeader === th) {
-        currentReverse = true;
+        currentReverse = !currentReverse;
       } else {
         if (currentSortHeader) {
           orderof(currentSortHeader).textContent = "";
         }
-        currentSortHeader = th, currentReverse = false;
+        currentSortHeader = th;
+        currentReverse = event.altKey;
       }
       const order = currentReverse ? descending : ascending;
-      compare = (a, b) => order(data[a][column], data[b][column]);
+      compare = (a, b) => order(array[a][column], array[b][column]);
       orderof(th).textContent = currentReverse ? "▾"  : "▴";
     }
     index.sort(compare);
     selected = new Set(Array.from(selected).sort(compare));
-    root.scrollTo(0, 0);
+    root.scrollTo(root.scrollLeft, 0);
     currentChunk = 0;
     repad();
     for (let i = 0; i < chunkRowCount * 2; i++) {
@@ -208,7 +219,7 @@ export function Table(
   function reinput() {
     inputof(theadr).checked = selected.size;
     value = undefined; // lazily computed
-    root.dispatchEvent(new CustomEvent("input"));
+    root.dispatchEvent(new Event("input"));
   }
 
   function repad() {
@@ -236,7 +247,7 @@ export function Table(
   if (value !== undefined) {
     materialize();
     const values = new Set(value);
-    selected = new Set(index.filter(i => values.has(data[i])));
+    selected = new Set(index.filter(i => values.has(array[i])));
     value = undefined; // lazily computed
   }
 
@@ -247,7 +258,7 @@ export function Table(
       tbody.append(row);
     }
   } else {
-    tbody.append(html`<tr>${columns.length ? html`<td>` : null}<td rowspan=${columns.length} style="padding-left: 1em; font-variant: italic;">No results.</td></tr>`);
+    tbody.append(html`<tr>${columns.length ? html`<td>` : null}<td rowspan=${columns.length} style="padding-left: var(--length3); font-style: italic;">No results.</td></tr>`);
   }
 
   if (sort !== undefined) {
@@ -264,7 +275,7 @@ export function Table(
     get() {
       if (value === undefined) {
         materialize();
-        value = Array.from(selected.size ? selected : index, i => data[i]);
+        value = Array.from(selected.size ? selected : index, i => array[i]);
         value.columns = columns;
       }
       return value;
@@ -272,7 +283,7 @@ export function Table(
     set(v) {
       materialize();
       const values = new Set(v);
-      const selection = new Set(index.filter(i => values.has(data[i])));
+      const selection = new Set(index.filter(i => values.has(array[i])));
       for (const i of selected) if (!selection.has(i)) unselect(i);
       for (const i of selection) if (!selected.has(i)) select(i);
       value = undefined; // lazily computed

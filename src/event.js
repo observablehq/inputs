@@ -3,5 +3,5 @@ export function preventDefault(event) {
 }
 
 export function dispatchInput({currentTarget}) {
-  (currentTarget.form || currentTarget).dispatchEvent(new CustomEvent("input"));
+  (currentTarget.form || currentTarget).dispatchEvent(new Event("input"));
 }

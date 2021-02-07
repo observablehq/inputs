@@ -1063,9 +1063,9 @@ has@^1.0.3, has@~1.0.3:
     function-bind "^1.1.1"
 
 htl@^0.2.3:
-  version "0.2.4"
-  resolved "https://registry.yarnpkg.com/htl/-/htl-0.2.4.tgz#f05471eb3395d9760f731e908f17efa63aecd811"
-  integrity sha512-GZL02+CQVKOx/vrqhLDyosxQmjQi147n0LXdQyh6zzeclKKFKbMefVo16JqDgyQFiBd1LCgqQzXHq1VIziMzdQ==
+  version "0.2.5"
+  resolved "https://registry.yarnpkg.com/htl/-/htl-0.2.5.tgz#a702f9c150683c03d39644479ec9b8d0797de0e9"
+  integrity sha512-U9lBgVHYD2uA+5ghRbN5g0G1aQkEm14ks5nR11Ia6RM+GarJ+pluAYN2fQfHdUZBU229ylQPIPSALGNxOy4Slg==
 
 html-encoding-sniffer@^2.0.1:
   version "2.0.1"

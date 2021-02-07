@@ -6,6 +6,6 @@ tape("bind(button, button) dispatches click events", test => {
   const b2 = bind(document.createElement("button"), b1, new Promise(() => {}));
   let clicked = false;
   b1.addEventListener("click", () => void (clicked = true), {once: true});
-  b2.dispatchEvent(new CustomEvent("click"));
+  b2.dispatchEvent(new Event("click"));
   test.equal(clicked, true);
 });

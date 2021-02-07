@@ -8,8 +8,14 @@ import {withJsdom} from "./jsdom.js";
 (async () => {
   for (const [name, input] of Object.entries(inputs)) {
     tape(`input ${name}`, async test => {
+      const reid = new Map();
       const element = await withJsdom(input);
-      const actual = beautify(element.outerHTML.replace(/(?<=="[^"]*)\boi-[a-f0-9]{6}\b/g, `__ns__`), {indent_size: 2});
+      const actual = beautify(
+        element.outerHTML
+          .replace(/(?<=="[^"]*)\boi-[a-f0-9]{6}-([0-9]+)\b/g, (_, id) => `__ns__-${reid.has(id) ? reid.get(id) : (reid.set(id, id = reid.size + 1), id)}`)
+          .replace(/(?<=="[^"]*)\boi-[a-f0-9]{6}\b/g, `__ns__`),
+        {indent_size: 2}
+      );
       const outfile = path.resolve("./test/output", path.basename(name, ".js") + ".html");
       let expected;
       try {
