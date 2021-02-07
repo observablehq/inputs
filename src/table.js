@@ -163,14 +163,14 @@ export function Table(
     materialize();
     const th = event.currentTarget;
     let compare;
-    if (currentSortHeader === th && currentReverse) {
+    if (currentSortHeader === th && event.metaKey) {
       orderof(currentSortHeader).textContent = "";
       currentSortHeader = null;
       currentReverse = false;
       compare = ascending;
     } else {
       if (currentSortHeader === th) {
-        currentReverse = true;
+        currentReverse = !currentReverse;
       } else {
         if (currentSortHeader) {
           orderof(currentSortHeader).textContent = "";
