@@ -111,8 +111,13 @@ form.__ns__ > label {
   margin-left: var(--length2);
 }
 
+/* Checkboxes and radios aren’t constrained by their input width; */
+form.__ns__-checkbox {
+  width: auto;
+}
+
 /* Vertically-align the label contents, and give ample horizontal separation. */
-.__ns__-checkbox > label {
+.__ns__-checkbox div label {
   display: inline-flex;
   align-items: center;
   margin-right: var(--length3);
