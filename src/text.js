@@ -1,5 +1,5 @@
 import {html} from "htl";
-import {length} from "./css.js";
+import {maybeWidth} from "./css.js";
 import {maybeDatalist} from "./datalist.js";
 import {dispatchInput, preventDefault} from "./event.js";
 import {stringify} from "./format.js";
@@ -25,8 +25,8 @@ export function Text({
   const [list, listId] = maybeDatalist(datalist);
   const button = submit ? html`<button type=submit disabled>${submit}` : null;
   const input = html`<input type=${type} name=text list=${listId} disabled=${disabled} required=${required} minlength=${minlength} maxlength=${maxlength} pattern=${pattern} spellcheck=${spellcheck === undefined ? false : spellcheck + ""} placeholder=${placeholder} value=${stringify(value)} oninput=${oninput}>`;
-  const form = html`<form class=__ns__ onsubmit=${onsubmit}>
-    ${maybeLabel(label, input)}<div class=__ns__-input style=${{width: length(width)}}>
+  const form = html`<form class=__ns__ onsubmit=${onsubmit} style=${maybeWidth(width)}>
+    ${maybeLabel(label, input)}<div class=__ns__-input>
       ${input}${button}
     </div>${list}
   </form>`;

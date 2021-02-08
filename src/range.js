@@ -1,5 +1,5 @@
 import {html} from "htl";
-import {length} from "./css.js";
+import {maybeWidth} from "./css.js";
 import {preventDefault} from "./event.js";
 import {formatNumber} from "./format.js";
 import {identity} from "./identity.js";
@@ -21,8 +21,8 @@ export function Range([min, max] = [0, 1], {
   if (typeof format !== "function") throw new TypeError("format is not a function");
   const number = html`<input type=number name=number placeholder=${placeholder} oninput=${onnumber} disabled=${disabled}>`;
   const range = html`<input type=range name=range oninput=${onrange} disabled=${disabled}>`;
-  const form = html`<form class=__ns__ onsubmit=${preventDefault}>
-    ${maybeLabel(label, number)}<div class=__ns__-input style=${{width: length(width)}}>
+  const form = html`<form class=__ns__ onsubmit=${preventDefault} style=${maybeWidth(width)}>
+    ${maybeLabel(label, number)}<div class=__ns__-input>
       ${number}${range}
     </div>
   </form>`;

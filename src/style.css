@@ -27,6 +27,8 @@ form.__ns__ > label {
   form.__ns__ {
     display: flex;
     align-items: center;
+    width: calc(var(--input-width) + var(--label-width));
+    max-width: 100%;
   }
   /* On wide screens, we need to handle: the label being taller than the inputs;
    * the inputs being taller than the label; or both being a single line. In the
@@ -64,7 +66,7 @@ form.__ns__ > label {
 .__ns__-input {
   display: flex;
   align-items: center;
-  width: var(--input-width);
+  width: 100%;
 }
 
 /* Have these elements observe flex layout, per above. */
