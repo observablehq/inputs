@@ -5,14 +5,17 @@
   --length3: 13px;
   --label-width: 120px;
   --input-width: 240px;
+  font: 13px var(--sans-serif);
 }
 
 /* The minimum height of a form should match the minimum allowed cell height.
  * Note that the font here is currently 1px smaller than the Table font; not
  * sure if it’s necessary to make the two exactly the same. */
 form.__ns__ {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
   min-height: 25.5px;
-  font: 13px var(--sans-serif);
 }
 
 /* On narrow screens, the label is drawn as a block element on top of the
@@ -25,8 +28,7 @@ form.__ns__ > label {
   /* On wide screens, the label and inputs are side-by-side, with the label
    * having a fixed width for consistent layout across cells. */
   form.__ns__ {
-    display: flex;
-    align-items: center;
+    flex-wrap: nowrap;
     width: calc(var(--input-width) + var(--label-width));
     max-width: 100%;
   }
@@ -49,7 +51,8 @@ form.__ns__ > label {
 /* A kind of “reset.css” to make these elements well-behaved. */
 .__ns__ button,
 .__ns__ input,
-.__ns__ select {
+.__ns__ select,
+.__ns__ table {
   font: inherit;
   box-sizing: border-box;
 }
