@@ -130,7 +130,7 @@ form.__ns__ > label {
   border-collapse: separate;
   border-spacing: 0;
   font-variant-numeric: tabular-nums;
-  line-height: inherit;
+  line-height: 1.5;
 }
 
 .__ns__-table thead th span {
