@@ -218,13 +218,13 @@ export function Table(
   }
 
   function repad() {
-    paddingRow.style.height = `${currentChunk * chunkRowCount * ROW_HEIGHT}px`;
+    paddingRow.style.height = `${currentChunk * chunkRowCount * rowHeight}px`;
     const lastRenderedRowIdx = (currentChunk + 2) * chunkRowCount;
-    table.style.paddingBottom = `${Math.max((N - lastRenderedRowIdx) * ROW_HEIGHT, 0)}px`;
+    table.style.paddingBottom = `${Math.max((N - lastRenderedRowIdx) * rowHeight, 0)}px`;
   }
 
   root.onscroll = () => {
-    const chunk = Math.min(Math.max(0, Math.floor(root.scrollTop / ROW_HEIGHT / (rows * 2))), lastChunk);
+    const chunk = Math.min(Math.max(0, Math.floor(root.scrollTop / rowHeight / (rows * 2))), lastChunk);
     if (chunk !== currentChunk) {
       for (let i = 0; i < chunkRowCount * 2; i++) {
         render((chunk * chunkRowCount) + i, tbody.children[i + 1]);
