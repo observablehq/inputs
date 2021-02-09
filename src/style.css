@@ -25,6 +25,26 @@ form.__ns__ > label {
   padding-bottom: 3px;
 }
 
+/* On narrow screens, a toggle is small enough to fit inline with the label;
+ * we don’t need to force it onto its own line as we do with other inputs. */
+form.__ns__-toggle {
+  flex-wrap: nowrap;
+}
+
+/* Since toggles won’t wrap on narrow screens, always align them vertically. */
+form.__ns__-toggle > label {
+  align-self: start;
+  padding-top: 5px;
+  padding-bottom: 0;
+  margin-right: var(--length2);
+}
+
+/* Since toggles won’t wrap on narrow screens, collpase to content. */
+form.__ns__-toggle > label,
+form.__ns__-toggle .__ns__-input {
+  width: initial;
+}
+
 @media only screen and (min-width: 30em) {
   /* On wide screens, the label and inputs are side-by-side, with the label
    * having a fixed width for consistent layout across cells. */

@@ -28,7 +28,7 @@ export const Checkbox = createCheckbox(true, "checkbox");
 
 export function Toggle({label, value, values, disabled} = {}) {
   const input = html`<input class=__ns__-input type=checkbox name=input disabled=${disabled}>`;
-  const form = html`<form class=__ns__>${maybeLabel(label, input)}${input}`;
+  const form = html`<form class="__ns__ __ns__-toggle">${maybeLabel(label, input)}${input}`;
   Object.defineProperty(form, "value", {
     get() {
       return values === undefined ? input.checked : values[input.checked ? 0 : 1];
