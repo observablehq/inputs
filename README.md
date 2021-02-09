@@ -265,8 +265,10 @@ The available *options* are:
 * *reverse* - whether to reverse the initial sort (descending instead of ascending).
 * *format* - an object of column name to format function.
 * *align* - an object of column name to “left”, “right”, or “center”.
-* *width* - an object of column name to width.
+* *width* - the table width, or an object of column name to width.
 * *layout* - the [table layout](https://developer.mozilla.org/en-US/docs/Web/CSS/table-layout); defaults to fixed for ≤12 columns.
+
+If *width* is “auto”, the table width will be based on the table contents; note that this may cause the table to resize as rows are lazily rendered.
 
 <a name="Text" href="#Text">#</a> <b>Text</b>(<i>options</i>) · [Source](./src/text.js), [Examples](https://observablehq.com/@observablehq/input-text)
 
@@ -306,6 +308,21 @@ Returns an [EventTarget](https://developer.mozilla.org/en-US/docs/Web/API/EventT
 <a name="bind" href="#bind">#</a> <b>bind</b>(<i>target</i>, <i>source</i>, <i>invalidation</i>) · [Source](./src/bind.js), [Examples](https://observablehq.com/@observablehq/synchronized-inputs)
 
 The bind function allows a *target* input to be bound to a *source* input, synchronizing the two: interaction with the *source* input will propagate to the *target* input and *vice versa*.
+
+The relationship between *target* and *source* is not symmetric: the *target* input should be considered a dependant of the *source* input, and if desired, only the *source* should be declared an Observable view. For example:
+
+```js
+viewof i = Input(42) // the “primary” input
+```
+```js
+bind(Range([0, 100]), viewof i) // a bound “secondary” input
+```
+
+When the *target* emits a type-appropriate event, the *target*’s type-appropriate value will be applied to the *source* and a type-appropriate event will be dispatched on the *source*; when the *source* emits a type-appropriate event, the *source*’s type-appropriate value will be applied to the *target*, but *no event will be dispatched*, avoiding an infinite loop.
+
+The type-appropriate event is a *click* event for buttons and submit inputs, a *change* event for file inputs, and an *input* event for anything else. The type-appropriate value is *input*.valueAsNumber for range and number inputs, *input*.valueAsDate for date inputs, *input*.checked for checkbox inputs, *input*.files for multiple file inputs, *input*.files[0] for single-file inputs, and *input*.value for anything else.
+
+If *invalidation* is specified, it is a promise; when the promise resolves, the target will stop listening to the source. If *invalidation* is not specified, it defaults to the [disposal promise](#disposal) on the specified *target*. Note that source will remain listening to the target, however, until the target is garbage-collected.
 
 <a name="disposal" href="#disposal">#</a> <b>disposal</b>(<i>element</i>) · [Source](./src/disposal.js)
 

@@ -5,28 +5,53 @@
   --length3: 13px;
   --label-width: 120px;
   --input-width: 240px;
+  font: 13px var(--sans-serif);
 }
 
 /* The minimum height of a form should match the minimum allowed cell height.
  * Note that the font here is currently 1px smaller than the Table font; not
  * sure if it’s necessary to make the two exactly the same. */
 form.__ns__ {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
   min-height: 25.5px;
-  font: 13px var(--sans-serif);
 }
 
 /* On narrow screens, the label is drawn as a block element on top of the
  * inputs, and a small amount of vertical padding is desired for separation. */
 form.__ns__ > label {
+  width: 100%;
   padding-bottom: 3px;
+}
+
+/* On narrow screens, a toggle is small enough to fit inline with the label;
+ * we don’t need to force it onto its own line as we do with other inputs. */
+form.__ns__-toggle {
+  flex-wrap: nowrap;
+}
+
+/* Since toggles won’t wrap on narrow screens, always align them vertically. */
+form.__ns__-toggle > label {
+  align-self: start;
+  padding-top: 5px;
+  padding-bottom: 0;
+  margin-right: var(--length2);
+}
+
+/* Since toggles won’t wrap on narrow screens, collpase to content. */
+form.__ns__-toggle > label,
+form.__ns__-toggle .__ns__-input {
+  width: initial;
 }
 
 @media only screen and (min-width: 30em) {
   /* On wide screens, the label and inputs are side-by-side, with the label
    * having a fixed width for consistent layout across cells. */
   form.__ns__ {
-    display: flex;
-    align-items: center;
+    flex-wrap: nowrap;
+    width: calc(var(--input-width) + var(--label-width));
+    max-width: 100%;
   }
   /* On wide screens, we need to handle: the label being taller than the inputs;
    * the inputs being taller than the label; or both being a single line. In the
@@ -47,7 +72,8 @@ form.__ns__ > label {
 /* A kind of “reset.css” to make these elements well-behaved. */
 .__ns__ button,
 .__ns__ input,
-.__ns__ select {
+.__ns__ select,
+.__ns__ table {
   font: inherit;
   box-sizing: border-box;
 }
@@ -64,7 +90,7 @@ form.__ns__ > label {
 .__ns__-input {
   display: flex;
   align-items: center;
-  width: var(--input-width);
+  width: 100%;
 }
 
 /* Have these elements observe flex layout, per above. */
@@ -106,8 +132,13 @@ form.__ns__ > label {
   margin-left: var(--length2);
 }
 
+/* Checkboxes and radios aren’t constrained by their input width; */
+form.__ns__-checkbox {
+  width: auto;
+}
+
 /* Vertically-align the label contents, and give ample horizontal separation. */
-.__ns__-checkbox > label {
+.__ns__-checkbox div label {
   display: inline-flex;
   align-items: center;
   margin-right: var(--length3);
@@ -125,7 +156,7 @@ form.__ns__ > label {
   border-collapse: separate;
   border-spacing: 0;
   font-variant-numeric: tabular-nums;
-  line-height: inherit;
+  line-height: 1.5;
 }
 
 .__ns__-table thead th span {

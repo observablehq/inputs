@@ -6,12 +6,7 @@ import {newId} from "./id.js";
 import {identity} from "./identity.js";
 import {defined, ascending, descending} from "./sort.js";
 
-const ROW_HEIGHT = 24;
-
-/**
- * We render two “chunks” of cells at once. Each chunk is twice the height of the table.
- *
- */
+const rowHeight = 22;
 
 export function Table(
   data,
@@ -23,7 +18,7 @@ export function Table(
     reverse = false, // if sorting, true for descending and false for ascending
     format, // object of column name to format function
     align, // object of column name to left, right, or center
-    width = {}, // object of column name to width
+    width = {}, // object of column name to width, or overall table width
     layout // "fixed" or "auto"
   } = {}
 ) {
@@ -63,11 +58,11 @@ export function Table(
   const tbody = html`<tbody>${paddingRow}`;
   const tr = html`<tr><td><input type=checkbox></td>${columns.map(() => html`<td>`)}`;
   const theadr = html`<tr><th><input type=checkbox onclick=${reselectAll}></th>${columns.map((column) => html`<th title=${column} onclick=${event => resort(event, column)}><span></span>${column}</th>`)}</tr>`;
-  const table = html`<table style=${{tableLayout: layout}}>
+  const table = html`<table style=${{tableLayout: layout, width: typeof width === "string" || typeof width === "number" ? length(width) : undefined}}>
     <thead>${N || columns.length ? theadr : null}</thead>
     ${tbody}
   </table>`;
-  const root = html`<div class="__ns__ __ns__-table" id=${id} style="max-height: ${(rows + 1) * ROW_HEIGHT - 1}px;">
+  const root = html`<div class="__ns__ __ns__-table" id=${id} style="max-height: ${(rows + 1) * rowHeight - 1}px;">
   ${table}
   <style>${columns.map((column, i) => {
     const rules = [];
