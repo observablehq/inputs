@@ -265,8 +265,10 @@ The available *options* are:
 * *reverse* - whether to reverse the initial sort (descending instead of ascending).
 * *format* - an object of column name to format function.
 * *align* - an object of column name to “left”, “right”, or “center”.
-* *width* - an object of column name to width.
+* *width* - the table width, or an object of column name to width.
 * *layout* - the [table layout](https://developer.mozilla.org/en-US/docs/Web/CSS/table-layout); defaults to fixed for ≤12 columns.
+
+If *width* is “auto”, the table width will be based on the table contents; note that this may cause the table to resize as rows are lazily rendered.
 
 <a name="Text" href="#Text">#</a> <b>Text</b>(<i>options</i>) · [Source](./src/text.js), [Examples](https://observablehq.com/@observablehq/input-text)
 
