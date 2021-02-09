@@ -21,6 +21,7 @@ form.__ns__ {
 /* On narrow screens, the label is drawn as a block element on top of the
  * inputs, and a small amount of vertical padding is desired for separation. */
 form.__ns__ > label {
+  width: 100%;
   padding-bottom: 3px;
 }
 
