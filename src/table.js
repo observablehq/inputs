@@ -217,7 +217,7 @@ export function Table(
     materialize();
     const values = new Set(value);
     selected = new Set(index.filter(i => values.has(array[i])));
-    value = undefined; // lazily computed
+    reinput();
   }
 
   if (N) {
