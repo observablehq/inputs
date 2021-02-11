@@ -36,11 +36,20 @@ export function Range([min, max] = [0, 1], {
   if (tmin > tmax) [tmin, tmax] = [tmax, tmin];
   range.min = tmin;
   range.max = tmax;
-  number.step = range.step = step === undefined ? "any" : step = +step;
+  if (step !== undefined) step = +step;
+  range.step = step === undefined || (transform !== identity && transform !== negate) ? "any" : step;
+  number.step = step === undefined ? "any" : step;
   if (value === undefined) number.value = invert(range.value = (tmin + tmax) / 2);
   else number.value = value, range.value = transform(+value);
   function onrange() {
-    number.value = format(value = +invert(range.valueAsNumber));
+    value = +invert(range.valueAsNumber);
+    if (step !== undefined && transform !== identity && transform !== negate && isFinite(value)) {
+      const stepValue = Math.round(value / step) * step;
+      if (isFinite(stepValue) && stepValue !== value) {
+        range.valueAsNumber = transform(value = stepValue);
+      }
+    }
+    number.value = format(value);
   }
   function onnumber() {
     range.value = transform(value = number.valueAsNumber);
