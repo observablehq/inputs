@@ -334,7 +334,7 @@ The default query parser used by [Search](#Search).
 
 <a name="formatAuto" href="#formatAuto">#</a> <b>formatAuto</b>(<i>value</i>) · [Source](./src/format.js)
 
-If *value* is null, returns the empty string; if *value* is a number, calls [formatNumber](#formatNumberif *value* is a date, calls [formatDate](#formatDate); otherwise coerces *value* to a string.
+If *value* is null, returns the empty string; if *value* is a number, calls [formatNumber](#formatNumber) if *value* is a date, calls [formatDate](#formatDate); otherwise coerces *value* to a string.
 
 <a name="formatNumber" href="#formatNumber">#</a> <b>formatNumber</b>(<i>number</i>) · [Source](./src/format.js)
 
