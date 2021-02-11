@@ -2,6 +2,13 @@ export function stringify(x) {
   return x == null ? "" : x + "";
 }
 
+export function formatAuto(value) {
+  return value == null ? ""
+    : typeof value === "number" ? formatNumber(value)
+    : value instanceof Date ? formatDate(value)
+    : value + "";
+}
+
 export function formatNumber(value) {
   return value === 0 ? "0" : value.toLocaleString("en"); // handle negative zero
 }

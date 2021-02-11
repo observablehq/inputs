@@ -96,7 +96,7 @@ The available *options* are:
 * *label* - a label; either a string or an HTML element.
 * *sort* - true, “ascending”, “descending”, or a comparator function to sort keys; defaults to false.
 * *unique* - true to only show unique keys; defaults to false.
-* *format* - a format function.
+* *format* - a format function; defaults to [formatAuto](#formatAuto).
 * *keyof* - a function to return the key for the given element in *data*.
 * *valueof* - a function to return the value of the given element in *data*.
 * *value* - the initial value, an array; defaults to an empty array (no selection).
@@ -140,7 +140,7 @@ The available *options* are:
 * *label* - a label; either a string or an HTML element.
 * *sort* - true, “ascending”, “descending”, or a comparator function to sort keys; defaults to false.
 * *unique* - true to only show unique keys; defaults to false.
-* *format* - a format function.
+* *format* - a format function; defaults to [formatAuto](#formatAuto).
 * *keyof* - a function to return the key for the given element in *data*.
 * *valueof* - a function to return the value of the given element in *data*.
 * *value* - the initial value; defaults to null (no selection).
@@ -237,7 +237,7 @@ The available *options* are:
 * *size* - if *multiple* is true, the number of options to show.
 * *sort* - true, “ascending”, “descending”, or a comparator function to sort keys; defaults to false.
 * *unique* - true to only show unique keys; defaults to false.
-* *format* - a format function.
+* *format* - a format function; defaults to [formatAuto](#formatAuto).
 * *keyof* - a function to return the key for the given element in *data*.
 * *valueof* - a function to return the value of the given element in *data*.
 * *value* - the initial value, an array if multiple choice is allowed.
@@ -331,6 +331,10 @@ The disposal promise is a heuristic for detecting when an input has been removed
 <a name="searchFilter" href="#searchFilter">#</a> <b>searchFilter</b>(<i>query</i>) · [Source](./src/search.js)
 
 The default query parser used by [Search](#Search).
+
+<a name="formatAuto" href="#formatAuto">#</a> <b>formatAuto</b>(<i>value</i>) · [Source](./src/format.js)
+
+If *value* is null, returns the empty string; if *value* is a number, calls [formatNumber](#formatNumberif *value* is a date, calls [formatDate](#formatDate); otherwise coerces *value* to a string.
 
 <a name="formatNumber" href="#formatNumber">#</a> <b>formatNumber</b>(<i>number</i>) · [Source](./src/format.js)
 

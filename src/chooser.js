@@ -1,5 +1,6 @@
 import {arrayify} from "./array.js";
 import {dispatchInput, preventDefault} from "./event.js";
+import {formatAuto} from "./format.js";
 import {identity} from "./identity.js";
 import {ascending, descending} from "./sort.js";
 
@@ -10,7 +11,7 @@ export function createChooser({multiple: fixedMultiple, render, selectedIndexes,
   return function Chooser(data, {
     keyof = data instanceof Map ? first : identity,
     valueof = data instanceof Map ? second : identity,
-    format = data instanceof Map ? first : identity,
+    format = data instanceof Map ? first : formatAuto,
     multiple,
     key,
     value,
