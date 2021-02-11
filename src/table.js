@@ -128,15 +128,15 @@ export function Table(
 
   function reselectAll(event) {
     materialize();
-    if (selected.size) {
-      for (let i of selected) unselect(i);
-      anchor = head = null;
-      if (event.detail) event.currentTarget.blur();
-    } else {
+    if (this.checked) {
       selected = new Set(index);
       for (const tr of tbody.childNodes) {
         inputof(tr).checked = true;
       }
+    } else {
+      for (let i of selected) unselect(i);
+      anchor = head = null;
+      if (event.detail) event.currentTarget.blur();
     }
     reinput();
   }
@@ -195,7 +195,9 @@ export function Table(
   }
 
   function reinput() {
-    inputof(theadr).checked = selected.size;
+    const check = inputof(theadr);
+    check.indeterminate = selected.size && selected.size !== N;
+    check.checked = selected.size;
     value = undefined; // lazily computed
     root.dispatchEvent(new Event("input"));
   }

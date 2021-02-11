@@ -197,7 +197,8 @@ form.__ns__-checkbox {
 
 .__ns__-table tr:hover > :first-of-type input,
 .__ns__-table tr > :first-of-type input:focus,
-.__ns__-table tr > :first-of-type input:checked {
+.__ns__-table tr > :first-of-type input:checked,
+.__ns__-table tr > :first-of-type input:indeterminate {
   opacity: inherit;
 }
 
