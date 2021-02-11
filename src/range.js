@@ -44,7 +44,7 @@ export function Range([min, max] = [0, 1], {
   function onrange() {
     value = +invert(range.valueAsNumber);
     if (step !== undefined && transform !== identity && transform !== negate && isFinite(value)) {
-      const stepValue = Math.round(value / step) * step;
+      const stepValue = Math.round((value - min) / step) * step + min;
       if (isFinite(stepValue) && stepValue !== value) {
         range.valueAsNumber = transform(value = stepValue);
       }
