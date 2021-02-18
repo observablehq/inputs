@@ -73,9 +73,34 @@ form.__ns__-toggle .__ns__-input {
 .__ns__ button,
 .__ns__ input,
 .__ns__ select,
-.__ns__ table {
+.__ns__ table,
+.__ns__ textarea {
+  color: inherit;
   font: inherit;
   box-sizing: border-box;
+}
+
+.__ns__-textarea {
+  --input-width: 520px;
+}
+
+.__ns__-textarea > div {
+  width: 100%;
+  text-align: right;
+}
+
+.__ns__-textarea > div textarea {
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 4px;
+  min-height: calc(2.5em + 8px);
+  max-height: 12em;
+  resize: vertical;
+}
+
+.__ns__-textarea > div button {
+  margin: 4px 0 0;
 }
 
 /* Consistent horizontal spacing for labeled radios and checkboxes. */

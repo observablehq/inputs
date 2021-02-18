@@ -126,3 +126,26 @@ export {
   textDisabled,
   textPassword
 } from "./texts.js";
+
+export {
+  textarea,
+  textareaLabel,
+  textareaLabelHtml,
+  textareaValue,
+  textareaValueDanger,
+  textareaPlaceholder,
+  textareaSpellcheckFalse,
+  textareaSubmit,
+  textareaSubmitCustom,
+  textareaSubmitHtml,
+  textareaWide,
+  textareaCols,
+  textareaColsWidth,
+  textareaRows,
+  textareaMinlength,
+  textareaMaxlength,
+  textareaReadonly,
+  textareaResize,
+  textareaDisabled
+} from "./textareas.js";
+

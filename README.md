@@ -299,6 +299,33 @@ The available *options* are:
 
 If *validate* is not defined, [*text*.checkValidity](https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#dom-cva-checkvalidity) is used. While the input is not considered valid, changes to the input will not be reported.
 
+<a name="Textarea" href="#Textarea">#</a> <b>Textarea</b>(<i>options</i>) · [Source](./src/textarea.js)
+
+<img src="./img/textarea.png" alt="A Textarea asking to type a biography" width="640">
+
+```js
+viewof bio = Textarea({label: "Bio", placeholder: "Tell us about your life…"})
+```
+
+A Textarea allows multiline freeform text input. By default, a Textarea will report its value immediately on input. If more deliberate behavior is desired, the *submit* option can be set to true to wait until a button is clicked or Command-Enter is pressed.
+
+The available *options* are:
+
+* *label* - a label; either a string or an HTML element.
+* *value* - the initial value; defaults to the empty string.
+* *placeholder* - the [placeholder](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/placeholder) attribute.
+* *spellcheck* - whether to activate the browser’s spell-checker.
+* *minlength* - [minimum length](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/minlength) attribute.
+* *maxlength* - [maximum length](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/maxlength) attribute.
+* *required* - if true, the input must be non-empty; defaults to *minlength* > 0.
+* *validate* - a function to check whether the text input is valid.
+* *width* - the width of the input (not including the label).
+* *rows* - the number of rows of text to show.
+* *submit* - whether to require explicit submission before updating; defaults to false.
+* *disabled* - whether input is disabled; defaults to false.
+
+If *validate* is not defined, [*text*.checkValidity](https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#dom-cva-checkvalidity) is used. While the input is not considered valid, changes to the input will not be reported.
+
 ## Utilities
 
 <a name="Input" href="#Input">#</a> <b>Input</b>(<i>value</i>) · [Source](./src/input.js), [Examples](https://observablehq.com/@observablehq/synchronized-inputs)
