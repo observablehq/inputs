@@ -317,14 +317,14 @@ The available *options* are:
 * *spellcheck* - whether to activate the browser’s spell-checker.
 * *minlength* - [minimum length](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/minlength) attribute.
 * *maxlength* - [maximum length](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/maxlength) attribute.
+* *required* - if true, the input must be non-empty; defaults to *minlength* > 0.
+* *validate* - a function to check whether the text input is valid.
 * *width* - the width of the input (not including the label).
-* *cols* - the number of columns of text (will set the width if not present).
-* *rows* - the number of rows of text.
+* *rows* - the number of rows of text to show.
 * *submit* - whether to require explicit submission before updating; defaults to false.
-* *resize* - whether input is resizable; defaults to true.
-* *readonly* - whether input is readonly; defaults to false.
 * *disabled* - whether input is disabled; defaults to false.
-* *fontFamily* - the font family (e.g. "monospace"); defaults to inherit.
+
+If *validate* is not defined, [*text*.checkValidity](https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#dom-cva-checkvalidity) is used. While the input is not considered valid, changes to the input will not be reported.
 
 ## Utilities
 
