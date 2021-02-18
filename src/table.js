@@ -1,6 +1,7 @@
 import {html} from "htl";
 import {arrayify} from "./array.js";
 import {length} from "./css.js";
+import {bubbles} from "./event.js";
 import {formatDate, formatNumber, stringify} from "./format.js";
 import {newId} from "./id.js";
 import {identity} from "./identity.js";
@@ -199,7 +200,7 @@ export function Table(
     check.indeterminate = selected.size && selected.size !== N;
     check.checked = selected.size;
     value = undefined; // lazily computed
-    root.dispatchEvent(new Event("input"));
+    root.dispatchEvent(new Event("input", bubbles));
   }
 
   root.onscroll = () => {
