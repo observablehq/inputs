@@ -19,11 +19,15 @@ export function createText(form, input, {value = "", submit, validate = checkVal
     }
   }
   function onsubmit(event) {
-    if (submit && update()) {
-      button.disabled = true;
-      dispatchInput(event);
-    }
     preventDefault(event);
+    if (submit) {
+      if (update()) {
+        button.disabled = true;
+        dispatchInput(event);
+      } else {
+        input.reportValidity();
+      }
+    }
   }
   function oninput(event) {
     if (submit) {
