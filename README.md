@@ -282,7 +282,7 @@ If *width* is “auto”, the table width will be based on the table contents; n
 viewof name = Text({label: "Name", placeholder: "Enter your name"})
 ```
 
-A Text allows freeform text input. For example, a Text might be used to allow the user to enter a search query. (See also [Search](#Search).) By default, a Text will report its value immediately on input. If more deliberate behavior is desired, say if the input will trigger an expensive computation or remote API, the *submit* option can be set to true to wait until a button is clicked or the Enter key is pressed.
+A Text allows freeform single-line text input. For example, a Text might be used to allow the user to enter a search query. (See also [Search](#Search).) By default, a Text will report its value immediately on input. If more deliberate behavior is desired, say if the input will trigger an expensive computation or remote API, the *submit* option can be set to true to wait until a button is clicked or the Enter key is pressed.
 
 The available *options* are:
 
@@ -305,13 +305,13 @@ If *validate* is not defined, [*text*.checkValidity](https://html.spec.whatwg.or
 
 <a name="Textarea" href="#Textarea">#</a> <b>Textarea</b>(<i>options</i>) · [Source](./src/textarea.js)
 
-<img src="./img/textarea.png" alt="A Textarea asking to type a biography" width="640">
+<img src="./img/textarea.png" alt="A Textarea asking for your biography" width="660">
 
 ```js
-viewof bio = Textarea({label: "Bio", placeholder: "Tell us about your life…"})
+viewof bio = Textarea({label: "Biography", placeholder: "Tell us a little about yourself…"})
 ```
 
-A Textarea allows multiline freeform text input. By default, a Textarea will report its value immediately on input. If more deliberate behavior is desired, the *submit* option can be set to true to wait until a button is clicked or Command-Enter is pressed.
+A Textarea allows multi-line freeform text input. By default, a Textarea will report its value immediately on input. If more deliberate behavior is desired, the *submit* option can be set to true to wait until a button is clicked or Command-Enter is pressed.
 
 The available *options* are:
 
