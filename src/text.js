@@ -1,7 +1,7 @@
 import {html} from "htl";
 import {maybeWidth} from "./css.js";
 import {maybeDatalist} from "./datalist.js";
-import {dispatchInput, preventDefault} from "./event.js";
+import {checkValidity, dispatchInput, preventDefault} from "./event.js";
 import {stringify} from "./format.js";
 import {maybeLabel} from "./label.js";
 
@@ -65,8 +65,4 @@ export function Text({
     </div>${list}
   </form>`;
   return createText(form, input, options);
-}
-
-function checkValidity(input) {
-  return input.checkValidity();
 }

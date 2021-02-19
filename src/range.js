@@ -1,6 +1,6 @@
 import {html} from "htl";
 import {maybeWidth} from "./css.js";
-import {preventDefault} from "./event.js";
+import {checkValidity, preventDefault} from "./event.js";
 import {formatNumber} from "./format.js";
 import {identity} from "./identity.js";
 import {maybeLabel} from "./label.js";
@@ -16,10 +16,11 @@ export function Range([min, max] = [0, 1], {
   step,
   disabled,
   placeholder,
+  validate = checkValidity,
   width
 } = {}) {
   if (typeof format !== "function") throw new TypeError("format is not a function");
-  const number = html`<input type=number name=number placeholder=${placeholder} oninput=${onnumber} disabled=${disabled}>`;
+  const number = html`<input type=number name=number required placeholder=${placeholder} oninput=${onnumber} disabled=${disabled}>`;
   const range = html`<input type=range name=range oninput=${onrange} disabled=${disabled}>`;
   const form = html`<form class=__ns__ onsubmit=${preventDefault} style=${maybeWidth(width)}>
     ${maybeLabel(label, number)}<div class=__ns__-input>
@@ -41,18 +42,27 @@ export function Range([min, max] = [0, 1], {
   number.step = step === undefined ? "any" : step;
   if (value === undefined) number.value = invert(range.value = (tmin + tmax) / 2);
   else number.value = value, range.value = transform(+value);
-  function onrange() {
-    value = +invert(range.valueAsNumber);
-    if (step !== undefined && transform !== identity && transform !== negate && isFinite(value)) {
-      const stepValue = Math.round((value - min) / step) * step + min;
-      if (isFinite(stepValue) && stepValue !== value) {
-        range.valueAsNumber = transform(value = stepValue);
+  function update(v) {
+    if (validate(number)) {
+      value = v;
+      return true;
+    }
+  }
+  function onrange(event) {
+    let v = +invert(range.valueAsNumber);
+    if (step !== undefined && transform !== identity && transform !== negate && isFinite(v)) {
+      const stepValue = Math.round((v - min) / step) * step + min;
+      if (isFinite(stepValue) && stepValue !== v) {
+        range.valueAsNumber = transform(v = stepValue);
       }
     }
-    number.value = format(value);
+    number.value = format(v);
+    if (!update(v) && event) event.stopPropagation();
   }
-  function onnumber() {
-    range.value = transform(value = number.valueAsNumber);
+  function onnumber(event) {
+    let v = number.valueAsNumber;
+    range.value = transform(v);
+    if (!update(v) && event) event.stopPropagation();
   }
   onrange();
   return Object.defineProperty(form, "value", {

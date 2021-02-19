@@ -7,3 +7,7 @@ export function preventDefault(event) {
 export function dispatchInput({currentTarget}) {
   (currentTarget.form || currentTarget).dispatchEvent(new Event("input", bubbles));
 }
+
+export function checkValidity(input) {
+  return input.checkValidity();
+}
