@@ -24,7 +24,8 @@ Observable Inputs provides basic inputs:
 * [Radio](#Radio) - choose one from a set
 * [Range](#Range) - choose a numeric value in a range (slider)
 * [Select](#Select) - choose one or many from a set (drop-down menu)
-* [Text](#Text) - freeform text input
+* [Text](#Text) - freeform single-line text input
+* [Textarea](#Textarea) - freeform multi-line text input
 
 Observable Inputs provides fancy inputs for tabular data:
 
