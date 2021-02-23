@@ -42,10 +42,11 @@ tape("Range(…, {step}) sets the step", test => {
   test.equal(Range([0, 100], {step: number(10)}).elements.range.step, "10");
 });
 
-tape("Range(…, {step}) does not affect the initial value", test => {
+// JSDOM does not implement inputs correctly…
+tape.skip("Range(…, {step}) affects the initial value", test => {
   const r = Range([0, 100], {step: 7}); // 50 is not a multiple of 7
-  test.equal(r.elements.range.value, "50");
-  test.equal(r.value, 50);
+  test.equal(r.elements.range.value, "49");
+  test.equal(r.value, 49);
 });
 
 tape("Range(…, {value}) sets the initial value", test => {
