@@ -299,6 +299,7 @@ The available *options* are:
 * *width* - the width of the input (not including the label).
 * *submit* - whether to require explicit submission before updating; defaults to false.
 * *datalist* - an iterable of suggested values.
+* *readonly* - whether input is readonly; defaults to false.
 * *disabled* - whether input is disabled; defaults to false.
 
 If *validate* is not defined, [*text*.checkValidity](https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#dom-cva-checkvalidity) is used. While the input is not considered valid, changes to the input will not be reported.
@@ -326,6 +327,7 @@ The available *options* are:
 * *width* - the width of the input (not including the label).
 * *rows* - the number of rows of text to show.
 * *submit* - whether to require explicit submission before updating; defaults to false.
+* *readonly* - whether input is readonly; defaults to false.
 * *disabled* - whether input is disabled; defaults to false.
 
 If *validate* is not defined, [*text*.checkValidity](https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#dom-cva-checkvalidity) is used. While the input is not considered valid, changes to the input will not be reported.

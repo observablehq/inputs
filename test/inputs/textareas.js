@@ -77,3 +77,6 @@ export async function textareaDisabled() {
   return Textarea({disabled: true});
 }
 
+export async function textareaReadonly() {
+  return Textarea({readonly: true});
+}

@@ -124,6 +124,7 @@ export {
   textMaxlength,
   textDatalist,
   textDisabled,
+  textReadonly,
   textPassword
 } from "./texts.js";
 
@@ -146,6 +147,7 @@ export {
   textareaMaxlength,
   textareaReadonly,
   textareaResize,
-  textareaDisabled
+  textareaDisabled,
+  textareaReadonly
 } from "./textareas.js";
 

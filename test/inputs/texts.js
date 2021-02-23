@@ -57,6 +57,10 @@ export async function textDisabled() {
   return Text({disabled: true});
 }
 
+export async function textReadonly() {
+  return Text({readonly: true});
+}
+
 export async function textPassword() {
   return Text({type: "password"});
 }
