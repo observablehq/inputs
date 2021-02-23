@@ -34,8 +34,7 @@ form.__ns__-toggle {
 /* Since toggles won’t wrap on narrow screens, always align them vertically. */
 form.__ns__-toggle > label {
   align-self: start;
-  padding-top: 5px;
-  padding-bottom: 0;
+  padding: 5px 0 4px 0;
   margin-right: var(--length2);
 }
 
@@ -62,8 +61,7 @@ form.__ns__-toggle .__ns__-input {
   form.__ns__ > label {
     flex-shrink: 0;
     align-self: start;
-    padding-top: 5px;
-    padding-bottom: 0;
+    padding: 5px 0 4px 0;
     width: var(--label-width);
     margin-right: var(--length2);
   }
@@ -160,6 +158,7 @@ form.__ns__-toggle .__ns__-input {
 /* Checkboxes and radios aren’t constrained by their input width; */
 form.__ns__-checkbox {
   width: auto;
+  max-width: 640px;
 }
 
 /* Vertically-align the label contents, and give ample horizontal separation. */
