@@ -7,6 +7,7 @@ import {newId} from "./id.js";
 import {identity} from "./identity.js";
 import {defined, ascending, descending} from "./sort.js";
 
+const objectValueOf = Object.prototype.valueOf;
 const rowHeight = 22;
 
 export function Table(
@@ -168,7 +169,7 @@ export function Table(
     const th = event.currentTarget;
     let compare;
     if (currentSortHeader === th && event.metaKey) {
-      orderof(currentSortHeader).textContent = "";
+      sorterof(currentSortHeader).textContent = "";
       currentSortHeader = null;
       currentReverse = false;
       compare = ascending;
@@ -177,14 +178,18 @@ export function Table(
         currentReverse = !currentReverse;
       } else {
         if (currentSortHeader) {
-          orderof(currentSortHeader).textContent = "";
+          sorterof(currentSortHeader).textContent = "";
         }
         currentSortHeader = th;
         currentReverse = event.altKey;
       }
       const order = currentReverse ? descending : ascending;
-      compare = (a, b) => order(array[a][column], array[b][column]);
-      orderof(th).textContent = currentReverse ? "▾"  : "▴";
+      compare = (a, b) => {
+        const va = array[a][column];
+        const vb = array[b][column];
+        return defined(vb) - defined(va) || order(va, vb);
+      };
+      sorterof(th).textContent = currentReverse ? "▾"  : "▴";
     }
     index.sort(compare);
     selected = new Set(Array.from(selected).sort(compare));
@@ -259,8 +264,26 @@ function inputof(tr) {
   return tr.firstChild.firstChild;
 }
 
-function orderof(th) {
+function sorterof(th) {
   return th.firstChild;
+}
+
+function orderof(base = {}, data, columns) {
+  const order = Object.create(null);
+  for (const column of columns) {
+    if (column in base) {
+      if (typeof base[column] !== "function") throw new Error("order is not a function");
+      order[column] = base[column];
+      continue;
+    }
+    for (const d of data) {
+      const value = d[column];
+      if (value == null) continue;
+      if (value.valueOf !== objectValueOf) order[column] = ascending;
+      break;
+    }
+  }
+  return order;
 }
 
 function formatof(base = {}, data, columns) {
