@@ -145,7 +145,6 @@ export {
   textareaRows,
   textareaMinlength,
   textareaMaxlength,
-  textareaReadonly,
   textareaResize,
   textareaDisabled,
   textareaReadonly

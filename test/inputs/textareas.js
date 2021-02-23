@@ -65,10 +65,6 @@ export async function textareaMaxlength() {
   return Textarea({maxlength: 10});
 }
 
-export async function textareaReadonly() {
-  return Textarea({readonly: true});
-}
-
 export async function textareaResize() {
   return Textarea({resize: false});
 }
