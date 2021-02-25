@@ -15,6 +15,7 @@ export function Table(
     columns, // array of column names
     value, // initial selection
     rows = 11.5, // maximum number of rows to show
+    required = true, // if true, the value is everything if nothing is selected
     sort, // name of column to sort by, if any
     reverse = false, // if sorting, true for descending and false for ascending
     format, // object of column name to format function
@@ -239,7 +240,7 @@ export function Table(
     get() {
       if (value === undefined) {
         materialize();
-        value = Array.from(selected.size ? selected : index, i => array[i]);
+        value = Array.from(required && selected.size === 0 ? index : selected, i => array[i]);
         value.columns = columns;
       }
       return value;

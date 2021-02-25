@@ -271,6 +271,7 @@ The available *options* are:
 * *align* - an object of column name to “left”, “right”, or “center”.
 * *width* - the table width, or an object of column name to width.
 * *layout* - the [table layout](https://developer.mozilla.org/en-US/docs/Web/CSS/table-layout); defaults to fixed for ≤12 columns.
+* *required* - if true, the table’s value is all *data* if no selection; defaults to true.
 
 If *width* is “auto”, the table width will be based on the table contents; note that this may cause the table to resize as rows are lazily rendered.
 
