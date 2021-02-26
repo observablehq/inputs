@@ -60,10 +60,20 @@ viewof clicks = Button("OK", {label: "Click me"})
 
 A Button emits an *input* event when you click it. Buttons may be used to trigger the evaluation of cells, say to restart an animation. The given *content*, either a string or an HTML element, is displayed within the button. If *content* is not specified, it defaults to “≡”, but a more meaningful value is strongly encouraged for usability.
 
-By default, the value of a Button is how many times it has been clicked. The *reduce* function allows you to compute the new value of the Button when clicked, given the old value. For example, to set the value as the time of last click:
+By default, the value of a solitary Button (when *content* is a string or HTML) is how many times it has been clicked. The *reduce* function allows you to compute the new value of the Button when clicked, given the old value. For example, to set the value as the time of last click:
 
 ```js
 viewof time = Button("Refresh", {value: null, reduce: () => Date.now()})
+```
+
+If *content* is an array or iterable, then multiple buttons will be generated. Each element in *content* should be a tuple [*contenti*, *reducei*], where *contenti* is the content for the given button (a string or hTML), and *reducei* is the function to call when that button is clicked. For example, to have a counter that you can increment, decrement, or reset to zero:
+
+```js
+viewof counter = Button([
+  ["Increment", value => value + 1],
+  ["Decrement", value => value - 1],
+  ["Reset", () => 0]
+], {label: "Counter", value: 0})
 ```
 
 The available *options* are:
