@@ -66,7 +66,7 @@ By default, the value of a solitary Button (when *content* is a string or HTML) 
 viewof time = Button("Refresh", {value: null, reduce: () => Date.now()})
 ```
 
-If *content* is an array or iterable, then multiple buttons will be generated. Each element in *content* should be a tuple [*contenti*, *reducei*], where *contenti* is the content for the given button (a string or hTML), and *reducei* is the function to call when that button is clicked. For example, to have a counter that you can increment, decrement, or reset to zero:
+If *content* is an array or iterable, then multiple buttons will be generated. Each element in *content* should be a tuple [*contenti*, *reducei*], where *contenti* is the content for the given button (a string or HTML), and *reducei* is the function to call when that button is clicked. For example, to have a counter that you can increment, decrement, or reset to zero:
 
 ```js
 viewof counter = Button([
