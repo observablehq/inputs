@@ -30,41 +30,8 @@ export function Table(
   align = alignof(align, data, columns);
   let N = lengthof(data); // total number of rows (if known)
 
-  let minknownlength = 0;
-  let next;
-
-  function minlengthof(length) {
-    if (N != null) {
-      return Math.min(N, length);
-    }
-
-    if (next == null) {
-      next = data[Symbol.iterator]().next;
-    }
-
-    if (length <= minknownlength) {
-      return length;
-    }
-
-    while (length > minknownlength) {
-      const {done} = next();
-      if (done) {
-        N = minknownlength;
-        return minknownlength;
-      }
-      minknownlength++;
-    }
-
-    return minknownlength;
-  }
-
-  let n = minlengthof(Math.floor(rows * 2)); // number of currently-shown rows
-  let currentSortHeader = null, currentReverse = false;
-  let selected = new Set();
-  let anchor = null, head = null;
-
-  let array;
-  let index;
+  let array = [];
+  let index = [];
   let iterator = data[Symbol.iterator]();
   let iterindex = 0;
 
@@ -76,6 +43,41 @@ export function Table(
       N = index.length;
     }
   }
+
+  let next;
+
+  function minlengthof(length) {
+    if (N != null) {
+      return Math.min(N, length);
+    }
+
+    if (next == null) {
+      next = iterator.next;
+    }
+
+    if (length <= iterindex) {
+      return length;
+    }
+
+    while (length > iterindex) {
+      const {done, value} = next();
+      if (done) {
+        N = iterindex;
+        return iterindex;
+      }
+
+      index.push(iterindex);
+      iterindex++;
+      array.push(value);
+    }
+
+    return iterindex;
+  }
+
+  let n = minlengthof(Math.floor(rows * 2)); // number of currently-shown rows
+  let currentSortHeader = null, currentReverse = false;
+  let selected = new Set();
+  let anchor = null, head = null;
 
   const height = (rows + 1) * rowHeight - 1;
   const id = newId();
