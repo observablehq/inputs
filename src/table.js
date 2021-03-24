@@ -44,15 +44,9 @@ export function Table(
     }
   }
 
-  let next;
-
   function minlengthof(length) {
     if (N != null) {
       return Math.min(N, length);
-    }
-
-    if (next == null) {
-      next = iterator.next;
     }
 
     if (length <= iterindex) {
@@ -60,7 +54,7 @@ export function Table(
     }
 
     while (length > iterindex) {
-      const {done, value} = next();
+      const {done, value} = iterator.next();
       if (done) {
         N = iterindex;
         return iterindex;
