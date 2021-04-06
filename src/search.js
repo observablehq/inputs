@@ -16,10 +16,12 @@ export function Search(data, {
   filter = columns === undefined ? searchFilter : columnFilter(columns), // returns the filter function given query
   datalist,
   disabled,
+  required = true, // if true, the value is everything if nothing is selected
   width
 } = {}) {
   let value = [];
   data = arrayify(data);
+  required = !!required;
   const [list, listId] = maybeDatalist(datalist);
   const input = html`<input name=input type=search list=${listId} disabled=${disabled} spellcheck=${spellcheck === undefined ? false : spellcheck + ""} placeholder=${placeholder} value=${query} oninput=${oninput}>`;
   const output = html`<output name=output>`;
@@ -29,7 +31,7 @@ export function Search(data, {
     </div>${list}
   </form>`;
   function oninput() {
-    value = data.filter(filter(input.value));
+    value = input.value || required ? data.filter(filter(input.value)) : [];
     if (columns !== undefined) value.columns = columns;
     output.value = input.value ? format(value.length) : "";
   }

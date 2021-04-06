@@ -220,6 +220,7 @@ The available *options* are:
 * *width* - the width of the input (not including the label).
 * *datalist* - an iterable of suggested values.
 * *disabled* - whether input is disabled; defaults to false.
+* *required* - if true, the search’s value is all *data* if no query; defaults to true.
 
 If a *filter* function is specified, it is invoked whenever the query changes; the function it returns is then passed each element from *data*, along with its zero-based index, and should return a truthy value if the given element matches the query. The default filter splits the current query into space-separated tokens and checks that each token matches the beginning of at least one string in the data’s columns, case-insensitive. For example, the query [hello world] will match the string “Worldwide Hello Services” but not “hello”.
 
