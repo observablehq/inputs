@@ -28,12 +28,13 @@ export function Table(
   if (layout === undefined) layout = columns.length >= 12 ? "auto" : "fixed";
   format = formatof(format, data, columns);
   align = alignof(align, data, columns);
-  let N = lengthof(data); // total number of rows (if known)
 
   let array = [];
   let index = [];
   let iterator = data[Symbol.iterator]();
   let iterindex = 0;
+  let N = lengthof(data); // total number of rows (if known)
+  let n = minlengthof(rows * 2); // number of currently-shown rows
 
   // Defer materializing index and data arrays until needed.
   function materialize() {
@@ -45,30 +46,18 @@ export function Table(
   }
 
   function minlengthof(length) {
-    if (N != null) {
-      return Math.min(N, length);
-    }
-
-    if (length <= iterindex) {
-      return length;
-    }
-
+    length = Math.floor(length);
+    if (N !== undefined) return Math.min(N, length);
+    if (length <= iterindex) return length;
     while (length > iterindex) {
       const {done, value} = iterator.next();
-      if (done) {
-        N = iterindex;
-        return iterindex;
-      }
-
-      index.push(iterindex);
-      iterindex++;
+      if (done) return N = iterindex;
+      index.push(iterindex++);
       array.push(value);
     }
-
     return iterindex;
   }
 
-  let n = minlengthof(Math.floor(rows * 2)); // number of currently-shown rows
   let currentSortHeader = null, currentReverse = false;
   let selected = new Set();
   let anchor = null, head = null;
@@ -216,22 +205,22 @@ export function Table(
     selected = new Set(Array.from(selected).sort(compare));
     root.scrollTo(root.scrollLeft, 0);
     while (tbody.firstChild) tbody.firstChild.remove();
-    appendRows(0, n = minlengthof(Math.floor(rows * 2)));
+    appendRows(0, n = minlengthof(rows * 2));
     anchor = head = null;
     reinput();
   }
 
   function reinput() {
     const check = inputof(theadr);
-    check.indeterminate = selected.size && selected.size !== index.length;
+    check.indeterminate = selected.size && selected.size !== N; // assume materalized!
     check.checked = selected.size;
     value = undefined; // lazily computed
     root.dispatchEvent(new Event("input", bubbles));
   }
 
   root.onscroll = () => {
-    if (root.scrollHeight - root.scrollTop < height * 1.5 && n < minlengthof(n+1)) {
-      appendRows(n, n = minlengthof(n + Math.floor(rows)));
+    if (root.scrollHeight - root.scrollTop < height * 1.5 && n < minlengthof(n + 1)) {
+      appendRows(n, n = minlengthof(n + rows));
     }
   };
 
