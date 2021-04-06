@@ -281,6 +281,8 @@ The available *options* are:
 * *format* - an object of column name to format function.
 * *align* - an object of column name to “left”, “right”, or “center”.
 * *width* - the table width, or an object of column name to width.
+* *height* - the fixed table height; defaults to undefined for variable height.
+* *maxHeight* - the maximum table height; defaults to (*rows* + 1) * 22 - 1.
 * *layout* - the [table layout](https://developer.mozilla.org/en-US/docs/Web/CSS/table-layout); defaults to fixed for ≤12 columns.
 * *required* - if true, the table’s value is all *data* if no selection; defaults to true.
 
