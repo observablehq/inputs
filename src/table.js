@@ -28,15 +28,10 @@ export function Table(
   if (layout === undefined) layout = columns.length >= 12 ? "auto" : "fixed";
   format = formatof(format, data, columns);
   align = alignof(align, data, columns);
+  let N = lengthof(data); // total number of rows (if known)
 
-  const N = lengthof(data); // total number of rows
-  let n = Math.min(N, Math.floor(rows * 2)); // number of currently-shown rows
-  let currentSortHeader = null, currentReverse = false;
-  let selected = new Set();
-  let anchor = null, head = null;
-
-  let array;
-  let index;
+  let array = [];
+  let index = [];
   let iterator = data[Symbol.iterator]();
   let iterindex = 0;
 
@@ -45,8 +40,38 @@ export function Table(
     if (iterindex >= 0) {
       iterindex = iterator = undefined;
       index = Uint32Array.from(array = arrayify(data), (_, i) => i);
+      N = index.length;
     }
   }
+
+  function minlengthof(length) {
+    if (N != null) {
+      return Math.min(N, length);
+    }
+
+    if (length <= iterindex) {
+      return length;
+    }
+
+    while (length > iterindex) {
+      const {done, value} = iterator.next();
+      if (done) {
+        N = iterindex;
+        return iterindex;
+      }
+
+      index.push(iterindex);
+      iterindex++;
+      array.push(value);
+    }
+
+    return iterindex;
+  }
+
+  let n = minlengthof(Math.floor(rows * 2)); // number of currently-shown rows
+  let currentSortHeader = null, currentReverse = false;
+  let selected = new Set();
+  let anchor = null, head = null;
 
   const height = (rows + 1) * rowHeight - 1;
   const id = newId();
@@ -55,7 +80,7 @@ export function Table(
   const theadr = html`<tr><th><input type=checkbox onclick=${reselectAll}></th>${columns.map((column) => html`<th title=${column} onclick=${event => resort(event, column)}><span></span>${column}</th>`)}</tr>`;
   const root = html`<div class="__ns__ __ns__-table" id=${id} style=${{maxHeight: `${height}px`, width: typeof width === "string" || typeof width === "number" ? length(width) : undefined}}>
   <table style=${{tableLayout: layout}}>
-    <thead>${N || columns.length ? theadr : null}</thead>
+    <thead>${minlengthof(1) || columns.length ? theadr : null}</thead>
     ${tbody}
   </table>
   <style>${columns.map((column, i) => {
@@ -191,22 +216,22 @@ export function Table(
     selected = new Set(Array.from(selected).sort(compare));
     root.scrollTo(root.scrollLeft, 0);
     while (tbody.firstChild) tbody.firstChild.remove();
-    appendRows(0, n = Math.min(N, Math.floor(rows * 2)));
+    appendRows(0, n = minlengthof(Math.floor(rows * 2)));
     anchor = head = null;
     reinput();
   }
 
   function reinput() {
     const check = inputof(theadr);
-    check.indeterminate = selected.size && selected.size !== N;
+    check.indeterminate = selected.size && selected.size !== index.length;
     check.checked = selected.size;
     value = undefined; // lazily computed
     root.dispatchEvent(new Event("input", bubbles));
   }
 
   root.onscroll = () => {
-    if (root.scrollHeight - root.scrollTop < height * 1.5 && n < N) {
-      appendRows(n, n = Math.min(N, n + Math.floor(rows)));
+    if (root.scrollHeight - root.scrollTop < height * 1.5 && n < minlengthof(n+1)) {
+      appendRows(n, n = minlengthof(n + Math.floor(rows)));
     }
   };
 
@@ -222,7 +247,7 @@ export function Table(
     reinput();
   }
 
-  if (N) {
+  if (minlengthof(1)) {
     appendRows(0, n);
   } else {
     tbody.append(html`<tr>${columns.length ? html`<td>` : null}<td rowspan=${columns.length} style="padding-left: var(--length3); font-style: italic;">No results.</td></tr>`);
@@ -306,9 +331,6 @@ function lengthof(data) {
   if (typeof data.length === "number") return data.length; // array or array-like
   if (typeof data.size === "number") return data.size; // map, set
   if (typeof data.numRows === "function") return data.numRows(); // arquero
-  let size = 0;
-  for (const d of data) ++size; // eslint-disable-line no-unused-vars
-  return size;
 }
 
 function columnsof(data) {
