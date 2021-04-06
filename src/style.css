@@ -169,7 +169,7 @@ form.__ns__-checkbox {
 }
 
 .__ns__-table {
-  overflow-y: scroll;
+  overflow-y: auto;
   margin: 0 -14px;
 }
 
