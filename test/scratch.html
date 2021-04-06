@@ -5,6 +5,7 @@
 
 body {
   max-width: 960px;
+  padding: 0 1em;
   margin: 1em auto;
 }
 
@@ -159,11 +160,27 @@ canvas {
 table {
   width: 100%;
   border-collapse: collapse;
-  font: 14px var(--sans-serif);
+  font: 13px/1.2 var(--sans-serif);
 }
 
 th {
+  color: #111;
   text-align: left;
+  vertical-align: bottom;
+}
+
+td {
+  color: #444;
+  vertical-align: top;
+}
+
+th,
+td {
+  padding: 3px 6.5px 3px 0;
+}
+
+th:last-child, td:last-child {
+  padding-right: 0;
 }
 
 tr:not(:last-child) {
@@ -186,6 +203,10 @@ figure img {
 figcaption {
   font: small var(--sans-serif);
   color: var(--syntax-unknown-variable);
+}
+
+form {
+  margin: 1em 0;
 }
 
   </style>

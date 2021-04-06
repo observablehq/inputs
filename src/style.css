@@ -5,7 +5,7 @@
   --length3: 13px;
   --label-width: 120px;
   --input-width: 240px;
-  font: 13px var(--sans-serif);
+  font: 13px/1.2 var(--sans-serif);
 }
 
 /* The minimum height of a form should match the minimum allowed cell height.
@@ -177,10 +177,8 @@ form.__ns__-checkbox {
   max-width: initial;
   min-height: 33px;
   margin: 0;
-  border-collapse: separate;
-  border-spacing: 0;
+  border-collapse: collapse;
   font-variant-numeric: tabular-nums;
-  line-height: 1.5;
 }
 
 .__ns__-table thead th span {
@@ -194,7 +192,7 @@ form.__ns__-checkbox {
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
-  border-bottom: solid 1px #eee;
+  padding: 3px 6.5px 3px 0;
 }
 
 .__ns__-table tr > :not(:first-of-type) {
@@ -209,14 +207,9 @@ form.__ns__-checkbox {
   width: 19px;
 }
 
-.__ns__-table tr,
-.__ns__-table tr:last-child td {
-  border-bottom: none;
-}
-
 .__ns__-table tr > :first-of-type input {
   opacity: 0;
-  margin: 0 3px 3px 4px;
+  margin: 0 3px 1px 4px;
 }
 
 .__ns__-table tr:hover > :first-of-type input,
@@ -226,10 +219,18 @@ form.__ns__-checkbox {
   opacity: inherit;
 }
 
+.__ns__-table thead tr {
+  border-bottom: none;
+}
+
 .__ns__-table thead th {
   position: sticky;
   top: 0;
   background: white;
-  border-bottom: solid 1px #ccc;
   cursor: ns-resize;
+  box-shadow: 0 1px 0 #ccc;
+}
+
+.__ns__-table tbody tr:first-child td {
+  padding-top: 4px;
 }
