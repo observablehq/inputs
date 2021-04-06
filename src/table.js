@@ -23,6 +23,7 @@ export function Table(
     height,
     maxHeight = height === undefined ? (rows + 1) * rowHeight - 1 : undefined,
     width = {}, // object of column name to width, or overall table width
+    maxWidth,
     layout // "fixed" or "auto"
   } = {}
 ) {
@@ -68,7 +69,7 @@ export function Table(
   const tbody = html`<tbody>`;
   const tr = html`<tr><td><input type=checkbox></td>${columns.map(() => html`<td>`)}`;
   const theadr = html`<tr><th><input type=checkbox onclick=${reselectAll}></th>${columns.map((column) => html`<th title=${column} onclick=${event => resort(event, column)}><span></span>${column}</th>`)}</tr>`;
-  const root = html`<div class="__ns__ __ns__-table" id=${id} style=${{height: length(height), maxHeight: length(maxHeight), width: typeof width === "string" || typeof width === "number" ? length(width) : undefined}}>
+  const root = html`<div class="__ns__ __ns__-table" id=${id} style=${{height: length(height), maxHeight: length(maxHeight), width: typeof width === "string" || typeof width === "number" ? length(width) : undefined, maxWidth: length(maxWidth)}}>
   <table style=${{tableLayout: layout}}>
     <thead>${minlengthof(1) || columns.length ? theadr : null}</thead>
     ${tbody}
