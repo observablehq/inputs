@@ -221,7 +221,7 @@ export function Table(
   }
 
   root.onscroll = () => {
-    if (root.scrollHeight - root.scrollTop < height * 1.5 && n < minlengthof(n + 1)) {
+    if (root.scrollHeight - root.scrollTop < rows * rowHeight * 1.5 && n < minlengthof(n + 1)) {
       appendRows(n, n = minlengthof(n + rows));
     }
   };
