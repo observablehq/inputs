@@ -43,7 +43,7 @@ export function Range([min, max] = [0, 1], {
   if (value === undefined) number.value = invert(range.value = (tmin + tmax) / 2);
   else number.value = value, range.value = transform(+value);
   function update(v) {
-    if (validate(number)) {
+    if (validate(form)) {
       value = v;
       return true;
     }

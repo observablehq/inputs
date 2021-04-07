@@ -184,7 +184,7 @@ The given *value* is clamped to the given extent, and rounded if *step* is defin
 
 If a *transform* function is specified, an inverse transform function *invert* is strongly recommended. If *invert* is not provided, the Range will fallback to Newton’s method, but this may be slow or inaccurate. Passing Math.sqrt, Math.log, or Math.exp as a *transform* will automatically supply the corresponding *invert*. If *min* is greater than *max*, *i.e.* if the extent is inverted, then *transform* and *invert* will default to `value => -value`.
 
-If *validate* is not defined, [*text*.checkValidity](https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#dom-cva-checkvalidity) is used. While the input is not considered valid, changes to the input will not be reported.
+If *validate* is not defined, [*form*.checkValidity](https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#dom-cva-checkvalidity) is used. While the input is not considered valid, changes to the input will not be reported.
 
 <a name="Search" href="#Search">#</a> <b>Search</b>(<i>data</i>, <i>options</i>) · [Source](./src/search.js), [Examples](https://observablehq.com/@observablehq/input-search)
 
@@ -318,7 +318,7 @@ The available *options* are:
 * *readonly* - whether input is readonly; defaults to false.
 * *disabled* - whether input is disabled; defaults to false.
 
-If *validate* is not defined, [*text*.checkValidity](https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#dom-cva-checkvalidity) is used. While the input is not considered valid, changes to the input will not be reported.
+If *validate* is not defined, [*form*.checkValidity](https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#dom-cva-checkvalidity) is used. While the input is not considered valid, changes to the input will not be reported.
 
 <a name="Textarea" href="#Textarea">#</a> <b>Textarea</b>(<i>options</i>) · [Source](./src/textarea.js)
 
@@ -346,7 +346,7 @@ The available *options* are:
 * *readonly* - whether input is readonly; defaults to false.
 * *disabled* - whether input is disabled; defaults to false.
 
-If *validate* is not defined, [*text*.checkValidity](https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#dom-cva-checkvalidity) is used. While the input is not considered valid, changes to the input will not be reported.
+If *validate* is not defined, [*form*.checkValidity](https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#dom-cva-checkvalidity) is used. While the input is not considered valid, changes to the input will not be reported.
 
 ## Utilities
 
