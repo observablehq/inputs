@@ -24,6 +24,7 @@ export function Table(
     maxHeight = height === undefined ? (rows + 1) * rowHeight - 1 : undefined,
     width = {}, // object of column name to width, or overall table width
     maxWidth,
+    multiple = true,
     layout // "fixed" or "auto"
   } = {}
 ) {
@@ -67,8 +68,8 @@ export function Table(
 
   const id = newId();
   const tbody = html`<tbody>`;
-  const tr = html`<tr><td><input type=checkbox></td>${columns.map(() => html`<td>`)}`;
-  const theadr = html`<tr><th><input type=checkbox onclick=${reselectAll}></th>${columns.map((column) => html`<th title=${column} onclick=${event => resort(event, column)}><span></span>${column}</th>`)}</tr>`;
+  const tr = html`<tr><td><input type=${multiple ? "checkbox" : "radio"} name=${multiple ? null : "radio"}></td>${columns.map(() => html`<td>`)}`;
+  const theadr = html`<tr><th><input type=checkbox onclick=${reselectAll} disabled=${!multiple}></th>${columns.map((column) => html`<th title=${column} onclick=${event => resort(event, column)}><span></span>${column}</th>`)}</tr>`;
   const root = html`<div class="__ns__ __ns__-table" id=${id} style=${{height: length(height), maxHeight: length(maxHeight), width: typeof width === "string" || typeof width === "number" ? length(width) : undefined, maxWidth: length(maxWidth)}}>
   <table style=${{tableLayout: layout}}>
     <thead>${minlengthof(1) || columns.length ? theadr : null}</thead>
@@ -101,7 +102,7 @@ export function Table(
     const input = inputof(itr);
     input.onclick = reselect;
     input.checked = selected.has(i);
-    input.name = i;
+    input.value = i;
     for (let j = 0; j < columns.length; ++j) {
       let column = columns[j];
       let value = d[column];
@@ -161,8 +162,11 @@ export function Table(
 
   function reselect(event) {
     materialize();
-    let i = +this.name;
-    if (event.shiftKey) {
+    let i = +this.value;
+    if (!multiple) {
+      for (let i of selected) unselect(i);
+      select(i);
+    } else if (event.shiftKey) {
       if (anchor === null) anchor = selected.size ? first(selected) : index[0];
       else for (let i of range(anchor, head)) unselect(i);
       head = i;
@@ -214,7 +218,8 @@ export function Table(
 
   function reinput() {
     const check = inputof(theadr);
-    check.indeterminate = selected.size && selected.size !== N; // assume materalized!
+    check.disabled = !multiple && !selected.size;
+    check.indeterminate = multiple && selected.size && selected.size !== N; // assume materalized!
     check.checked = selected.size;
     value = undefined; // lazily computed
     root.dispatchEvent(new Event("input", bubbles));
@@ -233,8 +238,13 @@ export function Table(
 
   if (value !== undefined) {
     materialize();
-    const values = new Set(value);
-    selected = new Set(index.filter(i => values.has(array[i])));
+    if (multiple) {
+      const values = new Set(value);
+      selected = new Set(index.filter(i => values.has(array[i])));
+    } else {
+      const i = array.indexOf(value);
+      selected = i < 0 ? new Set() : new Set([i]);
+    }
     reinput();
   }
 
@@ -256,17 +266,29 @@ export function Table(
     get() {
       if (value === undefined) {
         materialize();
-        value = Array.from(required && selected.size === 0 ? index : selected, i => array[i]);
-        value.columns = columns;
+        if (multiple) {
+          value = Array.from(required && selected.size === 0 ? index : selected, i => array[i]);
+          value.columns = columns;
+        } else if (selected.size) {
+          const [i] = selected;
+          value = array[i];
+        } else {
+          value = null;
+        }
       }
       return value;
     },
     set(v) {
       materialize();
-      const values = new Set(v);
-      const selection = new Set(index.filter(i => values.has(array[i])));
-      for (const i of selected) if (!selection.has(i)) unselect(i);
-      for (const i of selection) if (!selected.has(i)) select(i);
+      if (multiple) {
+        const values = new Set(v);
+        const selection = new Set(index.filter(i => values.has(array[i])));
+        for (const i of selected) if (!selection.has(i)) unselect(i);
+        for (const i of selection) if (!selected.has(i)) select(i);
+      } else {
+        const i = array.indexOf(v);
+        selected = i < 0 ? new Set() : new Set([i]);
+      }
       value = undefined; // lazily computed
     }
   });

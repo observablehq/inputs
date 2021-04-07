@@ -212,10 +212,10 @@ form.__ns__-checkbox {
   margin: 0 3px 1px 4px;
 }
 
-.__ns__-table tr:hover > :first-of-type input,
+.__ns__-table tr:hover > :first-of-type input:enabled,
 .__ns__-table tr > :first-of-type input:focus,
 .__ns__-table tr > :first-of-type input:checked,
-.__ns__-table tr > :first-of-type input:indeterminate {
+.__ns__-table tr > :first-of-type input[type=checkbox]:indeterminate {
   opacity: inherit;
 }
 
