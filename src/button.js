@@ -9,16 +9,17 @@ export function Button(content = "≡", {
   value,
   reduce,
   disabled,
+  required = false,
   width
 } = {}) {
   const solitary = typeof content === "string" || content instanceof Node;
   if (solitary) {
-    if (value === undefined) value = 0;
-    if (reduce === undefined) reduce = value => value + 1;
+    if (!required && value === undefined) value = 0;
+    if (reduce === undefined) reduce = (value = 0) => value + 1;
     disabled = new Set(disabled ? [content] : []);
     content = [[content, reduce]];
   } else {
-    if (value === undefined) value = null;
+    if (!required && value === undefined) value = null;
     disabled = new Set(disabled === true ? Array.from(content, ([content]) => content) : disabled || undefined);
   }
   const form = html`<form class=__ns__ onsubmit=${preventDefault}>`;
