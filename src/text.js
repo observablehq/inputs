@@ -43,7 +43,8 @@ export function createText(form, input, {value = "", submit, validate = checkVal
       return value;
     },
     set(v) {
-      input.value = value = stringify(v);
+      input.value = stringify(v);
+      update();
     }
   });
 }
