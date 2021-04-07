@@ -49,7 +49,7 @@ const config = {
   },
   plugins: [
     css,
-    replace({__ns__: styleNs})
+    replace({__ns__: styleNs, preventAssignment: true})
   ]
 };
 
