@@ -10,6 +10,7 @@ export function createText(form, input, {value = "", submit, validate = checkVal
   const button = submit ? html`<button type=submit disabled>${submit}` : null;
   if (submit) input.after(button);
   input.value = stringify(value);
+  value = validate(input) ? input.value : undefined;
   form.onsubmit = onsubmit;
   input.oninput = oninput;
   function update() {
