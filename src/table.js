@@ -2,7 +2,7 @@ import {html} from "htl";
 import {arrayify} from "./array.js";
 import {length} from "./css.js";
 import {bubbles} from "./event.js";
-import {formatDate, formatNumber, stringify} from "./format.js";
+import {formatDate, formatLocaleNumber, stringify} from "./format.js";
 import {newId} from "./id.js";
 import {identity} from "./identity.js";
 import {defined, ascending, descending} from "./sort.js";
@@ -18,6 +18,7 @@ export function Table(
     sort, // name of column to sort by, if any
     reverse = false, // if sorting, true for descending and false for ascending
     format, // object of column name to format function
+    locale,
     align, // object of column name to left, right, or center
     rows = 11.5, // maximum number of rows to show
     height,
@@ -30,7 +31,7 @@ export function Table(
 ) {
   columns = columns === undefined ? columnsof(data) : arrayify(columns);
   if (layout === undefined) layout = columns.length >= 12 ? "auto" : "fixed";
-  format = formatof(format, data, columns);
+  format = formatof(format, data, columns, locale);
   align = alignof(align, data, columns);
 
   let array = [];
@@ -302,7 +303,7 @@ function orderof(th) {
   return th.firstChild;
 }
 
-function formatof(base = {}, data, columns) {
+function formatof(base = {}, data, columns, locale) {
   const format = Object.create(null);
   for (const column of columns) {
     if (column in base) {
@@ -310,7 +311,7 @@ function formatof(base = {}, data, columns) {
       continue;
     }
     switch (type(data, column)) {
-      case "number": format[column] = formatNumber; break;
+      case "number": format[column] = formatLocaleNumber(locale); break;
       case "date": format[column] = formatDate; break;
       default: format[column] = stringify; break;
     }

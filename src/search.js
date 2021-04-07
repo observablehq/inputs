@@ -3,11 +3,12 @@ import {arrayify} from "./array.js";
 import {maybeWidth} from "./css.js";
 import {maybeDatalist} from "./datalist.js";
 import {preventDefault} from "./event.js";
-import {formatNumber, stringify} from "./format.js";
+import {formatLocaleNumber, localize, stringify} from "./format.js";
 import {maybeLabel} from "./label.js";
 
 export function Search(data, {
-  format = length => `${formatNumber(length)} result${length === 1 ? "" : "s"}`, // length format
+  locale,
+  format = formatResults(locale), // length format
   label,
   query = "", // initial search query
   placeholder = "Search", // placeholder text to show when empty
@@ -108,3 +109,8 @@ function termFilter(term) {
 function escapeRegExp(text) {
   return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
 }
+
+const formatResults = localize(locale => {
+  const formatNumber = formatLocaleNumber(locale);
+  return length => `${formatNumber(length)} result${length === 1 ? "" : "s"}`;
+});

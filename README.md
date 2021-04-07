@@ -108,7 +108,8 @@ The available *options* are:
 * *label* - a label; either a string or an HTML element.
 * *sort* - true, “ascending”, “descending”, or a comparator function to sort keys; defaults to false.
 * *unique* - true to only show unique keys; defaults to false.
-* *format* - a format function; defaults to [formatAuto](#formatAuto).
+* *locale* - the current locale; defaults to English.
+* *format* - a format function; defaults to [formatLocaleAuto](#formatLocaleAuto).
 * *keyof* - a function to return the key for the given element in *data*.
 * *valueof* - a function to return the value of the given element in *data*.
 * *value* - the initial value, an array; defaults to an empty array (no selection).
@@ -152,7 +153,8 @@ The available *options* are:
 * *label* - a label; either a string or an HTML element.
 * *sort* - true, “ascending”, “descending”, or a comparator function to sort keys; defaults to false.
 * *unique* - true to only show unique keys; defaults to false.
-* *format* - a format function; defaults to [formatAuto](#formatAuto).
+* *locale* - the current locale; defaults to English.
+* *format* - a format function; defaults to [formatLocaleAuto](#formatLocaleAuto).
 * *keyof* - a function to return the key for the given element in *data*.
 * *valueof* - a function to return the value of the given element in *data*.
 * *value* - the initial value; defaults to null (no selection).
@@ -214,6 +216,7 @@ The available *options* are:
 * *query* - the initial search terms; defaults to the empty string.
 * *placeholder* - a placeholder string for when the query is empty.
 * *columns* - an array of columns to search; defaults to *data*.columns.
+* *locale* - the current locale; defaults to English.
 * *format* - a function to show the number of results.
 * *spellcheck* - whether to activate the browser’s spell-checker.
 * *filter* - the filter factory: a function that receives the query and returns a filter.
@@ -252,7 +255,8 @@ The available *options* are:
 * *size* - if *multiple* is true, the number of options to show.
 * *sort* - true, “ascending”, “descending”, or a comparator function to sort keys; defaults to false.
 * *unique* - true to only show unique keys; defaults to false.
-* *format* - a format function; defaults to [formatAuto](#formatAuto).
+* *locale* - the current locale; defaults to English.
+* *format* - a format function; defaults to [formatLocaleAuto](#formatLocaleAuto).
 * *keyof* - a function to return the key for the given element in *data*.
 * *valueof* - a function to return the value of the given element in *data*.
 * *value* - the initial value, an array if multiple choice is allowed.
@@ -381,11 +385,11 @@ The disposal promise is a heuristic for detecting when an input has been removed
 
 The default query parser used by [Search](#Search).
 
-<a name="formatAuto" href="#formatAuto">#</a> <b>formatAuto</b>(<i>value</i>) · [Source](./src/format.js)
+<a name="formatLocaleAuto" href="#formatLocaleAuto">#</a> <b>formatLocaleAuto</b>(<i>locale</i> = "en") · [Source](./src/format.js)
 
-If *value* is null, returns the empty string; if *value* is a number, calls [formatNumber](#formatNumber) if *value* is a date, calls [formatDate](#formatDate); otherwise coerces *value* to a string.
+If *value* is null, returns the empty string; if *value* is a number, calls [formatLocaleNumber](#formatLocaleNumber) if *value* is a date, calls [formatDate](#formatDate); otherwise coerces *value* to a string.
 
-<a name="formatNumber" href="#formatNumber">#</a> <b>formatNumber</b>(<i>number</i>) · [Source](./src/format.js)
+<a name="formatLocaleNumber" href="#formatLocaleNumber">#</a> <b>formatLocaleNumber</b>(<i>locale</i> = "en) · [Source](./src/format.js)
 
 The default number formatter used by [Table](#Table).
 

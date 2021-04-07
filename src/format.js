@@ -2,16 +2,21 @@ export function stringify(x) {
   return x == null ? "" : x + "";
 }
 
-export function formatAuto(value) {
-  return value == null ? ""
+export const formatLocaleAuto = localize(locale => {
+  const formatNumber = formatLocaleNumber(locale);
+  return value => value == null ? ""
     : typeof value === "number" ? formatNumber(value)
     : value instanceof Date ? formatDate(value)
     : value + "";
-}
+});
 
-export function formatNumber(value) {
-  return value === 0 ? "0" : value.toLocaleString("en"); // handle negative zero
-}
+export const formatLocaleNumber = localize(locale => {
+  return value => value === 0 ? "0" : value.toLocaleString(locale); // handle negative zero
+});
+
+export const formatAuto = formatLocaleAuto();
+
+export const formatNumber = formatLocaleNumber();
 
 export function formatTrim(value) {
   const s = value.toString();
@@ -46,4 +51,10 @@ function formatYear(year) {
 
 function pad(value, width) {
   return (value + "").padStart(width, "0");
+}
+
+// Memoize the last-returned locale.
+export function localize(f) {
+  let key = localize, value;
+  return (locale = "en") => locale === key ? value : (value = f(key = locale));
 }
