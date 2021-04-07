@@ -11,4 +11,4 @@ export {Textarea} from "./textarea.js";
 export {Input} from "./input.js";
 export {bind} from "./bind.js";
 export {disposal} from "./disposal.js";
-export {formatAuto, formatNumber, formatDate} from "./format.js";
+export {formatAuto, formatNumber, formatDate, formatTrim} from "./format.js";
