@@ -78,9 +78,9 @@ form.__ns__-toggle .__ns__-input {
   box-sizing: border-box;
 }
 
-.__ns__ button {
-  padding: 3px 6px;
-  margin: 0;
+.__ns__ button,
+.__ns__ input {
+  line-height: normal;
 }
 
 .__ns__-textarea {
