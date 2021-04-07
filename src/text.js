@@ -13,7 +13,7 @@ export function createText(form, input, {value = "", submit, validate = checkVal
   form.onsubmit = onsubmit;
   input.oninput = oninput;
   function update() {
-    if (validate(form)) {
+    if (validate(input)) {
       value = input.value;
       return true;
     }

@@ -8,6 +8,6 @@ export function dispatchInput({currentTarget}) {
   (currentTarget.form || currentTarget).dispatchEvent(new Event("input", bubbles));
 }
 
-export function checkValidity(form) {
-  return form.checkValidity();
+export function checkValidity(input) {
+  return input.checkValidity();
 }
