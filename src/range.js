@@ -19,27 +19,23 @@ export function Range([min, max] = [0, 1], {
   width
 } = {}) {
   if (typeof format !== "function") throw new TypeError("format is not a function");
-  const number = html`<input type=number name=number required placeholder=${placeholder} oninvalid=${oninvalid} oninput=${onnumber} disabled=${disabled}>`;
-  const range = html`<input type=range name=range oninput=${onrange} disabled=${disabled}>`;
-  const stepper = html`<input type=range>`; // untransformed range for validation
-  const form = html`<form class=__ns__ onsubmit=${preventDefault} style=${maybeWidth(width)}>
-    ${maybeLabel(label, number)}<div class=__ns__-input>
-      ${number}${range}
-    </div>
-  </form>`;
   min = +min, max = +max;
   if (min > max) [min, max] = [max, min], transform === undefined && (transform = negate);
   if (transform === undefined) transform = identity;
   if (typeof transform !== "function") throw new TypeError("transform is not a function");
   if (invert === undefined) invert = transform.invert === undefined ? solver(transform) : transform.invert;
   if (typeof invert !== "function") throw new TypeError("invert is not a function");
-  let tmin = +transform(stepper.min = number.min = min), tmax = +transform(stepper.max = number.max = max);
-  if (tmin > tmax) [tmin, tmax] = [tmax, tmin];
-  range.min = tmin;
-  range.max = tmax;
   if (step !== undefined) step = +step;
-  range.step = step === undefined || (transform !== identity && transform !== negate) ? "any" : step;
-  stepper.step = number.step = step === undefined ? "any" : step;
+  let tmin = +transform(min), tmax = +transform(max);
+  if (tmin > tmax) [tmin, tmax] = [tmax, tmin];
+  const number = html`<input type=number min=${min} max=${max} step=${step == undefined ? "any" : step} name=number required placeholder=${placeholder} oninvalid=${oninvalid} oninput=${onnumber} disabled=${disabled}>`;
+  const stepper = html`<input type=range min=${min} max=${max} step=${step == undefined ? "any" : step}>`; // untransformed range for validation
+  const range = html`<input type=range min=${tmin} max=${tmax} step=${step === undefined || (transform !== identity && transform !== negate) ? "any" : step} name=range oninput=${onrange} disabled=${disabled}>`;
+  const form = html`<form class=__ns__ onsubmit=${preventDefault} style=${maybeWidth(width)}>
+    ${maybeLabel(label, number)}<div class=__ns__-input>
+      ${number}${range}
+    </div>
+  </form>`;
   function onrange(event) {
     let v = +invert(range.valueAsNumber);
     if (isFinite(v)) {
