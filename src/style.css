@@ -83,6 +83,11 @@ form.__ns__-toggle .__ns__-input {
   line-height: normal;
 }
 
+/* Align the left edge of Button inputs. */
+.__ns__ > button:first-of-type {
+  margin-left: 0;
+}
+
 .__ns__-textarea {
   --input-width: 520px;
 }
