@@ -349,6 +349,7 @@ function lengthof(data) {
 
 function columnsof(data) {
   if (Array.isArray(data.columns)) return data.columns; // d3-dsv, FileAttachment
+  if (data.schema && Array.isArray(data.schema.fields)) return data.schema.fields.map(f => f.name); // apache-arrow
   if (typeof data.columnNames === "function") return data.columnNames(); // arquero
   const columns = new Set();
   for (const row of data) {
