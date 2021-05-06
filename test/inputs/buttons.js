@@ -1,30 +1,30 @@
-import {Button} from "@observablehq/inputs";
+import * as Inputs from "@observablehq/inputs";
 import {html} from "htl";
 
 export async function button() {
-  return Button();
+  return Inputs.button();
 }
 
 export async function buttonContent() {
-  return Button("dollars&pounds");
+  return Inputs.button("dollars&pounds");
 }
 
 export async function buttonContentHtml() {
-  return Button(html.fragment`<b>Click</b> me`);
+  return Inputs.button(html.fragment`<b>Click</b> me`);
 }
 
 export async function buttonLabel() {
-  return Button("OK", {label: "dollars&pounds"});
+  return Inputs.button("OK", {label: "dollars&pounds"});
 }
 
 export async function buttonLabelHtml() {
-  return Button("OK", {label: html`<b>intensity</b>`});
+  return Inputs.button("OK", {label: html`<b>intensity</b>`});
 }
 
 export async function buttonDisabled() {
-  return Button("OK", {disabled: true});
+  return Inputs.button("OK", {disabled: true});
 }
 
 export async function buttonWidth() {
-  return Button("OK", {width: "20em"});
+  return Inputs.button("OK", {width: "20em"});
 }

@@ -8,7 +8,7 @@ const first = ([x]) => x;
 const second = ([, x]) => x;
 
 export function createChooser({multiple: fixedMultiple, render, selectedIndexes, select}) {
-  return function Chooser(data, {
+  return function chooser(data, {
     locale,
     keyof = data instanceof Map ? first : identity,
     valueof = data instanceof Map ? second : identity,

@@ -4,7 +4,7 @@ import {dispatchInput, preventDefault} from "./event.js";
 import {identity} from "./identity.js";
 import {maybeLabel} from "./label.js";
 
-export function Button(content = "≡", {
+export function button(content = "≡", {
   label = "",
   value,
   reduce,

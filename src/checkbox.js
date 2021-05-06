@@ -22,11 +22,11 @@ function createCheckbox(multiple, type) {
   });
 }
 
-export const Radio = createCheckbox(false, "radio");
+export const radio = createCheckbox(false, "radio");
 
-export const Checkbox = createCheckbox(true, "checkbox");
+export const checkbox = createCheckbox(true, "checkbox");
 
-export function Toggle({label, value, values, disabled} = {}) {
+export function toggle({label, value, values, disabled} = {}) {
   const input = html`<input class=__ns__-input type=checkbox name=input disabled=${disabled}>`;
   const form = html`<form class="__ns__ __ns__-toggle">${maybeLabel(label, input)}${input}`;
   Object.defineProperty(form, "value", {

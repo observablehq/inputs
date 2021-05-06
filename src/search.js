@@ -6,7 +6,7 @@ import {preventDefault} from "./event.js";
 import {formatLocaleNumber, localize, stringify} from "./format.js";
 import {maybeLabel} from "./label.js";
 
-export function Search(data, {
+export function search(data, {
   locale,
   format = formatResults(locale), // length format
   label,

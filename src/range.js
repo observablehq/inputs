@@ -7,7 +7,7 @@ import {maybeLabel} from "./label.js";
 
 const epsilon = 1e-6;
 
-export function Range([min, max] = [0, 1], {
+export function range([min, max] = [0, 1], {
   format = formatTrim,
   transform,
   invert,
