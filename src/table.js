@@ -223,7 +223,6 @@ export function Table(
     check.indeterminate = multiple && selected.size && selected.size !== N; // assume materalized!
     check.checked = selected.size;
     value = undefined; // lazily computed
-    root.dispatchEvent(new Event("input", bubbles));
   }
 
   root.onscroll = () => {
