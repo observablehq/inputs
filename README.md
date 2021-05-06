@@ -346,9 +346,11 @@ The available *options* are:
 * *validate* - a function to check whether the text input is valid.
 * *width* - the width of the input (not including the label).
 * *rows* - the number of rows of text to show.
+* *resize* - if true, allow vertical resizing; defaults to *rows* < 12.
 * *submit* - whether to require explicit submission before updating; defaults to false.
 * *readonly* - whether input is readonly; defaults to false.
 * *disabled* - whether input is disabled; defaults to false.
+* *monospace* - if true, use a monospace font.
 
 If *validate* is not defined, [*text*.checkValidity](https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#dom-cva-checkvalidity) is used. While the input is not considered valid, changes to the input will not be reported.
 

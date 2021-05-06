@@ -103,7 +103,7 @@ form.__ns__-toggle .__ns__-input {
   margin: 0;
   padding: 4px;
   min-height: calc(2.5em + 8px);
-  max-height: 12em;
+  max-height: calc(14em + 8px);
   resize: vertical;
 }
 

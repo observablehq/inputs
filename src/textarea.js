@@ -13,10 +13,12 @@ export function Textarea({
   required = minlength > 0,
   readonly,
   disabled,
+  monospace = false,
+  resize = rows < 12,
   width,
   ...options
 } = {}) {
-  const input = html`<textarea name=text readonly=${readonly} disabled=${disabled} required=${required} rows=${rows} minlength=${minlength} maxlength=${maxlength} spellcheck=${spellcheck === undefined ? false : spellcheck + ""} placeholder=${placeholder} onkeydown=${onkeydown} style=${{width}}>`;
+  const input = html`<textarea name=text readonly=${readonly} disabled=${disabled} required=${required} rows=${rows} minlength=${minlength} maxlength=${maxlength} spellcheck=${spellcheck === undefined ? false : spellcheck + ""} placeholder=${placeholder} onkeydown=${onkeydown} style=${{width, fontFamily: monospace ? "var(--monospace, monospace)" : null, resize: resize ? null : "none"}}>`;
   const form = html`<form class="__ns__ __ns__-textarea" style=${maybeWidth(width)}>
     ${maybeLabel(label, input)}<div>
       ${input}
