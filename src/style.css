@@ -183,6 +183,10 @@ form.__ns__-checkbox {
   margin: 0 -14px;
 }
 
+.__ns__-table form {
+  margin: 0;
+}
+
 .__ns__-table table {
   max-width: initial;
   min-height: 33px;
