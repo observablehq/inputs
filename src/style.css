@@ -178,13 +178,11 @@ form.__ns__-checkbox {
   margin-right: var(--length3);
 }
 
-.__ns__-table {
+form.__ns__-table {
+  display: block;
   overflow-y: auto;
   margin: 0 -14px;
-}
-
-.__ns__-table form {
-  margin: 0;
+  width: 100%;
 }
 
 .__ns__-table table {

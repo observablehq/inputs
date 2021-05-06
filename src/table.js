@@ -71,7 +71,7 @@ export function Table(
   const tbody = html`<tbody>`;
   const tr = html`<tr><td><input type=${multiple ? "checkbox" : "radio"} name=${multiple ? null : "radio"}></td>${columns.map(() => html`<td>`)}`;
   const theadr = html`<tr><th><input type=checkbox onclick=${reselectAll} disabled=${!multiple}></th>${columns.map((column) => html`<th title=${column} onclick=${event => resort(event, column)}><span></span>${column}</th>`)}</tr>`;
-  const root = html`<div class="__ns__ __ns__-table" id=${id} style=${{height: length(height), maxHeight: length(maxHeight), width: typeof width === "string" || typeof width === "number" ? length(width) : undefined, maxWidth: length(maxWidth)}}>
+  const root = html`<form class="__ns__ __ns__-table" id=${id} style=${{height: length(height), maxHeight: length(maxHeight), width: typeof width === "string" || typeof width === "number" ? length(width) : undefined, maxWidth: length(maxWidth)}}>
   <form><table style=${{tableLayout: layout}}>
     <thead>${minlengthof(1) || columns.length ? theadr : null}</thead>
     ${tbody}
@@ -82,7 +82,7 @@ export function Table(
     if (width[column]) rules.push(`width:${length(width[column])}`);
     if (rules.length) return `#${id} tr>:nth-child(${i + 2}){${rules.join(";")}}`;
   }).filter(identity).join("\n")}</style>
-</div>`;
+</form>`;
 
   function appendRows(i, j) {
     if (iterindex === i) {
