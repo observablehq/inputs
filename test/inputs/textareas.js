@@ -1,78 +1,78 @@
-import {Textarea} from "@observablehq/inputs";
+import * as Inputs from "@observablehq/inputs";
 import {html} from "htl";
 
 export async function textarea() {
-  return Textarea();
+  return Inputs.textarea();
 }
 
 export async function textareaLabel() {
-  return Textarea({label: "dollars&pounds"});
+  return Inputs.textarea({label: "dollars&pounds"});
 }
 
 export async function textareaLabelHtml() {
-  return Textarea({label: html`<b>intensity</b>`});
+  return Inputs.textarea({label: html`<b>intensity</b>`});
 }
 
 export async function textareaValue() {
-  return Textarea({value: "hello world"});
+  return Inputs.textarea({value: "hello world"});
 }
 
 export async function textareaValueDanger() {
-  return Textarea({value: "hello world </textarea>"});
+  return Inputs.textarea({value: "hello world </textarea>"});
 }
 
 export async function textareaPlaceholder() {
-  return Textarea({placeholder: "hello world"});
+  return Inputs.textarea({placeholder: "hello world"});
 }
 
 export async function textareaSpellcheckFalse() {
-  return Textarea({spellcheck: false});
+  return Inputs.textarea({spellcheck: false});
 }
 
 export async function textareaSubmit() {
-  return Textarea({submit: true});
+  return Inputs.textarea({submit: true});
 }
 
 export async function textareaSubmitCustom() {
-  return Textarea({submit: "dollars&pounds"});
+  return Inputs.textarea({submit: "dollars&pounds"});
 }
 
 export async function textareaSubmitHtml() {
-  return Textarea({submit: html`<b>Update</b>`});
+  return Inputs.textarea({submit: html`<b>Update</b>`});
 }
 
 export async function textareaWide() {
-  return Textarea({width: "20em"});
+  return Inputs.textarea({width: "20em"});
 }
 
 export async function textareaCols() {
-  return Textarea({cols: 80});
+  return Inputs.textarea({cols: 80});
 }
 
 export async function textareaColsWidth() {
-  return Textarea({cols: 80, width: 500});
+  return Inputs.textarea({cols: 80, width: 500});
 }
 
 export async function textareaRows() {
-  return Textarea({rows: 20});
+  return Inputs.textarea({rows: 20});
 }
 
 export async function textareaMinlength() {
-  return Textarea({minlength: 10});
+  return Inputs.textarea({minlength: 10});
 }
 
 export async function textareaMaxlength() {
-  return Textarea({maxlength: 10});
+  return Inputs.textarea({maxlength: 10});
 }
 
 export async function textareaResize() {
-  return Textarea({resize: false});
+  return Inputs.textarea({resize: false});
 }
 
 export async function textareaDisabled() {
-  return Textarea({disabled: true});
+  return Inputs.textarea({disabled: true});
 }
 
 export async function textareaReadonly() {
-  return Textarea({readonly: true});
+  return Inputs.textarea({readonly: true});
 }

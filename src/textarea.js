@@ -3,7 +3,7 @@ import {maybeWidth} from "./css.js";
 import {maybeLabel} from "./label.js";
 import {createText} from "./text.js";
 
-export function Textarea({
+export function textarea({
   label,
   placeholder,
   spellcheck,

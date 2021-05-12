@@ -49,7 +49,7 @@ export function createText(form, input, {value = "", submit, validate = checkVal
   });
 }
 
-export function Text({
+export function text({
   label,
   type = "text",
   placeholder,

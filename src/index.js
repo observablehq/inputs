@@ -1,14 +1,14 @@
 import "./style.css";
 
-export {Button} from "./button.js";
-export {Checkbox, Radio, Toggle} from "./checkbox.js";
-export {Range} from "./range.js";
-export {Search, searchFilter} from "./search.js";
-export {Select} from "./select.js";
-export {Table} from "./table.js";
-export {Text} from "./text.js";
-export {Textarea} from "./textarea.js";
-export {Input} from "./input.js";
+export {button} from "./button.js";
+export {checkbox, radio, toggle} from "./checkbox.js";
+export {range} from "./range.js";
+export {search, searchFilter} from "./search.js";
+export {select} from "./select.js";
+export {table} from "./table.js";
+export {text} from "./text.js";
+export {textarea} from "./textarea.js";
+export {input} from "./input.js";
 export {bind} from "./bind.js";
 export {disposal} from "./disposal.js";
 export {formatDate, formatLocaleAuto, formatLocaleNumber, formatTrim} from "./format.js";

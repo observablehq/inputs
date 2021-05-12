@@ -1,5 +1,5 @@
-export function Input(value) {
-  const input = new EventTarget();
-  input.value = value;
-  return input;
+export function input(value) {
+  const target = new EventTarget();
+  target.value = value;
+  return target;
 }

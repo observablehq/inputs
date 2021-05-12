@@ -1,15 +1,15 @@
-import {Radio} from "@observablehq/inputs";
+import * as Inputs from "@observablehq/inputs";
 import tape from "./jsdom.js";
 
-tape("Radio([]) handles empty options", test => {
-  const r = Radio([]);
+tape("Inputs.radio([]) handles empty options", test => {
+  const r = Inputs.radio([]);
   test.equal(r.value, null);
   r.value = "red";
   test.equal(r.value, null);
 });
 
-tape("Radio([value]) handles singular option", test => {
-  const r = Radio(["red"]);
+tape("Inputs.radio([value]) handles singular option", test => {
+  const r = Inputs.radio(["red"]);
   test.equal(r.value, null);
   r.value = "blue";
   test.equal(r.value, null);
@@ -19,10 +19,10 @@ tape("Radio([value]) handles singular option", test => {
   test.equal(r.value, "red");
 });
 
-// JSDOM doesn’t support RadioNodeList…
+// JSDOM doesn’t support Inputs.radioNodeList…
 // https://github.com/jsdom/jsdom/issues/2600
-tape.skip("Radio(values) supports value getter and setter", test => {
-  const r = Radio(["red", "blue"]);
+tape.skip("Inputs.radio(values) supports value getter and setter", test => {
+  const r = Inputs.radio(["red", "blue"]);
   test.equal(r.value, null);
   r.value = "blue";
   test.equal(r.value, "blue");

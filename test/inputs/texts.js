@@ -1,66 +1,66 @@
-import {Text} from "@observablehq/inputs";
+import * as Inputs from "@observablehq/inputs";
 import {html} from "htl";
 
 export async function text() {
-  return Text();
+  return Inputs.text();
 }
 
 export async function textLabel() {
-  return Text({label: "dollars&pounds"});
+  return Inputs.text({label: "dollars&pounds"});
 }
 
 export async function textLabelHtml() {
-  return Text({label: html`<b>intensity</b>`});
+  return Inputs.text({label: html`<b>intensity</b>`});
 }
 
 export async function textValue() {
-  return Text({value: "hello world"});
+  return Inputs.text({value: "hello world"});
 }
 
 export async function textPlaceholder() {
-  return Text({placeholder: "hello world"});
+  return Inputs.text({placeholder: "hello world"});
 }
 
 export async function textSpellcheckFalse() {
-  return Text({spellcheck: false});
+  return Inputs.text({spellcheck: false});
 }
 
 export async function textSubmit() {
-  return Text({submit: true});
+  return Inputs.text({submit: true});
 }
 
 export async function textSubmitCustom() {
-  return Text({submit: "dollars&pounds"});
+  return Inputs.text({submit: "dollars&pounds"});
 }
 
 export async function textSubmitHtml() {
-  return Text({submit: html`<b>Update</b>`});
+  return Inputs.text({submit: html`<b>Update</b>`});
 }
 
 export async function textWide() {
-  return Text({width: "20em"});
+  return Inputs.text({width: "20em"});
 }
 
 export async function textMinlength() {
-  return Text({minlength: 10});
+  return Inputs.text({minlength: 10});
 }
 
 export async function textMaxlength() {
-  return Text({maxlength: 10});
+  return Inputs.text({maxlength: 10});
 }
 
 export async function textDatalist() {
-  return Text({datalist: ["red", "green", "blue"]});
+  return Inputs.text({datalist: ["red", "green", "blue"]});
 }
 
 export async function textDisabled() {
-  return Text({disabled: true});
+  return Inputs.text({disabled: true});
 }
 
 export async function textReadonly() {
-  return Text({readonly: true});
+  return Inputs.text({readonly: true});
 }
 
 export async function textPassword() {
-  return Text({type: "password"});
+  return Inputs.text({type: "password"});
 }

@@ -1,30 +1,30 @@
-import {Range} from "@observablehq/inputs";
+import * as Inputs from "@observablehq/inputs";
 import {html} from "htl";
 
 export async function range() {
-  return Range();
+  return Inputs.range();
 }
 
 export async function range100() {
-  return Range([0, 100], {step: 1, value: 20});
+  return Inputs.range([0, 100], {step: 1, value: 20});
 }
 
 export async function rangeFixed() {
-  return Range([0, 1], {value: 0.12345, format: x => x.toFixed(3)});
+  return Inputs.range([0, 1], {value: 0.12345, format: x => x.toFixed(3)});
 }
 
 export async function rangeLabel() {
-  return Range([0, 1], {label: "dollars&pounds"});
+  return Inputs.range([0, 1], {label: "dollars&pounds"});
 }
 
 export async function rangeLabelHtml() {
-  return Range([0, 1], {label: html`<b>intensity</b>`});
+  return Inputs.range([0, 1], {label: html`<b>intensity</b>`});
 }
 
 export async function rangeWide() {
-  return Range([0, 1], {width: "20em"});
+  return Inputs.range([0, 1], {width: "20em"});
 }
 
 export async function rangePlaceholder() {
-  return Range([0, 1], {placeholder: "number"});
+  return Inputs.range([0, 1], {placeholder: "number"});
 }

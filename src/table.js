@@ -8,7 +8,7 @@ import {defined, ascending, descending} from "./sort.js";
 
 const rowHeight = 22;
 
-export function Table(
+export function table(
   data,
   {
     columns, // array of column names

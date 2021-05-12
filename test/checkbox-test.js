@@ -1,8 +1,8 @@
-import {Checkbox} from "@observablehq/inputs";
+import * as Inputs from "@observablehq/inputs";
 import tape from "./jsdom.js";
 
-tape("Checkbox([]) handles empty options", test => {
-  const r = Checkbox([]);
+tape("Inputs.checkbox([]) handles empty options", test => {
+  const r = Inputs.checkbox([]);
   test.deepEqual(r.value, []);
   test.strictEqual(r.value, r.value);
   r.value = ["red"];
@@ -10,8 +10,8 @@ tape("Checkbox([]) handles empty options", test => {
   test.strictEqual(r.value, r.value);
 });
 
-tape("Checkbox([value]) handles singular option", test => {
-  const r = Checkbox(["red"]);
+tape("Inputs.checkbox([value]) handles singular option", test => {
+  const r = Inputs.checkbox(["red"]);
   test.deepEqual(r.value, []);
   test.strictEqual(r.value, r.value);
   r.value = ["blue"];
