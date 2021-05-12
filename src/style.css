@@ -157,6 +157,8 @@ form.__ns__-toggle .__ns__-input {
 /* Use tabular-nums to avoid jitter when moving the range slider. */
 .__ns__-input > input[type=number] {
   font-variant-numeric: tabular-nums;
+  flex-shrink: 1.5;
+  text-overflow: ellipsis;
 }
 
 /* Separate the range input from the preceding number input. */
