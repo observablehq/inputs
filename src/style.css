@@ -218,6 +218,7 @@ form.__ns__-table {
 }
 
 .__ns__-table tr > :first-of-type {
+  text-overflow: unset;
   width: 19px;
 }
 
