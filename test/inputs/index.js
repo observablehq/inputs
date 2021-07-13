@@ -111,6 +111,7 @@ export {
 
 export {
   text,
+  textDate,
   textLabel,
   textLabelHtml,
   textValue,
