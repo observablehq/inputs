@@ -306,6 +306,8 @@ The available *options* are:
 * *pattern* - the [pattern](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/pattern) attribute.
 * *minlength* - [minimum length](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/minlength) attribute.
 * *maxlength* - [maximum length](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/maxlength) attribute.
+* *max* - [maximum date (yyyy-mm-dd)](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/max)
+* *min* - [minimum date (yyyy-mm-dd)](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/min)
 * *required* - if true, the input must be non-empty; defaults to *minlength* > 0.
 * *validate* - a function to check whether the text input is valid.
 * *width* - the width of the input (not including the label).
