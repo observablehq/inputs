@@ -1,14 +1,15 @@
 import * as Inputs from "@observablehq/inputs";
-import tape from "./jsdom.js";
+import assert from "assert";
+import it from "./jsdom.js";
 
-tape("Inputs.toggle({values}) handles custom values", test => {
+it("Inputs.toggle({values}) handles custom values", () => {
   const t = Inputs.toggle({values: [1, 0]});
-  test.equal(t.value, 0);
-  test.equal(t.elements.input.checked, false);
+  assert.strictEqual(t.value, 0);
+  assert.strictEqual(t.elements.input.checked, false);
   t.value = 1;
-  test.equal(t.value, 1);
-  test.equal(t.elements.input.checked, true);
+  assert.strictEqual(t.value, 1);
+  assert.strictEqual(t.elements.input.checked, true);
   t.value = 0;
-  test.equal(t.value, 0);
-  test.equal(t.elements.input.checked, false);
+  assert.strictEqual(t.value, 0);
+  assert.strictEqual(t.elements.input.checked, false);
 });

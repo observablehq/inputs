@@ -1,19 +1,19 @@
+import assert from "assert";
 import {promises as fs} from "fs";
 import * as path from "path";
-import {html as beautify} from "js-beautify";
-import tape from "tape-await";
+import beautify from "js-beautify";
+import it from "./jsdom.js";
 import * as inputs from "./inputs/index.js";
-import {withJsdom} from "./jsdom.js";
 
 (async () => {
   for (const [name, input] of Object.entries(inputs)) {
-    tape(`input ${name}`, async test => {
+    it(`input ${name}`, async () => {
       const reid = new Map();
-      const element = await withJsdom(input);
-      const actual = beautify(
+      const element = await input();
+      const actual = beautify.html(
         element.outerHTML
-          .replace(/(?<=="[^"]*)\boi-[a-f0-9]{6}-([0-9]+)\b/g, (_, id) => `__ns__-${reid.has(id) ? reid.get(id) : (reid.set(id, id = reid.size + 1), id)}`)
-          .replace(/(?<=="[^"]*)\boi-[a-f0-9]{6}\b/g, `__ns__`),
+          .replace(/(?<=="[^"]*)\b__ns__-([0-9]+)\b/g, (_, id) => `__ns__-${reid.has(id) ? reid.get(id) : (reid.set(id, id = reid.size + 1), id)}`)
+          .replace(/(?<=="[^"]*)\b__ns__\b/g, `__ns__`),
         {indent_size: 2}
       );
       const outfile = path.resolve("./test/output", path.basename(name, ".js") + ".html");
@@ -29,7 +29,7 @@ import {withJsdom} from "./jsdom.js";
           throw error;
         }
       }
-      test.ok(actual === expected, `${name} must match snapshot`);
+      assert(actual === expected, `${name} must match snapshot`);
     });
   }
 })();

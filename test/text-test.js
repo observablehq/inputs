@@ -1,43 +1,44 @@
 import * as Inputs from "@observablehq/inputs";
-import tape from "./jsdom.js";
+import assert from "assert";
+import it from "./jsdom.js";
 
-tape("Inputs.text() test  initial value is set to ''", test => {
+it("Inputs.text() test  initial value is set to ''", () => {
   const t = Inputs.text();
-  test.equal(t.value, "");
+  assert.strictEqual(t.value, "");
 });
 
-tape("Inputs.text() test setting various text properties ", test => {
+it("Inputs.text() test setting various text properties ", () => {
   const t = Inputs.text({type: "password", label: "Name", placeholder: "Enter your name", value: "Anonymous"});
-  test.equal(t.value, "Anonymous");
-  test.equal(t.textContent.trim(), "Name");
-  test.equal(t.elements.text.placeholder, "Enter your name");
-  test.equal(t.elements.text.type, "password");
+  assert.strictEqual(t.value, "Anonymous");
+  assert.strictEqual(t.textContent.trim(), "Name");
+  assert.strictEqual(t.elements.text.placeholder, "Enter your name");
+  assert.strictEqual(t.elements.text.type, "password");
 });
 
-tape("Inputs.text() test type=date settings ", test => {
+it("Inputs.text() test type=date settings ", () => {
   const t = Inputs.text({type: "date", label: "Date",  value: "1970-01-01"});
-  test.equal(t.value, "1970-01-01");
-  test.equal(t.textContent.trim(), "Date");
-  test.equal(t.elements.text.type, "date");
+  assert.strictEqual(t.value, "1970-01-01");
+  assert.strictEqual(t.textContent.trim(), "Date");
+  assert.strictEqual(t.elements.text.type, "date");
 });
 
-tape("Inputs.text() test type=date setting initial value ", test => {
+it("Inputs.text() test type=date setting initial value ", () => {
   const t = Inputs.text({type: "date", label: "Date",  value: "1970-01-01", min: "1970-01-01", max: "2021-07-11"});
-  test.equal(t.value, "1970-01-01");
-  test.equal(t.textContent.trim(), "Date");
-  test.equal(t.elements.text.type, "date");
-  test.equal(t.elements.text.min, "1970-01-01");
-  test.equal(t.elements.text.max, "2021-07-11");
+  assert.strictEqual(t.value, "1970-01-01");
+  assert.strictEqual(t.textContent.trim(), "Date");
+  assert.strictEqual(t.elements.text.type, "date");
+  assert.strictEqual(t.elements.text.min, "1970-01-01");
+  assert.strictEqual(t.elements.text.max, "2021-07-11");
 });
 
-tape("Inputs.text() test type=date settings for min and max", test => {
+it("Inputs.text() test type=date settings for min and max", () => {
   const t = Inputs.text({type: "date", label: "Date",  value: "2010-01-01", min: "2000-01-01", max: "2021-07-11"});
-  test.equal(t.value, "2010-01-01");
+  assert.strictEqual(t.value, "2010-01-01");
   t.value = "2015-01-01";
-  test.equal(t.value, "2015-01-01");
+  assert.strictEqual(t.value, "2015-01-01");
   t.value = "1999-01-01";
   // We should not be able to the date to a value outside of the [min, max] range
-  test.notEqual(t.value, "1999-01-01");
+  assert.notStrictEqual(t.value, "1999-01-01");
   // verify that trying to set an invalid date does not change the existing value
-  test.equal(t.value, "2015-01-01");
+  assert.strictEqual(t.value, "2015-01-01");
 });
