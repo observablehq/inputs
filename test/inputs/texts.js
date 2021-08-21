@@ -64,3 +64,7 @@ export async function textReadonly() {
 export async function textPassword() {
   return Inputs.text({type: "password"});
 }
+
+export async function textDate() {
+  return Inputs.text({type: "date"});
+}
