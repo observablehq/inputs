@@ -1,8 +1,9 @@
 import crypto from "crypto";
 import fs from "fs";
 import path from "path";
-import replace from "@rollup/plugin-replace";
 import {terser} from "rollup-plugin-terser";
+import replace from "@rollup/plugin-replace";
+import json from "@rollup/plugin-json";
 import jsesc from "jsesc";
 import CleanCSS from "clean-css";
 import * as meta from "./package.json";
@@ -10,7 +11,15 @@ import * as meta from "./package.json";
 const filename = meta.name.split("/").pop();
 
 // Resolve HTL dependency.
-const htl = require("htl/package.json");
+const htl = JSON.parse(fs.readFileSync("./node_modules/htl/package.json", "utf-8"));
+if (typeof htl.jsdelivr === "undefined") throw new Error("unable to resolve htl");
+const htlPath = `htl@${htl.version}/${htl.jsdelivr}`;
+
+// Extract copyrights from the LICENSE.
+const copyrights = fs.readFileSync("./LICENSE", "utf-8")
+  .split(/\n/g)
+  .filter(line => /^copyright\s+/i.test(line))
+  .map(line => line.replace(/^copyright\s+/i, ""));
 
 // Create a content-hashed namespace for our styles.
 const stylePath = path.resolve("./src/style.css");
@@ -26,6 +35,7 @@ const css = {
   transform(input, id) {
     if (id !== stylePath) return;
     return {
+      moduleSideEffects: true,
       code: `if (typeof document !== 'undefined' && !document.querySelector('.${styleNs}')) {
 const style = document.createElement('style');
 style.className = '${styleNs}';
@@ -38,69 +48,41 @@ document.head.appendChild(style);
 };
 
 const config = {
-  input: "src/index.js",
+  input: "bundle.js",
   external: ["htl"],
   output: {
     indent: false,
-    banner: `// ${meta.name} v${meta.version} Copyright ${(new Date).getFullYear()} ${meta.author.name}`,
+    banner: `// ${meta.name} v${meta.version} Copyright ${copyrights.join(", ")}`,
     name: "observablehq",
+    format: "umd",
     extend: true,
-    globals: {"htl": "htl"}
+    globals: {"htl": "htl"},
+    paths: {"htl": htlPath}
   },
   plugins: [
     css,
+    json(),
     replace({__ns__: styleNs, preventAssignment: true})
   ]
 };
-
-const minify = terser({
-  output: {
-    preamble: config.output.banner
-  }
-});
 
 export default [
   {
     ...config,
     output: {
       ...config.output,
-      format: "es",
-      file: `dist/${filename}.js`,
-      paths: {"htl": `https://cdn.jsdelivr.net/npm/htl@${htl.version}/${htl.module}`}
-    },
-    plugins: [
-      ...config.plugins,
-      minify
-    ]
-  },
-  {
-    ...config,
-    output: {
-      ...config.output,
-      format: "cjs",
-      file: `dist/${filename}.cjs.js`
+      file: `dist/${filename}.umd.js`
     }
   },
   {
     ...config,
     output: {
       ...config.output,
-      format: "umd",
-      file: `dist/${filename}.umd.js`,
-      paths: {"htl": `htl@${htl.version}/${htl.unpkg}`}
-    }
-  },
-  {
-    ...config,
-    output: {
-      ...config.output,
-      format: "umd",
-      file: `dist/${filename}.umd.min.js`,
-      paths: {"htl": `htl@${htl.version}/${htl.unpkg}`}
+      file: `dist/${filename}.umd.min.js`
     },
     plugins: [
       ...config.plugins,
-      minify
+      terser({output: {preamble: config.output.banner}})
     ]
   }
 ];

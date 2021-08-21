@@ -1,5 +1,3 @@
-import "./style.css";
-
 export {button} from "./button.js";
 export {checkbox, radio, toggle} from "./checkbox.js";
 export {range} from "./range.js";

@@ -1,25 +1,26 @@
 import * as Inputs from "@observablehq/inputs";
 import {string} from "./coercible.js";
-import tape from "./jsdom.js";
+import assert from "assert";
+import it from "./jsdom.js";
 
-tape("Inputs.select(options) sets the options", test => {
+it("Inputs.select(options) sets the options", () => {
   const s = Inputs.select(["red", "green", "blue"]);
-  test.deepEqual(Array.from(s.elements.input.options, o => o.textContent), ["red", "green", "blue"]);
-  test.equal(s.value, "red");
+  assert.deepStrictEqual(Array.from(s.elements.input.options, o => o.textContent), ["red", "green", "blue"]);
+  assert.strictEqual(s.value, "red");
   const red = string("red"), green = string("green"), blue = string("blue");
   const c = Inputs.select([red, green, blue]);
-  test.deepEqual(Array.from(c.elements.input.options, o => o.textContent), ["red", "green", "blue"]);
-  test.equal(c.value, red);
+  assert.deepStrictEqual(Array.from(c.elements.input.options, o => o.textContent), ["red", "green", "blue"]);
+  assert.strictEqual(c.value, red);
 });
 
-tape("Inputs.select(options) formats null as empty by default", test => {
+it("Inputs.select(options) formats null as empty by default", () => {
   const s = Inputs.select(["red", null, "blue"], {value: null});
-  test.deepEqual(Array.from(s.elements.input.options, o => o.textContent), ["red", "", "blue"]);
-  test.equal(s.value, null);
+  assert.deepStrictEqual(Array.from(s.elements.input.options, o => o.textContent), ["red", "", "blue"]);
+  assert.strictEqual(s.value, null);
 });
 
-tape("Inputs.select(…, {format}) sets the format function", test => {
+it("Inputs.select(…, {format}) sets the format function", () => {
   const s = Inputs.select(["red", null, "blue"], {format: x => x && x.toUpperCase()});
-  test.deepEqual(Array.from(s.elements.input.options, o => o.textContent), ["RED", "", "BLUE"]);
-  test.equal(s.value, "red");
+  assert.deepStrictEqual(Array.from(s.elements.input.options, o => o.textContent), ["RED", "", "BLUE"]);
+  assert.strictEqual(s.value, "red");
 });
