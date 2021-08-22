@@ -71,14 +71,14 @@ export default [
     ...config,
     output: {
       ...config.output,
-      file: `dist/${filename}.umd.js`
+      file: `dist/${filename}.js`
     }
   },
   {
     ...config,
     output: {
       ...config.output,
-      file: `dist/${filename}.umd.min.js`
+      file: `dist/${filename}.min.js`
     },
     plugins: [
       ...config.plugins,
