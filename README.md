@@ -270,7 +270,7 @@ By default, the Table uses fixed layout if *data* has fewer than twelve columns.
 The available *options* are:
 
 * *columns* - the columns (property names) to show; defaults to *data*.columns.
-* *value* - a subset of *data* to use as the initial selection (checked rows).
+* *value* - a subset of *data* to use as the initial selection (checked rows), or a *data* item if *multiple* is false.
 * *rows* - the maximum number of rows to show; defaults to 11.5.
 * *sort* - the column to sort by; defaults to null (input order).
 * *reverse* - whether to reverse the initial sort (descending instead of ascending).
