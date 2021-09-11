@@ -103,15 +103,14 @@ export function table(
     input.onclick = reselect;
     input.checked = selected.has(i);
     input.value = i;
-    if (d)
-      for (let j = 0; j < columns.length; ++j) {
-        let column = columns[j];
-        let value = d[column];
-        if (!defined(value)) continue;
-        value = format[column](value, i, data);
-        if (!(value instanceof Node)) value = document.createTextNode(value);
-        itr.childNodes[j + 1].appendChild(value);
-      }
+    if (d != null) for (let j = 0; j < columns.length; ++j) {
+      let column = columns[j];
+      let value = d[column];
+      if (!defined(value)) continue;
+      value = format[column](value, i, data);
+      if (!(value instanceof Node)) value = document.createTextNode(value);
+      itr.childNodes[j + 1].appendChild(value);
+    }
     tbody.append(itr);
   }
 
@@ -332,7 +331,7 @@ function alignof(base = {}, data, columns) {
 
 function type(data, column) {
   for (const d of data) {
-    if (!d) continue;
+    if (d == null) continue;
     const value = d[column];
     if (value == null) continue;
     if (typeof value === "number") return "number";
