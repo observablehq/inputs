@@ -103,7 +103,7 @@ export function table(
     input.onclick = reselect;
     input.checked = selected.has(i);
     input.value = i;
-    for (let j = 0; j < columns.length; ++j) {
+    if (d != null) for (let j = 0; j < columns.length; ++j) {
       let column = columns[j];
       let value = d[column];
       if (!defined(value)) continue;
@@ -331,6 +331,7 @@ function alignof(base = {}, data, columns) {
 
 function type(data, column) {
   for (const d of data) {
+    if (d == null) continue;
     const value = d[column];
     if (value == null) continue;
     if (typeof value === "number") return "number";
