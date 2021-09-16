@@ -1,7 +1,3 @@
-export function stringify(x) {
-  return x == null ? "" : x instanceof Date ? formatDate(x) : x + "";
-}
-
 export const formatLocaleAuto = localize(locale => {
   const formatNumber = formatLocaleNumber(locale);
   return value => value == null ? ""

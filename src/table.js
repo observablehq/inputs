@@ -1,7 +1,7 @@
 import {html} from "htl";
 import {arrayify} from "./array.js";
 import {length} from "./css.js";
-import {formatDate, formatLocaleNumber, stringify} from "./format.js";
+import {formatDate, formatLocaleNumber, formatAuto} from "./format.js";
 import {newId} from "./id.js";
 import {identity} from "./identity.js";
 import {defined, ascending, descending} from "./sort.js";
@@ -311,7 +311,7 @@ function formatof(base = {}, data, columns, locale) {
     switch (type(data, column)) {
       case "number": format[column] = formatLocaleNumber(locale); break;
       case "date": format[column] = formatDate; break;
-      default: format[column] = stringify; break;
+      default: format[column] = formatAuto; break;
     }
   }
   return format;

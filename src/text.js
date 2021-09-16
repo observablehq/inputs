@@ -2,14 +2,14 @@ import {html} from "htl";
 import {maybeWidth} from "./css.js";
 import {maybeDatalist} from "./datalist.js";
 import {checkValidity, dispatchInput, preventDefault} from "./event.js";
-import {stringify} from "./format.js";
+import {formatAuto} from "./format.js";
 import {maybeLabel} from "./label.js";
 
 export function createText(form, input, {
   value = "",
   submit,
   get = (input) => input.value,
-  set = (input, value) => input.value = stringify(value),
+  set = (input, value) => input.value = formatAuto(value),
   same = (input, value) => input.value === value,
   validate = checkValidity
 } = {}) {
