@@ -1,5 +1,5 @@
 export function stringify(x) {
-  return x == null ? "" : x + "";
+  return x == null ? "" : x instanceof Date ? formatDate(x) : x + "";
 }
 
 export const formatLocaleAuto = localize(locale => {
