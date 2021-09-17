@@ -1,5 +1,6 @@
 export {button} from "./button.js";
 export {checkbox, radio, toggle} from "./checkbox.js";
+export {date} from "./date.js";
 export {range} from "./range.js";
 export {search, searchFilter} from "./search.js";
 export {select} from "./select.js";

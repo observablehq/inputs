@@ -5,17 +5,24 @@ import {checkValidity, dispatchInput, preventDefault} from "./event.js";
 import {stringify} from "./format.js";
 import {maybeLabel} from "./label.js";
 
-export function createText(form, input, {value = "", submit, validate = checkValidity} = {}) {
+export function createText(form, input, {
+  value = "",
+  submit,
+  get = (input) => input.value,
+  set = (input, value) => input.value = stringify(value),
+  same = (input, value) => input.value === value,
+  validate = checkValidity
+} = {}) {
   submit = submit === true ? "Submit" : submit || null;
   const button = submit ? html`<button type=submit disabled>${submit}` : null;
   if (submit) input.after(button);
-  input.value = stringify(value);
-  value = validate(input) ? input.value : undefined;
+  set(input, value);
+  value = validate(input) ? get(input) : undefined;
   form.onsubmit = onsubmit;
   input.oninput = oninput;
   function update() {
     if (validate(input)) {
-      value = input.value;
+      value = get(input);
       return true;
     }
   }
@@ -32,7 +39,7 @@ export function createText(form, input, {value = "", submit, validate = checkVal
   }
   function oninput(event) {
     if (submit) {
-      button.disabled = value === input.value;
+      button.disabled = same(input, value);
       event.stopPropagation();
     } else if (!update()) {
       event.stopPropagation();
@@ -43,7 +50,7 @@ export function createText(form, input, {value = "", submit, validate = checkVal
       return value;
     },
     set(v) {
-      input.value = stringify(v);
+      set(input, v);
       update();
     }
   });
