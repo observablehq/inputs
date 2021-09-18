@@ -167,9 +167,9 @@ form.__ns__-toggle .__ns__-input {
   margin-left: var(--length2);
 }
 
-/* Tweak the line-height so that date inputs match text (and others). */
+/* Tweak the height so that date inputs match text (and others). */
 .__ns__-input > input[type=date] {
-  line-height: 12px;
+  height: 22px;
 }
 
 /* Checkboxes and radios aren’t constrained by their input width; */
