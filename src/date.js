@@ -33,8 +33,8 @@ export function date({
 
 function coerce(value) {
   return value instanceof Date && !isNaN(value) ? value
-    : value == null ? null
-    : typeof value === "string" && isoformat.test(value) ? new Date(value)
+    : typeof value === "string" ? (isoformat.test(value) ? new Date(value) : null)
+    : value == null || isNaN(value = +value) ? null
     : new Date(+value);
 }
 
