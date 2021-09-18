@@ -10,6 +10,10 @@ jsdomit.skip = (description, run) => {
   return it.skip(description, withJsdom(run));
 };
 
+jsdomit.only = (description, run) => {
+  return it.only(description, withJsdom(run));
+};
+
 function withJsdom(run) {
   return async () => {
     const jsdom = new JSDOM("");
