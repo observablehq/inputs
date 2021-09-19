@@ -8,7 +8,37 @@ import {defined, ascending, descending} from "./sort.js";
 
 const rowHeight = 22;
 
-export function table(
+export function table(data, options = {}) {
+  const {
+    rows = 11.5, // maximum number of rows to show
+    height,
+    maxHeight = height === undefined ? (rows + 1) * rowHeight - 1 : undefined,
+    width = {}, // object of column name to width, or overall table width
+    maxWidth
+  } = options;
+  const id = newId();
+  const root = html`<form class="__ns__ __ns__-table" id=${id} style=${{height: length(height), maxHeight: length(maxHeight), width: typeof width === "string" || typeof width === "number" ? length(width) : undefined, maxWidth: length(maxWidth)}}>`;
+  // The outer form element is created synchronously, while the table is lazily
+  // created when the data promise resolves. This allows you to pass a promise
+  // of data to the table without an explicit await.
+  if (data && typeof data.then === "function") {
+    Object.defineProperty(root, "value", {
+      set() {
+        throw new Error("cannot set value while data is unresolved");
+      }
+    });
+    Promise.resolve(data).then(data => initialize({root, id}, data, options));
+  } else {
+    initialize({root, id}, data, options);
+  }
+  return root;
+}
+
+function initialize(
+  {
+    root,
+    id
+  },
   data,
   {
     columns, // array of column names
@@ -20,10 +50,7 @@ export function table(
     locale,
     align, // object of column name to left, right, or center
     rows = 11.5, // maximum number of rows to show
-    height,
-    maxHeight = height === undefined ? (rows + 1) * rowHeight - 1 : undefined,
     width = {}, // object of column name to width, or overall table width
-    maxWidth,
     multiple = true,
     layout // "fixed" or "auto"
   } = {}
@@ -66,23 +93,19 @@ export function table(
   let selected = new Set();
   let anchor = null, head = null;
 
-  const id = newId();
   const tbody = html`<tbody>`;
   const tr = html`<tr><td><input type=${multiple ? "checkbox" : "radio"} name=${multiple ? null : "radio"}></td>${columns.map(() => html`<td>`)}`;
   const theadr = html`<tr><th><input type=checkbox onclick=${reselectAll} disabled=${!multiple}></th>${columns.map((column) => html`<th title=${column} onclick=${event => resort(event, column)}><span></span>${column}</th>`)}</tr>`;
-  const root = html`<form class="__ns__ __ns__-table" id=${id} style=${{height: length(height), maxHeight: length(maxHeight), width: typeof width === "string" || typeof width === "number" ? length(width) : undefined, maxWidth: length(maxWidth)}}>
-  <table style=${{tableLayout: layout}}>
-    <thead>${minlengthof(1) || columns.length ? theadr : null}</thead>
-    ${tbody}
-  </table>
-  <style>${columns.map((column, i) => {
-    const rules = [];
-    if (align[column]) rules.push(`text-align:${align[column]}`);
-    if (width[column]) rules.push(`width:${length(width[column])}`);
-    if (rules.length) return `#${id} tr>:nth-child(${i + 2}){${rules.join(";")}}`;
-  }).filter(identity).join("\n")}</style>
-</form>`;
-
+  root.appendChild(html.fragment`<table style=${{tableLayout: layout}}>
+  <thead>${minlengthof(1) || columns.length ? theadr : null}</thead>
+  ${tbody}
+</table>
+<style>${columns.map((column, i) => {
+  const rules = [];
+  if (align[column]) rules.push(`text-align:${align[column]}`);
+  if (width[column]) rules.push(`width:${length(width[column])}`);
+  if (rules.length) return `#${id} tr>:nth-child(${i + 2}){${rules.join(";")}}`;
+}).filter(identity).join("\n")}</style>`);
   function appendRows(i, j) {
     if (iterindex === i) {
       for (; i < j; ++i) {
