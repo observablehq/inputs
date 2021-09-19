@@ -1,9 +1,14 @@
+// Note: use formatAuto (or any other localized format) to present values to the
+// user; stringify is only intended for machine values.
+export function stringify(x) {
+  return x == null ? "" : x + "";
+}
+
 export const formatLocaleAuto = localize(locale => {
   const formatNumber = formatLocaleNumber(locale);
-  return value => value == null ? ""
-    : typeof value === "number" ? formatNumber(value)
+  return value => typeof value === "number" ? formatNumber(value)
     : value instanceof Date ? formatDate(value)
-    : value + "";
+    : stringify(value);
 });
 
 export const formatLocaleNumber = localize(locale => {

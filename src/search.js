@@ -3,7 +3,7 @@ import {arrayify} from "./array.js";
 import {maybeWidth} from "./css.js";
 import {maybeDatalist} from "./datalist.js";
 import {preventDefault} from "./event.js";
-import {formatLocaleNumber, localize} from "./format.js";
+import {formatLocaleNumber, localize, stringify} from "./format.js";
 import {maybeLabel} from "./label.js";
 
 export function search(data, {
@@ -24,7 +24,7 @@ export function search(data, {
   data = arrayify(data);
   required = !!required;
   const [list, listId] = maybeDatalist(datalist);
-  const input = html`<input name=input type=search list=${listId} disabled=${disabled} spellcheck=${spellcheck === undefined ? false : spellcheck + ""} placeholder=${placeholder} value=${query} oninput=${oninput}>`;
+  const input = html`<input name=input type=search list=${listId} disabled=${disabled} spellcheck=${spellcheck === undefined ? false : spellcheck === null ? null : spellcheck + ""} placeholder=${placeholder} value=${query} oninput=${oninput}>`;
   const output = html`<output name=output>`;
   const form = html`<form class=__ns__ onsubmit=${preventDefault} style=${maybeWidth(width)}>
     ${maybeLabel(label, input)}<div class=__ns__-input>
@@ -48,7 +48,7 @@ export function search(data, {
         return query;
       },
       set(v) {
-        query = input.value = "" + v;
+        query = input.value = stringify(v);
         oninput();
       }
     }

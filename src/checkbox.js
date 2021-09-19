@@ -1,5 +1,6 @@
 import {html} from "htl";
 import {createChooser} from "./chooser.js";
+import {stringify} from "./format.js";
 import {maybeLabel} from "./label.js";
 
 function createCheckbox(multiple, type) {
@@ -80,7 +81,7 @@ class OptionOne {
   set value(v) {
     const {_input} = this;
     if (_input.checked) return;
-    _input.checked = (v + "") === _input.value;
+    _input.checked = stringify(v) === _input.value;
   }
   *[Symbol.iterator]() {
     yield this._input;
@@ -98,7 +99,7 @@ class MultipleOptionOne {
   set value(v) {
     const {_input} = this;
     if (_input.checked) return;
-    _input.checked = (v + "") === _input.value;
+    _input.checked = stringify(v) === _input.value;
     this._value = _input.checked ? [_input.value] : [];
   }
   *[Symbol.iterator]() {
