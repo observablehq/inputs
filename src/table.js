@@ -18,6 +18,9 @@ export function table(data, options = {}) {
   } = options;
   const id = newId();
   const root = html`<form class="__ns__ __ns__-table" id=${id} style=${{height: length(height), maxHeight: length(maxHeight), width: typeof width === "string" || typeof width === "number" ? length(width) : undefined, maxWidth: length(maxWidth)}}>`;
+  // The outer form element is created synchronously, while the table is lazily
+  // created when the data promise resolves. This allows you to pass a promise
+  // of data to the table without an explicit await.
   if (data && typeof data.then === "function") {
     Object.defineProperty(root, "value", {
       set() {
@@ -31,9 +34,6 @@ export function table(data, options = {}) {
   return root;
 }
 
-// While the outer form element is rendered synchronously, the table itself is
-// lazily constructed when the associated data promise is resolved. This allows
-// you to pass a promise of data to the table without an explicit await.
 function initialize(
   {
     root,
