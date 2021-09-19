@@ -1,3 +1,5 @@
+// Note: use formatAuto (or any other localized format) to present values to the
+// user; stringify is only intended for machine values.
 export function stringify(x) {
   return x == null ? "" : x + "";
 }

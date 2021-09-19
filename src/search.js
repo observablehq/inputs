@@ -24,7 +24,7 @@ export function search(data, {
   data = arrayify(data);
   required = !!required;
   const [list, listId] = maybeDatalist(datalist);
-  const input = html`<input name=input type=search list=${listId} disabled=${disabled} spellcheck=${spellcheck === undefined ? false : spellcheck + ""} placeholder=${placeholder} value=${query} oninput=${oninput}>`;
+  const input = html`<input name=input type=search list=${listId} disabled=${disabled} spellcheck=${spellcheck === undefined ? false : spellcheck === null ? null : spellcheck + ""} placeholder=${placeholder} value=${query} oninput=${oninput}>`;
   const output = html`<output name=output>`;
   const form = html`<form class=__ns__ onsubmit=${preventDefault} style=${maybeWidth(width)}>
     ${maybeLabel(label, input)}<div class=__ns__-input>

@@ -15,3 +15,7 @@ export function tableSparse() {
   sparse[8] = {a: 1};
   return Inputs.table(sparse);
 }
+
+export function tableVariousDates() {
+  return Inputs.table([{A: "Hello, not a date"}, {A: new Date(Date.UTC(2000, 0, 1))}]);
+}
