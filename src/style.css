@@ -196,8 +196,19 @@ form.__ns__-table {
   max-width: initial;
   min-height: 33px;
   margin: 0;
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0;
   font-variant-numeric: tabular-nums;
+}
+
+.__ns__-table tr:not(:last-child) td,
+.__ns__-table tr:not(:last-child) th {
+  border-bottom: solid 1px #eee;
+}
+
+.__ns__-table thead tr td,
+.__ns__-table thead tr th {
+  border-bottom: solid 1px #ccc;
 }
 
 .__ns__-table thead th span {
@@ -248,7 +259,6 @@ form.__ns__-table {
   top: 0;
   background: white;
   cursor: ns-resize;
-  box-shadow: 0 1px 0 #ccc;
 }
 
 .__ns__-table tbody tr:first-child td {
