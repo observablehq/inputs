@@ -102,8 +102,8 @@ function initialize(
 </table>
 <style>${columns.map((column, i) => {
   const rules = [];
-  if (align[column]) rules.push(`text-align:${align[column]}`);
-  if (width[column]) rules.push(`width:${length(width[column])}`);
+  if (align[column] != null) rules.push(`text-align:${align[column]}`);
+  if (width[column] != null) rules.push(`width:${length(width[column])}`);
   if (rules.length) return `#${id} tr>:nth-child(${i + 2}){${rules.join(";")}}`;
 }).filter(identity).join("\n")}</style>`);
   function appendRows(i, j) {
