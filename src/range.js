@@ -31,7 +31,8 @@ function createRange({
   width
 } = {}) {
   if (typeof format !== "function") throw new TypeError("format is not a function");
-  min = +min, max = +max;
+  if (min == null || isNaN(min = +min)) min = -Infinity;
+  if (max == null || isNaN(max = +max)) max = Infinity;
   if (min > max) [min, max] = [max, min], transform === undefined && (transform = negate);
   if (step !== undefined) step = +step;
   const number = html`<input type=number min=${min} max=${max} step=${step == undefined ? "any" : step} name=number required placeholder=${placeholder} oninput=${onnumber} disabled=${disabled}>`;
@@ -55,7 +56,7 @@ function createRange({
   function onrange(event) {
     const v = +invert(range.valueAsNumber);
     if (isFinite(v)) {
-      number.valueAsNumber = v;
+      number.valueAsNumber = Math.max(min, Math.min(max, v));
       if (validate(number)) {
         value = number.valueAsNumber;
         number.value = format(value);
