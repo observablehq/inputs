@@ -12,6 +12,7 @@ import * as inputs from "./inputs/index.js";
       const element = await input();
       const actual = beautify.html(
         element.outerHTML
+          .replace(/#__ns__-([0-9]+)\b/g, (_, id) => `#__ns__-${reid.has(id) ? reid.get(id) : (reid.set(id, id = reid.size + 1), id)}`)
           .replace(/(?<=="[^"]*)\b__ns__-([0-9]+)\b/g, (_, id) => `__ns__-${reid.has(id) ? reid.get(id) : (reid.set(id, id = reid.size + 1), id)}`)
           .replace(/(?<=="[^"]*)\b__ns__\b/g, `__ns__`),
         {indent_size: 2}

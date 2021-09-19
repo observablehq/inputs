@@ -49,6 +49,7 @@ function initialize(
     format, // object of column name to format function
     locale,
     align, // object of column name to left, right, or center
+    header, // object of column name to string or HTML element
     rows = 11.5, // maximum number of rows to show
     width = {}, // object of column name to width, or overall table width
     multiple = true,
@@ -95,7 +96,7 @@ function initialize(
 
   const tbody = html`<tbody>`;
   const tr = html`<tr><td><input type=${multiple ? "checkbox" : "radio"} name=${multiple ? null : "radio"}></td>${columns.map(() => html`<td>`)}`;
-  const theadr = html`<tr><th><input type=checkbox onclick=${reselectAll} disabled=${!multiple}></th>${columns.map((column) => html`<th title=${column} onclick=${event => resort(event, column)}><span></span>${column}</th>`)}</tr>`;
+  const theadr = html`<tr><th><input type=checkbox onclick=${reselectAll} disabled=${!multiple}></th>${columns.map((column) => html`<th title=${column} onclick=${event => resort(event, column)}><span></span>${header && column in header ? header[column] : column}</th>`)}</tr>`;
   root.appendChild(html.fragment`<table style=${{tableLayout: layout}}>
   <thead>${minlengthof(1) || columns.length ? theadr : null}</thead>
   ${tbody}

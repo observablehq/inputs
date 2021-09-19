@@ -293,6 +293,7 @@ The available *options* are:
 * *reverse* - whether to reverse the initial sort (descending instead of ascending).
 * *format* - an object of column name to format function.
 * *align* - an object of column name to “left”, “right”, or “center”.
+* *header* - an object of column name to corresponding header; either a string or HTML element.
 * *width* - the table width, or an object of column name to width.
 * *maxWidth* - the maximum table width, if any.
 * *height* - the fixed table height, if any.
