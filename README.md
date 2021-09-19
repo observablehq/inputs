@@ -191,6 +191,10 @@ The *format* function should return a string value that is compatible with nativ
 
 If a *transform* function is specified, an inverse transform function *invert* is strongly recommended. If *invert* is not provided, the Range will fallback to Newton’s method, but this may be slow or inaccurate. Passing Math.sqrt, Math.log, or Math.exp as a *transform* will automatically supply the corresponding *invert*. If *min* is greater than *max*, *i.e.* if the extent is inverted, then *transform* and *invert* will default to `value => -value`.
 
+#### Inputs.number(*extent*, *options*)
+
+Equivalent to Inputs.range, except the range input is suppressed; only a number input is shown.
+
 ### Search
 
 #### Inputs.search(*data*, *options*)

@@ -7,7 +7,18 @@ import {maybeLabel} from "./label.js";
 
 const epsilon = 1e-6;
 
-export function range([min, max] = [0, 1], {
+export function number(extent, options) {
+  return createRange({extent}, options);
+}
+
+export function range(extent, options) {
+  return createRange({extent, range: true}, options);
+}
+
+function createRange({
+  extent: [min, max] = [0, 1],
+  range
+}, {
   format = formatTrim,
   transform,
   invert,
@@ -21,16 +32,21 @@ export function range([min, max] = [0, 1], {
   if (typeof format !== "function") throw new TypeError("format is not a function");
   min = +min, max = +max;
   if (min > max) [min, max] = [max, min], transform === undefined && (transform = negate);
-  if (transform === undefined) transform = identity;
-  if (typeof transform !== "function") throw new TypeError("transform is not a function");
-  if (invert === undefined) invert = transform.invert === undefined ? solver(transform) : transform.invert;
-  if (typeof invert !== "function") throw new TypeError("invert is not a function");
   if (step !== undefined) step = +step;
-  let tmin = +transform(min), tmax = +transform(max);
-  if (tmin > tmax) [tmin, tmax] = [tmax, tmin];
   const number = html`<input type=number min=${min} max=${max} step=${step == undefined ? "any" : step} name=number required placeholder=${placeholder} oninvalid=${oninvalid} oninput=${onnumber} disabled=${disabled}>`;
   const stepper = html`<input type=range min=${min} max=${max} step=${step == undefined ? "any" : step}>`; // untransformed range for validation
-  const range = html`<input type=range min=${tmin} max=${tmax} step=${step === undefined || (transform !== identity && transform !== negate) ? "any" : step} name=range oninput=${onrange} disabled=${disabled}>`;
+  if (range) {
+    if (transform === undefined) transform = identity;
+    if (typeof transform !== "function") throw new TypeError("transform is not a function");
+    if (invert === undefined) invert = transform.invert === undefined ? solver(transform) : transform.invert;
+    if (typeof invert !== "function") throw new TypeError("invert is not a function");
+    let tmin = +transform(min), tmax = +transform(max);
+    if (tmin > tmax) [tmin, tmax] = [tmax, tmin];
+    range = html`<input type=range min=${tmin} max=${tmax} step=${step === undefined || (transform !== identity && transform !== negate) ? "any" : step} name=range oninput=${onrange} disabled=${disabled}>`;
+  } else {
+    range = null;
+    transform = invert = identity;
+  }
   const form = html`<form class=__ns__ onsubmit=${preventDefault} style=${maybeWidth(width)}>
     ${maybeLabel(label, number)}<div class=__ns__-input>
       ${number}${range}
@@ -49,7 +65,7 @@ export function range([min, max] = [0, 1], {
     let v = number.valueAsNumber;
     if (isFinite(v)) {
       stepper.valueAsNumber = v;
-      range.valueAsNumber = transform(value = stepper.valueAsNumber);
+      if (range) range.valueAsNumber = transform(value = stepper.valueAsNumber);
       return;
     }
     if (event) event.stopPropagation();
@@ -66,7 +82,7 @@ export function range([min, max] = [0, 1], {
         stepper.valueAsNumber = v;
         value = stepper.valueAsNumber;
         number.value = format(value);
-        range.valueAsNumber = transform(value);
+        if (range) range.valueAsNumber = transform(value);
       }
     }
   });
