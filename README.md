@@ -25,6 +25,7 @@ Observable Inputs provides basic inputs:
 * [Range](#Range) - choose a numeric value in a range (slider)
 * [Select](#Select) - choose one or many from a set (drop-down menu)
 * [Text](#Text) - freeform single-line text input
+* [Date](#Date) - date input
 * [Textarea](#Textarea) - freeform multi-line text input
 
 Observable Inputs provides fancy inputs for tabular data:
@@ -317,6 +318,29 @@ The available *options* are:
 * *disabled* - whether input is disabled; defaults to false.
 
 If *validate* is not defined, [*text*.checkValidity](https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#dom-cva-checkvalidity) is used. While the input is not considered valid, changes to the input will not be reported.
+
+<a name="Date" href="#Date">#</a> Inputs.<b>date</b>(<i>options</i>) · [Source](./src/date.js), [Examples](https://observablehq.com/@observablehq/input-date)
+
+```js
+viewof start = Inputs.date({label: "Start date", value: "1982-03-06"})
+```
+
+A Date allows a [calendar-based input](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/date). By default, a Date will report its value immediately on input. If more deliberate behavior is desired, say if the input will trigger an expensive computation or remote API, the *submit* option can be set to true to wait until a button is clicked or the Enter key is pressed.
+
+The available *options* are:
+
+* *label* - a label; either a string or an HTML element.
+* *value* - the initial value, as a JavaScript Date or formatted as an ISO string (yyyy-mm-dd); defaults to null.
+* *min* - [minimum value](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/min) attribute.
+* *max* - [maximum value](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/max) attribute.
+* *required* - if true, the input must be a valid date.
+* *validate* - a function to check whether the text input is valid.
+* *width* - the width of the input (not including the label).
+* *submit* - whether to require explicit submission before updating; defaults to false.
+* *readonly* - whether input is readonly; defaults to false.
+* *disabled* - whether input is disabled; defaults to false.
+
+Note that the displayed date format is formatted [based on the locale of the user's browser](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/date).
 
 <a name="Textarea" href="#Textarea">#</a> Inputs.<b>textarea</b>(<i>options</i>) · [Source](./src/textarea.js)
 
