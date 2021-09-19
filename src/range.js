@@ -1,6 +1,6 @@
 import {html} from "htl";
 import {maybeWidth} from "./css.js";
-import {preventDefault} from "./event.js";
+import {checkValidity, preventDefault} from "./event.js";
 import {formatTrim} from "./format.js";
 import {identity} from "./identity.js";
 import {maybeLabel} from "./label.js";
@@ -27,14 +27,14 @@ function createRange({
   step,
   disabled,
   placeholder,
+  validate = checkValidity,
   width
 } = {}) {
   if (typeof format !== "function") throw new TypeError("format is not a function");
   min = +min, max = +max;
   if (min > max) [min, max] = [max, min], transform === undefined && (transform = negate);
   if (step !== undefined) step = +step;
-  const number = html`<input type=number min=${min} max=${max} step=${step == undefined ? "any" : step} name=number required placeholder=${placeholder} oninvalid=${oninvalid} oninput=${onnumber} disabled=${disabled}>`;
-  const stepper = html`<input type=range min=${min} max=${max} step=${step == undefined ? "any" : step}>`; // untransformed range for validation
+  const number = html`<input type=number min=${min} max=${max} step=${step == undefined ? "any" : step} name=number required placeholder=${placeholder} oninput=${onnumber} disabled=${disabled}>`;
   if (range) {
     if (transform === undefined) transform = identity;
     if (typeof transform !== "function") throw new TypeError("transform is not a function");
@@ -53,25 +53,27 @@ function createRange({
     </div>
   </form>`;
   function onrange(event) {
-    let v = +invert(range.valueAsNumber);
+    const v = +invert(range.valueAsNumber);
     if (isFinite(v)) {
-      stepper.valueAsNumber = v;
-      number.value = format(value = stepper.valueAsNumber);
-      return;
+      number.valueAsNumber = v;
+      if (validate(number)) {
+        value = number.valueAsNumber;
+        number.value = format(value);
+        return;
+      }
     }
     if (event) event.stopPropagation();
   }
   function onnumber(event) {
-    let v = number.valueAsNumber;
+    const v = number.valueAsNumber;
     if (isFinite(v)) {
-      stepper.valueAsNumber = v;
-      if (range) range.valueAsNumber = transform(value = stepper.valueAsNumber);
-      return;
+      if (range) range.valueAsNumber = transform(v);
+      if (validate(number)) {
+        value = v;
+        return;
+      }
     }
     if (event) event.stopPropagation();
-  }
-  function oninvalid() {
-    number.value = format(value);
   }
   Object.defineProperty(form, "value", {
     get() {
@@ -79,15 +81,19 @@ function createRange({
     },
     set(v) {
       if (isFinite(v = +v)) {
-        stepper.valueAsNumber = v;
-        value = stepper.valueAsNumber;
-        number.value = format(value);
-        if (range) range.valueAsNumber = transform(value);
+        number.valueAsNumber = v;
+        if (range) range.valueAsNumber = transform(v);
+        if (validate(number)) {
+          value = v;
+          number.value = format(value);
+        }
       }
     }
   });
-  if (isFinite(value = +value)) stepper.valueAsNumber = value;
-  form.value = stepper.valueAsNumber;
+  // Use an untransformed range to initialize the value to (min + max) / 2, respecting step.
+  if (value === undefined && range) value = html`<input type=range min=${min} max=${max} step=${step == undefined ? "any" : step}>`.valueAsNumber;
+  if (value !== undefined) form.value = value; // invokes setter
+  if (!validate(number)) value = undefined; // clear initial value if invalid
   return form;
 }
 

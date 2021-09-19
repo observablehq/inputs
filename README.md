@@ -181,11 +181,14 @@ The available *options* are:
 * *placeholder* - a placeholder string for when the input is empty.
 * *transform* - an optional non-linear transform.
 * *invert* - the inverse transform.
+* *validate* - a function to check whether the number input is valid.
 * *value* - the initial value; defaults to (*min* + *max*) / 2.
 * *width* - the width of the input (not including the label).
 * *disabled* - whether input is disabled; defaults to false.
 
 The given *value* is clamped to the given extent, and rounded if *step* is defined. However, note that the *min*, *max* and *step* options affect only the slider behavior, the number input’s buttons, and whether the browser shows a warning if a typed number is invalid; they do not constrain the typed number.
+
+If *validate* is not defined, [*number*.checkValidity](https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#dom-cva-checkvalidity) is used. While the input is not considered valid, changes to the input will not be reported.
 
 The *format* function should return a string value that is compatible with native number parsing. Hence, the default [formatTrim](#formatTrim) is recommended.
 
