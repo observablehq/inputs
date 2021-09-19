@@ -1,5 +1,4 @@
 import * as Inputs from "@observablehq/inputs";
-import {html} from "htl";
 
 export async function date() {
   return Inputs.date();
