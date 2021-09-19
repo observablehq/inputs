@@ -42,7 +42,7 @@ it("Inputs.date() sets the initial value, min, and max", () => {
   assert.strictEqual(input.elements.date.max, "2021-07-11");
   input.value = "2015-01-01";
   assert.deepStrictEqual(input.value, new Date("2015-01-01"));
-  // We should not be able to the date to a value outside of the [min, max] range
+  // We should not be able to set the date to a value outside of the [min, max] range
   input.value = "1969-01-01";
   assert.notDeepStrictEqual(input.value, new Date("1969-01-01"));
   // verify that trying to set an invalid date does not change the existing value

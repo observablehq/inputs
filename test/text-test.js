@@ -35,7 +35,7 @@ it("Inputs.text() supports type=date with min and max", () => {
   input.value = "2015-01-01";
   assert.strictEqual(input.value, "2015-01-01");
   input.value = "1999-01-01";
-  // We should not be able to the date to a value outside of the [min, max] range
+  // We should not be able to set the date to a value outside of the [min, max] range
   assert.notStrictEqual(input.value, "1999-01-01");
   // verify that trying to set an invalid date does not change the existing value
   assert.strictEqual(input.value, "2015-01-01");
