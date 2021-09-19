@@ -44,6 +44,7 @@ export function createChooser({multiple: fixedMultiple, render, selectedIndexes,
       maybeDisabled(data, index, disabled, valueof),
       {
         ...options,
+        locale,
         format,
         multiple,
         size
