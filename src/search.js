@@ -3,7 +3,7 @@ import {arrayify} from "./array.js";
 import {maybeWidth} from "./css.js";
 import {maybeDatalist} from "./datalist.js";
 import {preventDefault} from "./event.js";
-import {formatLocaleNumber, localize, formatAuto} from "./format.js";
+import {formatLocaleNumber, localize} from "./format.js";
 import {maybeLabel} from "./label.js";
 
 export function search(data, {
@@ -48,7 +48,7 @@ export function search(data, {
         return query;
       },
       set(v) {
-        query = input.value = formatAuto(v);
+        query = input.value = "" + v;
         oninput();
       }
     }
