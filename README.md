@@ -340,7 +340,7 @@ The available *options* are:
 * *readonly* - whether input is readonly; defaults to false.
 * *disabled* - whether input is disabled; defaults to false.
 
-Note that the displayed date format is formatted [based on the locale of the user's browser](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/date).
+Note that the displayed date format is formatted [based on the browser’s locale](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/date).
 
 <a name="Textarea" href="#Textarea">#</a> Inputs.<b>textarea</b>(<i>options</i>) · [Source](./src/textarea.js)
 
