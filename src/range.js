@@ -8,15 +8,17 @@ import {maybeLabel} from "./label.js";
 const epsilon = 1e-6;
 
 export function number(extent, options) {
+  if (arguments.length < 2) options = extent, extent = undefined;
+  if (extent === undefined) extent = [];
   return createRange({extent}, options);
 }
 
-export function range(extent, options) {
+export function range(extent = [0, 1], options) {
   return createRange({extent, range: true}, options);
 }
 
 function createRange({
-  extent: [min, max] = [0, 1],
+  extent: [min, max],
   range
 }, {
   format = formatTrim,
