@@ -23,19 +23,21 @@ function createRange({
   transform,
   invert,
   label = "",
-  value,
+  value: initialValue,
   step,
   disabled,
   placeholder,
   validate = checkValidity,
   width
 } = {}) {
+  let value;
   if (typeof format !== "function") throw new TypeError("format is not a function");
   if (min == null || isNaN(min = +min)) min = -Infinity;
   if (max == null || isNaN(max = +max)) max = Infinity;
   if (min > max) [min, max] = [max, min], transform === undefined && (transform = negate);
   if (step !== undefined) step = +step;
   const number = html`<input type=number min=${min} max=${max} step=${step == undefined ? "any" : step} name=number required placeholder=${placeholder} oninput=${onnumber} disabled=${disabled}>`;
+  let irange; // untransformed range for coercion
   if (range) {
     if (transform === undefined) transform = identity;
     if (typeof transform !== "function") throw new TypeError("transform is not a function");
@@ -44,6 +46,7 @@ function createRange({
     let tmin = +transform(min), tmax = +transform(max);
     if (tmin > tmax) [tmin, tmax] = [tmax, tmin];
     range = html`<input type=range min=${tmin} max=${tmax} step=${step === undefined || (transform !== identity && transform !== negate) ? "any" : step} name=range oninput=${onrange} disabled=${disabled}>`;
+    irange = transform === identity ? range : html`<input type=range min=${min} max=${max} step=${step === undefined ? "any" : step} name=range disabled=${disabled}>`;
   } else {
     range = null;
     transform = invert = identity;
@@ -53,8 +56,16 @@ function createRange({
       ${number}${range}
     </div>
   </form>`;
+  // If range, use an untransformed range to round to the nearest valid value.
+  function coerce(v) {
+    if (!irange) return +v;
+    v = Math.max(min, Math.min(max, v));
+    if (!isFinite(v)) return v;
+    irange.valueAsNumber = v;
+    return irange.valueAsNumber;
+  }
   function onrange(event) {
-    const v = +invert(range.valueAsNumber);
+    const v = coerce(invert(range.valueAsNumber));
     if (isFinite(v)) {
       number.valueAsNumber = Math.max(min, Math.min(max, v));
       if (validate(number)) {
@@ -66,7 +77,7 @@ function createRange({
     if (event) event.stopPropagation();
   }
   function onnumber(event) {
-    const v = number.valueAsNumber;
+    const v = coerce(number.valueAsNumber);
     if (isFinite(v)) {
       if (range) range.valueAsNumber = transform(v);
       if (validate(number)) {
@@ -81,7 +92,8 @@ function createRange({
       return value;
     },
     set(v) {
-      if (isFinite(v = +v)) {
+      v = coerce(v);
+      if (isFinite(v)) {
         number.valueAsNumber = v;
         if (range) range.valueAsNumber = transform(v);
         if (validate(number)) {
@@ -91,10 +103,8 @@ function createRange({
       }
     }
   });
-  // Use an untransformed range to initialize the value to (min + max) / 2, respecting step.
-  if (value === undefined && range) value = html`<input type=range min=${min} max=${max} step=${step == undefined ? "any" : step}>`.valueAsNumber;
-  if (value !== undefined) form.value = value; // invokes setter
-  if (!validate(number)) value = undefined; // clear initial value if invalid
+  if (initialValue === undefined && irange) initialValue = irange.valueAsNumber; // (min + max) / 2
+  if (initialValue !== undefined) form.value = initialValue; // invoke setter
   return form;
 }
 
