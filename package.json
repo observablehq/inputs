@@ -38,6 +38,7 @@
   },
   "devDependencies": {
     "@rollup/plugin-json": "4",
+    "@rollup/plugin-node-resolve": "^13.0.5",
     "@rollup/plugin-replace": "3",
     "clean-css": "5",
     "d3": "7",
@@ -52,7 +53,8 @@
     "snowpack": "3"
   },
   "dependencies": {
-    "htl": "0.3"
+    "htl": "0.3",
+    "isoformat": "^0.2.0"
   },
   "publishConfig": {
     "access": "public"

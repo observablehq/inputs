@@ -1,9 +1,8 @@
 import {html} from "htl";
+import {parse as isoparse} from "isoformat";
 import {maybeWidth} from "./css.js";
 import {maybeLabel} from "./label.js";
 import {createText} from "./text.js";
-
-const isoformat = /^(?:[-+]\d{2})?\d{4}(?:-\d{2}(?:-\d{2})?)?(?:T\d{2}:\d{2}(?::\d{2}(?:\.\d{3})?)?(?:Z|[-+]\d{2}:?\d{2})?)?$/;
 
 export function date({
   label,
@@ -33,7 +32,7 @@ export function date({
 
 function coerce(value) {
   return value instanceof Date && !isNaN(value) ? value
-    : typeof value === "string" ? (isoformat.test(value) ? new Date(value) : null)
+    : typeof value === "string" ? isoparse(value, null)
     : value == null || isNaN(value = +value) ? null
     : new Date(+value);
 }
