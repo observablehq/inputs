@@ -2,6 +2,7 @@ import crypto from "crypto";
 import fs from "fs";
 import path from "path";
 import {terser} from "rollup-plugin-terser";
+import node from "@rollup/plugin-node-resolve";
 import replace from "@rollup/plugin-replace";
 import json from "@rollup/plugin-json";
 import jsesc from "jsesc";
@@ -62,6 +63,7 @@ const config = {
   plugins: [
     css,
     json(),
+    node(),
     replace({__ns__: styleNs, preventAssignment: true})
   ]
 };
