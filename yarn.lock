@@ -1107,9 +1107,9 @@ d3-scale-chromatic@3:
     d3-interpolate "1 - 3"
 
 d3-scale@4:
-  version "4.0.1"
-  resolved "https://registry.yarnpkg.com/d3-scale/-/d3-scale-4.0.1.tgz#c65aa7a357e4f58954a66e1edacc712bab4b1034"
-  integrity sha512-akUAsUujCFnw6Sf1dF7y/FXTxz+VvEIOB3ValKtLhNrzFp8q5wPO3VCAmsbCLJWRTxyJCZDoooodjOI1plFqlw==
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/d3-scale/-/d3-scale-4.0.2.tgz#82b38e8e8ff7080764f8dcec77bd4be393689396"
+  integrity sha512-GZW464g1SH7ag3Y7hXjf8RoUuAFIqklOAq3MRl4OaWabTFJY9PN/E1YklhXLh+OQ3fM9yS2nOkCoS+WLZ6kvxQ==
   dependencies:
     d3-array "2.10.0 - 3"
     d3-format "1 - 3"
@@ -1171,9 +1171,9 @@ d3-zoom@3:
     d3-transition "2 - 3"
 
 d3@7:
-  version "7.0.3"
-  resolved "https://registry.yarnpkg.com/d3/-/d3-7.0.3.tgz#5c100c0522fedadc2aec43243b16e881e8c07143"
-  integrity sha512-BEQCpEXI+Z9OnnlXLaS6txoYZZvvXuRyjZoudPuAnWGVOzHxGWC0TL8XRUs7V7IeZQPLfvGztcl54+jgOe122g==
+  version "7.0.4"
+  resolved "https://registry.yarnpkg.com/d3/-/d3-7.0.4.tgz#37dfeb3b526f64a0de2ddb705ea61649325207bd"
+  integrity sha512-ruRiyPYZEGeJBOOjVS5pHliNUZM2HAllEY7HKB2ff+9ENxOti4N+S+WZqo9ggUMr8tSPMm+riqKpJd1oYEDN5Q==
   dependencies:
     d3-array "3"
     d3-axis "3"
@@ -1974,9 +1974,9 @@ hosted-git-info@^4.0.1:
     lru-cache "^6.0.0"
 
 htl@0.3:
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/htl/-/htl-0.3.0.tgz#078769ae5cb77d110b976b0a15e44b6b158ebef3"
-  integrity sha512-BvVM78yP5/b9k7GmuXUh2GEadmRueFrJ6UGEpSm0JuvX/yqZ53akB+1tNqWEFDAQnFF3E79GhusZ003E9oOZKQ==
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/htl/-/htl-0.3.1.tgz#13c5a32fa46434f33b84d4553dd37e58a80e8d8a"
+  integrity sha512-1LBtd+XhSc+++jpOOt0lCcEycXs/zTQSupOISnVAUmvGBpV7DH+C2M6hwV7zWYfpTMMg9ch4NO0lHiOTAMHdVA==
 
 html-encoding-sniffer@^2.0.1:
   version "2.0.1"
