@@ -54,7 +54,7 @@ const config = {
   output: {
     indent: false,
     banner: `// ${meta.name} v${meta.version} Copyright ${copyrights.join(", ")}`,
-    name: "observablehq",
+    name: "Inputs",
     format: "umd",
     extend: true,
     globals: {"htl": "htl"},
