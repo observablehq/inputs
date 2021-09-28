@@ -34,7 +34,7 @@ export function search(data, {
   function oninput() {
     value = input.value || required ? data.filter(filter(input.value)) : [];
     if (columns !== undefined) value.columns = columns;
-    output.value = input.value ? format(value.length) : "";
+    output.value = format(value.length);
   }
   oninput();
   return Object.defineProperties(form, {
