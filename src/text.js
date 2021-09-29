@@ -108,9 +108,9 @@ export function truefalse(value) {
   return value == null ? null : `${value}`;
 }
 
-// For boolean attributes that support “on” and “off”, this maps true to “on”and
-// false to “off”. Any other value (if not nullish) is assumed to be a string,
-// such as autocapitalize=sentences.
+// For boolean attributes that support “on” and “off”, this maps true to “on”
+// and false to “off”. Any other value (if not nullish) is assumed to be a
+// string, such as autocapitalize=sentences.
 export function onoff(value) {
   return value == null ? null : `${value === false ? "off" : value === true ? "on" : value}`;
 }
