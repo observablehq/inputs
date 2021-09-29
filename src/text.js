@@ -62,6 +62,8 @@ export function text({
   placeholder,
   pattern,
   spellcheck,
+  autocomplete,
+  autocapitalize,
   min,
   max,
   minlength,
@@ -74,7 +76,7 @@ export function text({
   ...options
 } = {}) {
   const [list, listId] = maybeDatalist(datalist);
-  const input = html`<input type=${type} name=text list=${listId} readonly=${readonly} disabled=${disabled} required=${required} min=${min} max=${max} minlength=${minlength} maxlength=${maxlength} pattern=${pattern} spellcheck=${spellcheck === undefined ? false : spellcheck === null ? null : `${spellcheck}`} placeholder=${placeholder}>`;
+  const input = html`<input type=${type} name=text list=${listId} readonly=${readonly} disabled=${disabled} required=${required} min=${min} max=${max} minlength=${minlength} maxlength=${maxlength} pattern=${pattern} spellcheck=${spellcheck == null ? null : `${spellcheck}`} autocomplete=${autocomplete == null ? null : `${autocomplete === false ? "off" : autocomplete === true ? "on" : autocomplete}`} autocapitalize=${autocapitalize == null ? null : `${autocapitalize === false ? "off" : autocapitalize === true ? "on" : autocapitalize}`} placeholder=${placeholder}>`;
   const form = html`<form class=__ns__ style=${maybeWidth(width)}>
     ${maybeLabel(label, input)}<div class=__ns__-input>
       ${input}
