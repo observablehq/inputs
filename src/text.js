@@ -76,11 +76,35 @@ export function text({
   ...options
 } = {}) {
   const [list, listId] = maybeDatalist(datalist);
-  const input = html`<input type=${type} name=text list=${listId} readonly=${readonly} disabled=${disabled} required=${required} min=${min} max=${max} minlength=${minlength} maxlength=${maxlength} pattern=${pattern} spellcheck=${spellcheck == null ? null : `${spellcheck}`} autocomplete=${autocomplete == null ? null : `${autocomplete === false ? "off" : autocomplete === true ? "on" : autocomplete}`} autocapitalize=${autocapitalize == null ? null : `${autocapitalize === false ? "off" : autocapitalize === true ? "on" : autocapitalize}`} placeholder=${placeholder}>`;
+  const input = html`<input
+    type=${type}
+    name=text
+    list=${listId}
+    readonly=${readonly}
+    disabled=${disabled}
+    required=${required}
+    min=${min}
+    max=${max}
+    minlength=${minlength}
+    maxlength=${maxlength}
+    pattern=${pattern}
+    spellcheck=${truefalse(spellcheck)}
+    autocomplete=${onoff(autocomplete)}
+    autocapitalize=${onoff(autocapitalize)}
+    placeholder=${placeholder}
+  >`;
   const form = html`<form class=__ns__ style=${maybeWidth(width)}>
     ${maybeLabel(label, input)}<div class=__ns__-input>
       ${input}
     </div>${list}
   </form>`;
   return createText(form, input, options);
+}
+
+export function truefalse(value) {
+  return value == null ? null : `${value}`;
+}
+
+export function onoff(value) {
+  return value == null ? null : `${value === false ? "off" : value === true ? "on" : value}`;
 }
