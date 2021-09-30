@@ -21,9 +21,7 @@ export function date({
       ${input}
     </div>
   </form>`;
-  return createText(form, input, {
-    ...options,
-    value: coerce(value),
+  return createText(form, input, coerce(value), options, {
     get: (input) => input.valueAsDate,
     set: (input, value) => input.value = format(value),
     same: (input, value) => +input.valueAsDate === +value

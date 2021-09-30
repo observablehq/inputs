@@ -5,13 +5,13 @@ import {checkValidity, dispatchInput, preventDefault} from "./event.js";
 import {stringify} from "./format.js";
 import {maybeLabel} from "./label.js";
 
-export function createText(form, input, {
-  value = "",
-  submit,
+export function createText(form, input, value, {
+  validate = checkValidity,
+  submit
+} = {}, {
   get = (input) => input.value,
   set = (input, value) => input.value = stringify(value),
-  same = (input, value) => input.value === value,
-  validate = checkValidity
+  same = (input, value) => input.value === value
 } = {}) {
   submit = submit === true ? "Submit" : submit || null;
   const button = submit ? html`<button type=submit disabled>${submit}` : null;
@@ -58,6 +58,7 @@ export function createText(form, input, {
 
 export function text({
   label,
+  value = "",
   type = "text",
   placeholder,
   pattern,
@@ -98,7 +99,7 @@ export function text({
       ${input}
     </div>${list}
   </form>`;
-  return createText(form, input, options);
+  return createText(form, input, value, options);
 }
 
 // Hypertext Literal will normally drop an attribute if its value is exactly

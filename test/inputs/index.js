@@ -1,6 +1,7 @@
 export * from "./buttons.js";
 export * from "./checkboxes.js";
 export * from "./dates.js";
+export * from "./files.js";
 export * from "./numbers.js";
 export * from "./radios.js";
 export * from "./ranges.js";

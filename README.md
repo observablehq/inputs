@@ -25,8 +25,9 @@ Observable Inputs provides basic inputs:
 * [Range](#Range) - choose a numeric value in a range (slider)
 * [Select](#Select) - choose one or many from a set (drop-down menu)
 * [Text](#Text) - freeform single-line text input
-* [Date](#Date) - date input
 * [Textarea](#Textarea) - freeform multi-line text input
+* [Date](#Date) - date input
+* [File](#File) - local file input
 
 Observable Inputs provides fancy inputs for tabular data:
 
@@ -349,31 +350,6 @@ The available *options* are:
 
 If *validate* is not defined, [*text*.checkValidity](https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#dom-cva-checkvalidity) is used. While the input is not considered valid, changes to the input will not be reported.
 
-### Date
-
-#### Inputs.date(*options*)
-
-```js
-viewof start = Inputs.date({label: "Start date", value: "1982-03-06"})
-```
-
-[Source](./src/date.js) · [Examples](https://observablehq.com/@observablehq/input-date) · A Date allows a [calendar-based input](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/date). By default, a Date will report its value immediately on input. If more deliberate behavior is desired, say if the input will trigger an expensive computation or remote API, the *submit* option can be set to true to wait until a button is clicked or the Enter key is pressed.
-
-The available *options* are:
-
-* *label* - a label; either a string or an HTML element.
-* *value* - the initial value, as a JavaScript Date or formatted as an ISO string (yyyy-mm-dd); defaults to null.
-* *min* - [minimum value](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/min) attribute.
-* *max* - [maximum value](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/max) attribute.
-* *required* - if true, the input must be a valid date.
-* *validate* - a function to check whether the text input is valid.
-* *width* - the width of the input (not including the label).
-* *submit* - whether to require explicit submission before updating; defaults to false.
-* *readonly* - whether input is readonly; defaults to false.
-* *disabled* - whether input is disabled; defaults to false.
-
-Note that the displayed date format is formatted [based on the browser’s locale](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/date).
-
 ### Textarea
 
 #### Inputs.textarea(*options*)
@@ -407,6 +383,59 @@ The available *options* are:
 * *monospace* - if true, use a monospace font.
 
 If *validate* is not defined, [*text*.checkValidity](https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#dom-cva-checkvalidity) is used. While the input is not considered valid, changes to the input will not be reported.
+
+### Date
+
+#### Inputs.date(*options*)
+
+```js
+viewof start = Inputs.date({label: "Start date", value: "1982-03-06"})
+```
+
+[Source](./src/date.js) · [Examples](https://observablehq.com/@observablehq/input-date) · A Date allows a [calendar-based input](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/date). By default, a Date will report its value immediately on input. If more deliberate behavior is desired, say if the input will trigger an expensive computation or remote API, the *submit* option can be set to true to wait until a button is clicked or the Enter key is pressed.
+
+The available *options* are:
+
+* *label* - a label; either a string or an HTML element.
+* *value* - the initial value, as a JavaScript Date or formatted as an ISO string (yyyy-mm-dd); defaults to null.
+* *min* - [minimum value](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/min) attribute.
+* *max* - [maximum value](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/max) attribute.
+* *required* - if true, the input must be a valid date.
+* *validate* - a function to check whether the text input is valid.
+* *width* - the width of the input (not including the label).
+* *submit* - whether to require explicit submission before updating; defaults to false.
+* *readonly* - whether input is readonly; defaults to false.
+* *disabled* - whether input is disabled; defaults to false.
+
+Note that the displayed date format is formatted [based on the browser’s locale](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/date).
+
+### File
+
+#### Inputs.file(*options*)
+
+```js
+viewof recordsFile = Inputs.file({label: "Records", accept: ".json"})
+```
+```js
+records = recordsFile.json()
+```
+
+[Source](./src/file.js) · A file input allows the user to pick one or more local files. These files will be exposed as objects with the same API as [Observable file attachments](https://github.com/observablehq/stdlib/blob/main/README.md#file-attachments).
+
+The available *options* are:
+
+* *label* - a label; either a string or an HTML element.
+* *required* - if true, the input must be a valid date.
+* *validate* - a function to check whether the text input is valid.
+* *accept* - the [acceptable file types](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file#accept).
+* *capture* - for [capturing image or video data](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file#capture).
+* *multiple* - whether to allow multiple files to be selected; defaults to false.
+* *width* - the width of the input (not including the label).
+* *disabled* - whether input is disabled; defaults to false.
+
+Note that the value of file input cannot be set programmatically; it can only be changed by the user.
+
+(In vanilla JavaScript, the Inputs.file method is not exposed directly. Instead, an Inputs.fileOf method is exposed which takes an AbstractFile implementation and returns the Inputs.file method. This avoids a circular dependency between Observable Inputs and the Observable standard library.)
 
 ## Utilities
 
