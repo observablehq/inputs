@@ -1,12 +1,14 @@
 import {html} from "htl";
 import {maybeWidth} from "./css.js";
 import {maybeLabel} from "./label.js";
-import {createText} from "./text.js";
+import {createText, onoff, truefalse} from "./text.js";
 
 export function textarea({
   label,
   placeholder,
   spellcheck,
+  autocomplete,
+  autocapitalize,
   rows = 3,
   minlength,
   maxlength,
@@ -18,7 +20,25 @@ export function textarea({
   width,
   ...options
 } = {}) {
-  const input = html`<textarea name=text readonly=${readonly} disabled=${disabled} required=${required} rows=${rows} minlength=${minlength} maxlength=${maxlength} spellcheck=${spellcheck === undefined ? false : spellcheck === null ? null : `${spellcheck}`} placeholder=${placeholder} onkeydown=${onkeydown} style=${{width, fontFamily: monospace ? "var(--monospace, monospace)" : null, resize: resize ? null : "none"}}>`;
+  const input = html`<textarea
+    name=text
+    readonly=${readonly}
+    disabled=${disabled}
+    required=${required}
+    rows=${rows}
+    minlength=${minlength}
+    maxlength=${maxlength}
+    spellcheck=${truefalse(spellcheck)}
+    autocomplete=${onoff(autocomplete)}
+    autocapitalize=${onoff(autocapitalize)}
+    placeholder=${placeholder}
+    onkeydown=${onkeydown}
+    style=${{
+      width,
+      fontFamily: monospace ? "var(--monospace, monospace)" : null,
+      resize: resize ? null : "none"
+    }}
+  >`;
   const form = html`<form class="__ns__ __ns__-textarea" style=${maybeWidth(width)}>
     ${maybeLabel(label, input)}<div>
       ${input}

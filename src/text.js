@@ -62,6 +62,8 @@ export function text({
   placeholder,
   pattern,
   spellcheck,
+  autocomplete,
+  autocapitalize,
   min,
   max,
   minlength,
@@ -74,11 +76,41 @@ export function text({
   ...options
 } = {}) {
   const [list, listId] = maybeDatalist(datalist);
-  const input = html`<input type=${type} name=text list=${listId} readonly=${readonly} disabled=${disabled} required=${required} min=${min} max=${max} minlength=${minlength} maxlength=${maxlength} pattern=${pattern} spellcheck=${spellcheck === undefined ? false : spellcheck === null ? null : `${spellcheck}`} placeholder=${placeholder}>`;
+  const input = html`<input
+    type=${type}
+    name=text
+    list=${listId}
+    readonly=${readonly}
+    disabled=${disabled}
+    required=${required}
+    min=${min}
+    max=${max}
+    minlength=${minlength}
+    maxlength=${maxlength}
+    pattern=${pattern}
+    spellcheck=${truefalse(spellcheck)}
+    autocomplete=${onoff(autocomplete)}
+    autocapitalize=${onoff(autocapitalize)}
+    placeholder=${placeholder}
+  >`;
   const form = html`<form class=__ns__ style=${maybeWidth(width)}>
     ${maybeLabel(label, input)}<div class=__ns__-input>
       ${input}
     </div>${list}
   </form>`;
   return createText(form, input, options);
+}
+
+// Hypertext Literal will normally drop an attribute if its value is exactly
+// false, but for these attributes (e.g., spellcheck), we actually want the
+// false to be stringified as the attribute value.
+export function truefalse(value) {
+  return value == null ? null : `${value}`;
+}
+
+// For boolean attributes that support “on” and “off”, this maps true to “on”
+// and false to “off”. Any other value (if not nullish) is assumed to be a
+// string, such as autocapitalize=sentences.
+export function onoff(value) {
+  return value == null ? null : `${value === false ? "off" : value === true ? "on" : value}`;
 }

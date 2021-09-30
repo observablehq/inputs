@@ -231,6 +231,8 @@ The available *options* are:
 * *locale* - the current locale; defaults to English.
 * *format* - a function to show the number of results.
 * *spellcheck* - whether to activate the browser’s spell-checker.
+* *autocomplete* - the [autocomplete](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete) attribute, as text or boolean (true for on, false for off).
+* *autocapitalize* - the [autocapitalize](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/autocapitalize) attribute, as text or boolean (true for on, false for off).
 * *filter* - the filter factory: a function that receives the query and returns a filter.
 * *width* - the width of the input (not including the label).
 * *datalist* - an iterable of suggested values.
@@ -330,6 +332,8 @@ The available *options* are:
 * *value* - the initial value; defaults to the empty string.
 * *placeholder* - the [placeholder](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/placeholder) attribute.
 * *spellcheck* - whether to activate the browser’s spell-checker.
+* *autocomplete* - the [autocomplete](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete) attribute, as text or boolean (true for on, false for off).
+* *autocapitalize* - the [autocapitalize](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/autocapitalize) attribute, as text or boolean (true for on, false for off).
 * *pattern* - the [pattern](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/pattern) attribute.
 * *minlength* - [minimum length](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/minlength) attribute.
 * *maxlength* - [maximum length](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/maxlength) attribute.
@@ -388,6 +392,8 @@ The available *options* are:
 * *value* - the initial value; defaults to the empty string.
 * *placeholder* - the [placeholder](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/placeholder) attribute.
 * *spellcheck* - whether to activate the browser’s spell-checker.
+* *autocomplete* - the [autocomplete](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete) attribute, as text or boolean (true for on, false for off).
+* *autocapitalize* - the [autocapitalize](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/autocapitalize) attribute, as text or boolean (true for on, false for off).
 * *minlength* - [minimum length](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/minlength) attribute.
 * *maxlength* - [maximum length](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/maxlength) attribute.
 * *required* - if true, the input must be non-empty; defaults to *minlength* > 0.
