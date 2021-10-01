@@ -25,8 +25,9 @@ Observable Inputs provides basic inputs:
 * [Range](#Range) - choose a numeric value in a range (slider)
 * [Select](#Select) - choose one or many from a set (drop-down menu)
 * [Text](#Text) - freeform single-line text input
-* [Date](#Date) - date input
 * [Textarea](#Textarea) - freeform multi-line text input
+* [Date](#Date) - date input
+* [File](#File) - local file input
 
 Observable Inputs provides fancy inputs for tabular data:
 
@@ -349,6 +350,40 @@ The available *options* are:
 
 If *validate* is not defined, [*text*.checkValidity](https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#dom-cva-checkvalidity) is used. While the input is not considered valid, changes to the input will not be reported.
 
+### Textarea
+
+#### Inputs.textarea(*options*)
+
+[<img src="./img/textarea.png" alt="A Textarea asking for your biography" width="660">](https://observablehq.com/@observablehq/input-textarea)
+
+```js
+viewof bio = Inputs.textarea({label: "Biography", placeholder: "Tell us a little about yourself…"})
+```
+
+[Source](./src/textarea.js) · [Examples](https://observablehq.com/@observablehq/input-textarea) · A Textarea allows multi-line freeform text input. By default, a Textarea will report its value immediately on input. If more deliberate behavior is desired, the *submit* option can be set to true to wait until a button is clicked or the appropriate keyboard shortcut (such as Command-Enter on macOS) is pressed.
+
+The available *options* are:
+
+* *label* - a label; either a string or an HTML element.
+* *value* - the initial value; defaults to the empty string.
+* *placeholder* - the [placeholder](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/placeholder) attribute.
+* *spellcheck* - whether to activate the browser’s spell-checker.
+* *autocomplete* - the [autocomplete](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete) attribute, as text or boolean (true for on, false for off).
+* *autocapitalize* - the [autocapitalize](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/autocapitalize) attribute, as text or boolean (true for on, false for off).
+* *minlength* - [minimum length](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/minlength) attribute.
+* *maxlength* - [maximum length](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/maxlength) attribute.
+* *required* - if true, the input must be non-empty; defaults to *minlength* > 0.
+* *validate* - a function to check whether the text input is valid.
+* *width* - the width of the input (not including the label).
+* *rows* - the number of rows of text to show.
+* *resize* - if true, allow vertical resizing; defaults to *rows* < 12.
+* *submit* - whether to require explicit submission before updating; defaults to false.
+* *readonly* - whether input is readonly; defaults to false.
+* *disabled* - whether input is disabled; defaults to false.
+* *monospace* - if true, use a monospace font.
+
+If *validate* is not defined, [*text*.checkValidity](https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#dom-cva-checkvalidity) is used. While the input is not considered valid, changes to the input will not be reported.
+
 ### Date
 
 #### Inputs.date(*options*)
@@ -374,39 +409,33 @@ The available *options* are:
 
 Note that the displayed date format is formatted [based on the browser’s locale](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/date).
 
-### Textarea
+### File
 
-#### Inputs.textarea(*options*)
-
-[<img src="./img/textarea.png" alt="A Textarea asking for your biography" width="660">](https://observablehq.com/@observablehq/input-textarea)
+#### Inputs.file(*options*)
 
 ```js
-viewof bio = Inputs.textarea({label: "Biography", placeholder: "Tell us a little about yourself…"})
+viewof recordsFile = Inputs.file({label: "Records", accept: ".json"})
+```
+```js
+records = recordsFile.json()
 ```
 
-[Source](./src/textarea.js) · [Examples](https://observablehq.com/@observablehq/input-textarea) · A Textarea allows multi-line freeform text input. By default, a Textarea will report its value immediately on input. If more deliberate behavior is desired, the *submit* option can be set to true to wait until a button is clicked or Command-Enter is pressed.
+[Source](./src/file.js) · A file input allows the user to pick one or more local files. These files will be exposed as objects with the same API as [Observable file attachments](https://github.com/observablehq/stdlib/blob/main/README.md#file-attachments).
 
 The available *options* are:
 
 * *label* - a label; either a string or an HTML element.
-* *value* - the initial value; defaults to the empty string.
-* *placeholder* - the [placeholder](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/placeholder) attribute.
-* *spellcheck* - whether to activate the browser’s spell-checker.
-* *autocomplete* - the [autocomplete](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete) attribute, as text or boolean (true for on, false for off).
-* *autocapitalize* - the [autocapitalize](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/autocapitalize) attribute, as text or boolean (true for on, false for off).
-* *minlength* - [minimum length](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/minlength) attribute.
-* *maxlength* - [maximum length](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/maxlength) attribute.
-* *required* - if true, the input must be non-empty; defaults to *minlength* > 0.
+* *required* - if true, the input must be a valid date.
 * *validate* - a function to check whether the text input is valid.
+* *accept* - the [acceptable file types](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file#accept).
+* *capture* - for [capturing image or video data](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file#capture).
+* *multiple* - whether to allow multiple files to be selected; defaults to false.
 * *width* - the width of the input (not including the label).
-* *rows* - the number of rows of text to show.
-* *resize* - if true, allow vertical resizing; defaults to *rows* < 12.
-* *submit* - whether to require explicit submission before updating; defaults to false.
-* *readonly* - whether input is readonly; defaults to false.
 * *disabled* - whether input is disabled; defaults to false.
-* *monospace* - if true, use a monospace font.
 
-If *validate* is not defined, [*text*.checkValidity](https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#dom-cva-checkvalidity) is used. While the input is not considered valid, changes to the input will not be reported.
+Note that the value of file input cannot be set programmatically; it can only be changed by the user.
+
+(In vanilla JavaScript, the Inputs.file method is not exposed directly. Instead, an Inputs.fileOf method is exposed which takes an AbstractFile implementation and returns the Inputs.file method. This avoids a circular dependency between Observable Inputs and the Observable standard library.)
 
 ## Utilities
 

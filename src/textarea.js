@@ -4,6 +4,7 @@ import {maybeLabel} from "./label.js";
 import {createText, onoff, truefalse} from "./text.js";
 
 export function textarea({
+  value = "",
   label,
   placeholder,
   spellcheck,
@@ -49,5 +50,5 @@ export function textarea({
       return form.onsubmit(event);
     }
   }
-  return createText(form, input, options);
+  return createText(form, input, value, options);
 }
