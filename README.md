@@ -360,7 +360,7 @@ If *validate* is not defined, [*text*.checkValidity](https://html.spec.whatwg.or
 viewof bio = Inputs.textarea({label: "Biography", placeholder: "Tell us a little about yourself…"})
 ```
 
-[Source](./src/textarea.js) · [Examples](https://observablehq.com/@observablehq/input-textarea) · A Textarea allows multi-line freeform text input. By default, a Textarea will report its value immediately on input. If more deliberate behavior is desired, the *submit* option can be set to true to wait until a button is clicked or Command-Enter is pressed.
+[Source](./src/textarea.js) · [Examples](https://observablehq.com/@observablehq/input-textarea) · A Textarea allows multi-line freeform text input. By default, a Textarea will report its value immediately on input. If more deliberate behavior is desired, the *submit* option can be set to true to wait until a button is clicked or the appropriate keyboard shortcut (such as Command-Enter on macOS) is pressed.
 
 The available *options* are:
 
