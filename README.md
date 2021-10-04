@@ -425,8 +425,8 @@ records = recordsFile.json()
 The available *options* are:
 
 * *label* - a label; either a string or an HTML element.
-* *required* - if true, the input must be a valid date.
-* *validate* - a function to check whether the text input is valid.
+* *required* - if true, a valid file must be selected.
+* *validate* - a function to check whether the file input is valid.
 * *accept* - the [acceptable file types](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file#accept).
 * *capture* - for [capturing image or video data](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file#capture).
 * *multiple* - whether to allow multiple files to be selected; defaults to false.
