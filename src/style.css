@@ -168,7 +168,8 @@ form.__ns__-toggle .__ns__-input {
 }
 
 /* Tweak the height so that date inputs match text (and others). */
-.__ns__-input > input[type=date] {
+.__ns__-input > input[type=date],
+.__ns__-input > input[type=datetime-local] {
   height: 22px;
 }
 

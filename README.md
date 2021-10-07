@@ -409,6 +409,14 @@ The available *options* are:
 
 Note that the displayed date format is formatted [based on the browser’s locale](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/date).
 
+#### Inputs.datetime(*options*)
+
+```js
+viewof start = Inputs.datetime({label: "Start date", value: "1982-03-06T02:30"})
+```
+
+Like Inputs.date, but allows a time to also be specified in the user’s local time zone.
+
 ### File
 
 #### Inputs.file(*options*)
