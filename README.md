@@ -368,7 +368,7 @@ Like Inputs.text, but where *type* is password.
 
 #### Inputs.color(*options*)
 
-Like Inputs.text, but where *type* is color. This type of input does not support the following options: *placeholder*, *pattern*, *spellcheck*, *autocomplete*, *autocapitalize*, *min*, *max*, *minlength*, *maxlength*.
+Like Inputs.text, but where *type* is color. The color value is represented as an RGB hexadecimal string such as #ff00ff. This type of input does not support the following options: *placeholder*, *pattern*, *spellcheck*, *autocomplete*, *autocapitalize*, *min*, *max*, *minlength*, *maxlength*.
 
 ### Textarea
 
@@ -427,7 +427,7 @@ The available *options* are:
 * *readonly* - whether input is readonly; defaults to false.
 * *disabled* - whether input is disabled; defaults to false.
 
-Note that the displayed date format is formatted [based on the browser’s locale](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/date).
+The value of the input is a Date instance at UTC midnight of the specified date, or null if no (valid) value has been specified. Note that the displayed date format is [based on the browser’s locale](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/date).
 
 #### Inputs.datetime(*options*)
 
