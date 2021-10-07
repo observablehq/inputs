@@ -5,6 +5,7 @@ import {maybeLabel} from "./label.js";
 import {createText} from "./text.js";
 
 const dateops = {
+  type: "date",
   get: (input) => input.valueAsDate,
   set: (input, value) => input.value = formatDate(value),
   same: (input, value) => +input.valueAsDate === +value,
@@ -16,14 +17,14 @@ const dateops = {
 // (which you think would be implied by datetime-local)?
 // https://github.com/whatwg/html/issues/4770
 const datetimeops = {
+  type: "datetime-local",
   get: (input) => input.value ? new Date(input.value) : null,
   set: (input, value) => input.value = formatDatetime(value),
   same: (input, value) => +new Date(input.value) === +value,
   format: formatDatetime
 };
 
-export function date({
-  type = "date",
+function createDate({
   label,
   min,
   max,
@@ -34,9 +35,10 @@ export function date({
   value,
   ...options
 } = {}, {
+  type,
   format,
   ...ops
-} = dateops) {
+}) {
   const input = html`<input type=${type} name=date readonly=${readonly} disabled=${disabled} required=${required} min=${format(min)} max=${format(max)}>`;
   const form = html`<form class=__ns__ style=${maybeWidth(width)}>
     ${maybeLabel(label, input)}<div class=__ns__-input>
@@ -46,8 +48,12 @@ export function date({
   return createText(form, input, coerce(value), options, ops);
 }
 
+export function date(options) {
+  return createDate(options, dateops);
+}
+
 export function datetime(options) {
-  return date({...options, type: "datetime-local"}, datetimeops);
+  return createDate(options, datetimeops);
 }
 
 function coerce(value) {
