@@ -1,5 +1,6 @@
 export * from "./buttons.js";
 export * from "./checkboxes.js";
+export * from "./colors.js";
 export * from "./dates.js";
 export * from "./files.js";
 export * from "./numbers.js";

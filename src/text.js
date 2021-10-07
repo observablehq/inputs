@@ -11,11 +11,12 @@ export function createText(form, input, value, {
 } = {}, {
   get = (input) => input.value,
   set = (input, value) => input.value = stringify(value),
-  same = (input, value) => input.value === value
+  same = (input, value) => input.value === value,
+  after = (button) => input.after(button)
 } = {}) {
   submit = submit === true ? "Submit" : submit || null;
   const button = submit ? html`<button type=submit disabled>${submit}` : null;
-  if (submit) input.after(button);
+  if (submit) after(button);
   set(input, value);
   value = validate(input) ? get(input) : undefined;
   form.onsubmit = onsubmit;

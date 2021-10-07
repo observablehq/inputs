@@ -366,6 +366,10 @@ Like Inputs.text, but where *type* is url.
 
 Like Inputs.text, but where *type* is password.
 
+#### Inputs.color(*options*)
+
+Like Inputs.text, but where *type* is color. This type of input does not support the following options: *placeholder*, *pattern*, *spellcheck*, *autocomplete*, *autocapitalize*, *min*, *max*, *minlength*, *maxlength*.
+
 ### Textarea
 
 #### Inputs.textarea(*options*)
