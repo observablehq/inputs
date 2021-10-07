@@ -102,6 +102,22 @@ export function text({
   return createText(form, input, value, options);
 }
 
+export function email(options) {
+  return text({...options, type: "email"});
+}
+
+export function tel(options) {
+  return text({...options, type: "tel"});
+}
+
+export function url(options) {
+  return text({...options, type: "url"});
+}
+
+export function password(options) {
+  return text({...options, type: "password"});
+}
+
 // Hypertext Literal will normally drop an attribute if its value is exactly
 // false, but for these attributes (e.g., spellcheck), we actually want the
 // false to be stringified as the attribute value.

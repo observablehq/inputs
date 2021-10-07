@@ -350,6 +350,22 @@ The available *options* are:
 
 If *validate* is not defined, [*text*.checkValidity](https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#dom-cva-checkvalidity) is used. While the input is not considered valid, changes to the input will not be reported.
 
+#### Inputs.email(*options*)
+
+Like Inputs.text, but where *type* is email.
+
+#### Inputs.tel(*options*)
+
+Like Inputs.text, but where *type* is tel.
+
+#### Inputs.url(*options*)
+
+Like Inputs.text, but where *type* is url.
+
+#### Inputs.password(*options*)
+
+Like Inputs.text, but where *type* is password.
+
 ### Textarea
 
 #### Inputs.textarea(*options*)

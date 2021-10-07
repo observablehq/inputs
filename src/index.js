@@ -6,7 +6,7 @@ export {range, number} from "./range.js";
 export {search, searchFilter} from "./search.js";
 export {select} from "./select.js";
 export {table} from "./table.js";
-export {text} from "./text.js";
+export {text, email, tel, url, password} from "./text.js";
 export {textarea} from "./textarea.js";
 export {input} from "./input.js";
 export {bind} from "./bind.js";
