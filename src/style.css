@@ -161,6 +161,16 @@ form.__ns__-toggle .__ns__-input {
   text-overflow: ellipsis;
 }
 
+/* If possible, show the color input output in the system’s monospace font. */
+.__ns__-input > input[type=color] ~ output {
+  font-family: ui-monospace, var(--monospace);
+}
+
+/* When a color input has a submit button, reserve more space for the output. */
+.__ns__-input:not(:only-child) > input[type=color] ~ output {
+  flex-shrink: 1;
+}
+
 /* Separate the range input from the preceding number input. */
 .__ns__-input > input[type=range] {
   margin: 0;

@@ -61,8 +61,20 @@ export async function textReadonly() {
   return Inputs.text({readonly: true});
 }
 
-export async function textPassword() {
-  return Inputs.text({type: "password"});
+export async function password() {
+  return Inputs.password();
+}
+
+export async function email() {
+  return Inputs.email();
+}
+
+export async function tel() {
+  return Inputs.tel();
+}
+
+export async function url() {
+  return Inputs.url();
 }
 
 export async function textDate() {

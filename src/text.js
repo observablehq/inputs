@@ -11,11 +11,12 @@ export function createText(form, input, value, {
 } = {}, {
   get = (input) => input.value,
   set = (input, value) => input.value = stringify(value),
-  same = (input, value) => input.value === value
+  same = (input, value) => input.value === value,
+  after = (button) => input.after(button)
 } = {}) {
   submit = submit === true ? "Submit" : submit || null;
   const button = submit ? html`<button type=submit disabled>${submit}` : null;
-  if (submit) input.after(button);
+  if (submit) after(button);
   set(input, value);
   value = validate(input) ? get(input) : undefined;
   form.onsubmit = onsubmit;
@@ -100,6 +101,22 @@ export function text({
     </div>${list}
   </form>`;
   return createText(form, input, value, options);
+}
+
+export function email(options) {
+  return text({...options, type: "email"});
+}
+
+export function tel(options) {
+  return text({...options, type: "tel"});
+}
+
+export function url(options) {
+  return text({...options, type: "url"});
+}
+
+export function password(options) {
+  return text({...options, type: "password"});
 }
 
 // Hypertext Literal will normally drop an attribute if its value is exactly
