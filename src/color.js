@@ -7,7 +7,7 @@ import {createText} from "./text.js";
 
 export function color({
   label,
-  value = "#000000",
+  value,
   required,
   datalist,
   readonly,
@@ -20,6 +20,7 @@ export function color({
   const input = html`<input
     type=color
     name=text
+    value=${value}
     id=${id}
     list=${listId}
     readonly=${readonly}
