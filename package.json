@@ -1,7 +1,7 @@
 {
   "name": "@observablehq/inputs",
   "description": "User interface components for Observable notebooks",
-  "version": "0.10.2",
+  "version": "0.10.3",
   "author": {
     "name": "Observable, Inc.",
     "url": "https://observablehq.com"
