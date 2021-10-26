@@ -6,17 +6,20 @@ export function form(inputs) {
 
 function arrayForm(inputs) {
   inputs = [...inputs]; // defensive copy
-  let value; // lazily constructed
+  let value = inputs.map(({value}) => value);
   const form = html`<form>${inputs}`;
-  form.addEventListener("input", () => value = undefined);
   return Object.defineProperty(form, "value", {
     get() {
-      return value === undefined
-        ? (value = inputs.map(({value}) => value))
-        : value;
+      for (let i = 0, n = inputs.length; i < n; ++i) {
+        const v = inputs[i].value;
+        if (!Object.is(v, value[i])) {
+          value = [...value];
+          value[i] = v;
+        }
+      }
+      return value;
     },
     set(v = []) {
-      value = undefined;
       for (let i = 0, n = inputs.length; i < n; ++i) {
         inputs[i].value = v[i];
       }
@@ -26,17 +29,20 @@ function arrayForm(inputs) {
 
 function objectForm(inputs) {
   inputs = {...inputs}; // defensive copy
-  let value; // lazily constructed
+  let value = Object.fromEntries(Object.entries(inputs).map(([name, {value}]) => [name, value]));
   const form = html`<form>${Object.values(inputs)}`;
-  form.addEventListener("input", () => value = undefined);
   return Object.defineProperty(form, "value", {
     get() {
-      return value === undefined
-        ? (value = Object.fromEntries(Object.entries(inputs).map(([name, {value}]) => [name, value])))
-        : value;
+      for (const k in value) {
+        const v = inputs[k].value;
+        if (!Object.is(v, value[k])) {
+          value = {...value};
+          value[k] = v;
+        }
+      }
+      return value;
     },
     set(v = {}) {
-      value = undefined;
       for (const name in inputs) {
         inputs[name].value = v[name];
       }
