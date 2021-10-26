@@ -2,6 +2,7 @@ export {button} from "./button.js";
 export {checkbox, radio, toggle} from "./checkbox.js";
 export {color} from "./color.js";
 export {date, datetime} from "./date.js";
+export {form} from "./form.js";
 export {fileOf} from "./file.js";
 export {range, number} from "./range.js";
 export {search, searchFilter} from "./search.js";
