@@ -35,8 +35,7 @@ Observable Inputs provides fancy inputs for tabular data:
 * [Table](#Table) - browse a tabular dataset
 
 Lastly, Inputs provides low-level utilities for more advanced usage:
-
-* [Input](#Input) - a programmatic interface for storing input state
+* [Input](#inputsinputvalue) - a programmatic interface for storing input state
 * [bind](#bind) - synchronize two or more inputs
 * [disposal](#disposal) - detect when an input is discarded
 
