@@ -23,6 +23,7 @@ export function table(data, options = {}) {
   // of data to the table without an explicit await.
   if (data && typeof data.then === "function") {
     Object.defineProperty(root, "value", {
+      configurable: true, // allow defineProperty again on initialization
       set() {
         throw new Error("cannot set value while data is unresolved");
       }
