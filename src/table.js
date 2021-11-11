@@ -1,5 +1,5 @@
 import {html} from "htl";
-import {arrayify} from "./array.js";
+import {arrayify, maybeColumns} from "./array.js";
 import {length} from "./css.js";
 import {formatDate, formatLocaleAuto, formatLocaleNumber} from "./format.js";
 import {newId} from "./id.js";
@@ -42,7 +42,7 @@ function initialize(
   },
   data,
   {
-    columns, // array of column names
+    columns = maybeColumns(data), // array of column names
     value, // initial selection
     required = true, // if true, the value is everything if nothing is selected
     sort, // name of column to sort by, if any
@@ -372,9 +372,6 @@ function lengthof(data) {
 }
 
 function columnsof(data) {
-  if (Array.isArray(data.columns)) return data.columns; // d3-dsv, FileAttachment
-  if (data.schema && Array.isArray(data.schema.fields)) return data.schema.fields.map(f => f.name); // apache-arrow
-  if (typeof data.columnNames === "function") return data.columnNames(); // arquero
   const columns = new Set();
   for (const row of data) {
     for (const name in row) {

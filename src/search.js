@@ -1,5 +1,5 @@
 import {html} from "htl";
-import {arrayify} from "./array.js";
+import {arrayify, maybeColumns} from "./array.js";
 import {maybeWidth} from "./css.js";
 import {maybeDatalist} from "./datalist.js";
 import {preventDefault} from "./event.js";
@@ -13,7 +13,7 @@ export function search(data, {
   label,
   query = "", // initial search query
   placeholder = "Search", // placeholder text to show when empty
-  columns = data.columns,
+  columns = maybeColumns(data),
   spellcheck,
   autocomplete,
   autocapitalize,
