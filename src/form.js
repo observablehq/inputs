@@ -1,13 +1,17 @@
 import {html} from "htl";
 
-export function form(inputs) {
-  return (Array.isArray(inputs) ? arrayForm : objectForm)(inputs);
+export function form(inputs, options) {
+  return (Array.isArray(inputs) ? arrayForm : objectForm)(inputs, options);
 }
 
-function arrayForm(inputs) {
+function arrayTemplate(inputs) {
+  return html`<div>${inputs}`;
+}
+
+function arrayForm(inputs, {template = arrayTemplate} = {}) {
   inputs = [...inputs]; // defensive copy
   let value = inputs.map(({value}) => value);
-  return Object.defineProperty(html`<div>${inputs}`, "value", {
+  return Object.defineProperty(template(inputs), "value", {
     get() {
       for (let i = 0, n = inputs.length; i < n; ++i) {
         const v = inputs[i].value;
@@ -26,10 +30,14 @@ function arrayForm(inputs) {
   });
 }
 
-function objectForm(inputs) {
+function objectTemplate(inputs) {
+  return html`<div>${Object.values(inputs)}`;
+}
+
+function objectForm(inputs, {template = objectTemplate} = {}) {
   inputs = {...inputs}; // defensive copy
   let value = Object.fromEntries(Object.entries(inputs).map(([name, {value}]) => [name, value]));
-  return Object.defineProperty(html`<div>${Object.values(inputs)}`, "value", {
+  return Object.defineProperty(template(inputs), "value", {
     get() {
       for (const k in value) {
         const v = inputs[k].value;
