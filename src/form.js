@@ -7,8 +7,7 @@ export function form(inputs) {
 function arrayForm(inputs) {
   inputs = [...inputs]; // defensive copy
   let value = inputs.map(({value}) => value);
-  const form = html`<form>${inputs}`;
-  return Object.defineProperty(form, "value", {
+  return Object.defineProperty(html`<div>${inputs}`, "value", {
     get() {
       for (let i = 0, n = inputs.length; i < n; ++i) {
         const v = inputs[i].value;
@@ -30,8 +29,7 @@ function arrayForm(inputs) {
 function objectForm(inputs) {
   inputs = {...inputs}; // defensive copy
   let value = Object.fromEntries(Object.entries(inputs).map(([name, {value}]) => [name, value]));
-  const form = html`<form>${Object.values(inputs)}`;
-  return Object.defineProperty(form, "value", {
+  return Object.defineProperty(html`<div>${Object.values(inputs)}`, "value", {
     get() {
       for (const k in value) {
         const v = inputs[k].value;
