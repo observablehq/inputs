@@ -36,7 +36,7 @@ Observable Inputs provides fancy inputs for tabular data:
 
 Lastly, Inputs provides low-level utilities for more advanced usage:
 
-* [Form](#inputsforminputsoptions) - combine multiple inputs
+* [Form](#inputsforminputs-options) - combine multiple inputs
 * [Input](#inputsinputvalue) - a programmatic interface for storing input state
 * [bind](#bind) - synchronize two or more inputs
 * [disposal](#disposal) - detect when an input is discarded
