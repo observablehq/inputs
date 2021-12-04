@@ -35,6 +35,8 @@ Observable Inputs provides fancy inputs for tabular data:
 * [Table](#Table) - browse a tabular dataset
 
 Lastly, Inputs provides low-level utilities for more advanced usage:
+
+* [Form](#inputsforminputsoptions) - combine multiple inputs
 * [Input](#inputsinputvalue) - a programmatic interface for storing input state
 * [bind](#bind) - synchronize two or more inputs
 * [disposal](#disposal) - detect when an input is discarded
@@ -465,6 +467,34 @@ Note that the value of file input cannot be set programmatically; it can only be
 (In vanilla JavaScript, the Inputs.file method is not exposed directly. Instead, an Inputs.fileOf method is exposed which takes an AbstractFile implementation and returns the Inputs.file method. This avoids a circular dependency between Observable Inputs and the Observable standard library.)
 
 ## Utilities
+
+#### Inputs.form(*inputs*, *options*)
+
+[Source](./src/form.js) · [Examples](https://observablehq.com/@observablehq/input-form) · Returns a compound input for the specified array or object of *inputs*. This allows multiple inputs to be combined into a single cell for a more compact display. For example, to define an input for the value `rgb` that is a three-element array [*r*, *g*, *b*] of numbers:
+
+```js
+viewof rgb = Inputs.form([
+  Inputs.range([0, 255], {step: 1, label: "r"}),
+  Inputs.range([0, 255], {step: 1, label: "g"}),
+  Inputs.range([0, 255], {step: 1, label: "b"})
+])
+```
+
+Alternatively, to represent `rgb` as an object {*r*, *g*, *b*}:
+
+```js
+viewof rgb = Inputs.form({
+  r: Inputs.range([0, 255], {step: 1, label: "r"}),
+  g: Inputs.range([0, 255], {step: 1, label: "g"}),
+  b: Inputs.range([0, 255], {step: 1, label: "b"})
+})
+```
+
+The available *options* are:
+
+* *template* - a function that takes the given *inputs* and returns an HTML element to display.
+
+If the *template* object is not specified, the given inputs are wrapped in a DIV.
 
 #### Inputs.input(*value*)
 
