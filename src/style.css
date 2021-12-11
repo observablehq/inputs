@@ -85,9 +85,13 @@ form.__ns__-toggle .__ns__-input {
   line-height: normal;
 }
 
-/* Align the left edge of Button inputs. */
-.__ns__ > button:first-of-type {
-  margin-left: 0;
+.__ns__ button {
+  margin: 0;
+}
+
+/* Separate adjacent buttons. */
+.__ns__ button ~ button {
+  margin-left: var(--length1);
 }
 
 .__ns__-textarea {
