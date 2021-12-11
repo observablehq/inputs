@@ -90,7 +90,7 @@ form.__ns__-toggle .__ns__-input {
 }
 
 /* Separate adjacent buttons. */
-.__ns__ button ~ button {
+.__ns__ button + button {
   margin-left: var(--length1);
 }
 
