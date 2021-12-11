@@ -9,13 +9,14 @@
 }
 
 /* The minimum height of a form should match the minimum allowed cell height.
- * Note that the font here is currently 1px smaller than the Table font; not
- * sure if it’s necessary to make the two exactly the same. */
+ * The vertical margins ensure adequate separation in narrow windows when used
+ * with Inputs.form. */
 form.__ns__ {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
   min-height: 25.5px;
+  margin: var(--length3) 0;
 }
 
 /* On narrow screens, the label is drawn as a block element on top of the
@@ -51,6 +52,7 @@ form.__ns__-toggle .__ns__-input {
     flex-wrap: nowrap;
     width: calc(var(--input-width) + var(--label-width));
     max-width: 100%;
+    margin: initial;
   }
   /* On wide screens, we need to handle: the label being taller than the inputs;
    * the inputs being taller than the label; or both being a single line. In the
