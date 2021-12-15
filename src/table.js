@@ -5,6 +5,8 @@ import {formatDate, formatLocaleAuto, formatLocaleNumber} from "./format.js";
 import {newId} from "./id.js";
 import {identity} from "./identity.js";
 import {defined, ascending, descending} from "./sort.js";
+import {format as d3Format} from "d3-format";
+import {utcFormat as d3UtcFormat} from "d3-time-format";
 
 const rowHeight = 22;
 
@@ -330,7 +332,10 @@ function formatof(base = {}, data, columns, locale) {
   const format = Object.create(null);
   for (const column of columns) {
     if (column in base) {
-      format[column] = base[column];
+      format[column] = typeof(base[column]) === "string" ? 
+        type(data, column) === "date" ? d3UtcFormat(base[column]) :             
+          d3Format(base[column]) : 
+        base[column];
       continue;
     }
     switch (type(data, column)) {
