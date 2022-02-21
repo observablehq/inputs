@@ -12,7 +12,7 @@ export function createChooser({multiple: fixedMultiple, render, selectedIndexes,
     locale,
     keyof = data instanceof Map ? first : identity,
     valueof = data instanceof Map ? second : identity,
-    format = data instanceof Map ? first : formatLocaleAuto(locale),
+    format = (f => (d, i, data) => f(keyof(d, i, data)))(formatLocaleAuto(locale)),
     multiple,
     key,
     value,
@@ -49,11 +49,11 @@ export function createChooser({multiple: fixedMultiple, render, selectedIndexes,
         size
       }
     );
-    form.onchange = dispatchInput;
-    form.oninput = oninput;
-    form.onsubmit = preventDefault;
+    form.addEventListener("input", oninput);
+    form.addEventListener("change", dispatchInput);
+    form.addEventListener("submit", preventDefault);
     function oninput(event) {
-      if (event && event.isTrusted) form.onchange = null;
+      if (event && event.isTrusted) form.removeEventListener("change", dispatchInput);
       if (multiple) {
         value = selectedIndexes(input).map(i => valueof(data[i], i, data));
       } else {

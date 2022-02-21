@@ -40,11 +40,12 @@ export function search(data, {
     oninput=${oninput}
   >`;
   const output = html`<output name=output>`;
-  const form = html`<form class=__ns__ onsubmit=${preventDefault} style=${maybeWidth(width)}>
+  const form = html`<form class=__ns__ style=${maybeWidth(width)}>
     ${maybeLabel(label, input)}<div class=__ns__-input>
       ${input}${output}
     </div>${list}
   </form>`;
+  form.addEventListener("submit", preventDefault);
   function oninput() {
     value = input.value || required ? data.filter(filter(input.value)) : [];
     if (columns !== undefined) value.columns = columns;

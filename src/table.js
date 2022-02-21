@@ -249,11 +249,11 @@ function initialize(
     value = undefined; // lazily computed
   }
 
-  root.onscroll = () => {
+  root.addEventListener("scroll", () => {
     if (root.scrollHeight - root.scrollTop < rows * rowHeight * 1.5 && n < minlengthof(n + 1)) {
       appendRows(n, n = minlengthof(n + rows));
     }
-  };
+  });
 
   if (sort === undefined && reverse) {
     materialize();

@@ -108,7 +108,7 @@ The available *options* are:
 * *sort* - true, “ascending”, “descending”, or a comparator function to sort keys; defaults to false.
 * *unique* - true to only show unique keys; defaults to false.
 * *locale* - the current locale; defaults to English.
-* *format* - a format function; defaults to [formatLocaleAuto](#formatLocaleAuto).
+* *format* - a format function; defaults to [formatLocaleAuto](#formatLocaleAuto) composed with *keyof*.
 * *keyof* - a function to return the key for the given element in *data*.
 * *valueof* - a function to return the value of the given element in *data*.
 * *value* - the initial value, an array; defaults to an empty array (no selection).
@@ -157,7 +157,7 @@ The available *options* are:
 * *sort* - true, “ascending”, “descending”, or a comparator function to sort keys; defaults to false.
 * *unique* - true to only show unique keys; defaults to false.
 * *locale* - the current locale; defaults to English.
-* *format* - a format function; defaults to [formatLocaleAuto](#formatLocaleAuto).
+* *format* - a format function; defaults to [formatLocaleAuto](#formatLocaleAuto) composed with *keyof*.
 * *keyof* - a function to return the key for the given element in *data*.
 * *valueof* - a function to return the value of the given element in *data*.
 * *value* - the initial value; defaults to null (no selection).
@@ -274,7 +274,7 @@ The available *options* are:
 * *sort* - true, “ascending”, “descending”, or a comparator function to sort keys; defaults to false.
 * *unique* - true to only show unique keys; defaults to false.
 * *locale* - the current locale; defaults to English.
-* *format* - a format function; defaults to [formatLocaleAuto](#formatLocaleAuto).
+* *format* - a format function; defaults to [formatLocaleAuto](#formatLocaleAuto) composed with *keyof*.
 * *keyof* - a function to return the key for the given element in *data*.
 * *valueof* - a function to return the value of the given element in *data*.
 * *value* - the initial value, an array if multiple choice is allowed.

@@ -22,7 +22,8 @@ export function button(content = "≡", {
     if (!required && value === undefined) value = null;
     disabled = new Set(disabled === true ? Array.from(content, ([content]) => content) : disabled || undefined);
   }
-  const form = html`<form class=__ns__ onsubmit=${preventDefault}>`;
+  const form = html`<form class=__ns__>`;
+  form.addEventListener("submit", preventDefault);
   const style = {width: length(width)};
   const buttons = Array.from(content, ([content, reduce = identity]) => {
     if (typeof reduce !== "function") throw new TypeError("reduce is not a function");
