@@ -242,6 +242,10 @@ form.__ns__-table {
   padding: 3px 6.5px 3px 0;
 }
 
+.__ns__-table td .gray {
+  color: #888;
+}
+
 .__ns__-table tr > :not(:first-of-type) {
   padding-left: var(--length2);
 }
