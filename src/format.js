@@ -26,6 +26,7 @@ export function formatObjects(format, circular = true) {
   : circular && Array.isArray(value) ? formatArray(value)
   : circular && isTypedArray(value) ? formatArray(value)
   : value instanceof Date ? formatDate(value)
+  : circular && value instanceof Node ? value
   : circular && typeof value === "object" ? formatObject(value)
   : format(value);
 }

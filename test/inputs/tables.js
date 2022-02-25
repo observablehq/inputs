@@ -51,3 +51,9 @@ export function tableCircular() {
     {A: o}
   ]);
 }
+
+export function tableHtml() {
+  return Inputs.table([
+    {A: html`<span style="font-variant: small-caps">hello`}
+  ]);
+}
