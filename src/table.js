@@ -6,6 +6,7 @@ import {newId} from "./id.js";
 import {identity} from "./identity.js";
 import {defined, ascending, descending} from "./sort.js";
 
+const primitive = Symbol("primitive");
 const rowHeight = 22;
 
 export function table(data, options = {}) {
@@ -61,6 +62,7 @@ function initialize(
   if (layout === undefined) layout = columns.length >= 12 ? "auto" : "fixed";
   format = formatof(format, data, columns, locale);
   align = alignof(align, data, columns);
+  const primitiveFormat = formatLocaleAuto(locale);
 
   let array = [];
   let index = [];
@@ -97,7 +99,7 @@ function initialize(
 
   const tbody = html`<tbody>`;
   const tr = html`<tr><td><input type=${multiple ? "checkbox" : "radio"} name=${multiple ? null : "radio"}></td>${columns.map(() => html`<td>`)}`;
-  const theadr = html`<tr><th><input type=checkbox onclick=${reselectAll} disabled=${!multiple}></th>${columns.map((column) => html`<th title=${column} onclick=${event => resort(event, column)}><span></span>${header && column in header ? header[column] : column}</th>`)}</tr>`;
+  const theadr = html`<tr><th><input type=checkbox onclick=${reselectAll} disabled=${!multiple}></th>${columns.map((column) => html`<th title=${column === primitive ? null : column} onclick=${event => resort(event, column)}><span></span>${header && column in header ? header[column] : column === primitive ? "•••" : column}</th>`)}</tr>`;
   root.appendChild(html.fragment`<table style=${{tableLayout: layout}}>
   <thead>${minlengthof(1) || columns.length ? theadr : null}</thead>
   ${tbody}
@@ -128,13 +130,19 @@ function initialize(
     input.onclick = reselect;
     input.checked = selected.has(i);
     input.value = i;
-    if (d != null) for (let j = 0; j < columns.length; ++j) {
-      let column = columns[j];
-      let value = d[column];
-      if (!defined(value)) continue;
-      value = format[column](value, i, data);
+    if (isPrimitive(d)) {
+      value = primitiveFormat(d);
       if (!(value instanceof Node)) value = document.createTextNode(value);
-      itr.childNodes[j + 1].appendChild(value);
+      itr.childNodes[1].appendChild(value);
+    } else {
+      for (let j = 0; j < columns.length; ++j) {
+        let column = columns[j];
+        let value = d[column];
+        if (!defined(value)) continue;
+        value = format[column](value, i, data);
+        if (!(value instanceof Node)) value = document.createTextNode(value);
+        itr.childNodes[j + 1].appendChild(value);
+      }
     }
     tbody.append(itr);
   }
@@ -229,7 +237,7 @@ function initialize(
         currentReverse = event.altKey;
       }
       const order = currentReverse ? descending : ascending;
-      compare = (a, b) => order(array[a][column], array[b][column]);
+      compare = (a, b) => isPrimitive(array[a]) || isPrimitive(array[b]) ? order(array[a], array[b]) : order(array[a][column], array[b][column]);
       orderof(th).textContent = currentReverse ? "▾"  : "▴";
     }
     index.sort(compare);
@@ -374,9 +382,18 @@ function lengthof(data) {
 function columnsof(data) {
   const columns = new Set();
   for (const row of data) {
-    for (const name in row) {
-      columns.add(name);
+    if (row == null) continue;
+    if (row != null && isPrimitive(row)) {
+      columns.add(primitive);
+    } else {
+      for (const name in row) {
+        columns.add(name);
+      }
     }
   }
-  return Array.from(columns);
+  return Array.from(columns).sort((a, b) => (b === primitive) - (a === primitive));
+}
+
+function isPrimitive(row) {
+  return typeof row === "string" || typeof row === "boolean" || typeof row === "number" || row == null;
 }

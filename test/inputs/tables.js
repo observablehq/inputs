@@ -28,3 +28,11 @@ export function tableCustomHeader() {
 export function tableCustomHeaderHtml() {
   return Inputs.table([{foo: "hello"}], {header: {foo: html`<i>Foo</i>`}});
 }
+
+export function tablePrimitives() {
+  return Inputs.table(["hello", "world", 1, true, false, null]);
+}
+
+export function tableWithNulls() {
+  return Inputs.table([{foo: "hello"}, null, undefined, {foo: 1}]);
+}
