@@ -117,7 +117,7 @@ function* valuesof(d) {
 }
 
 function termFilter(term) {
-  return new RegExp(`\\b${escapeRegExp(term)}`, "i");
+  return new RegExp(`(?:^|[^\\p{L}-])${escapeRegExp(term)}`, "iu");
 }
 
 function escapeRegExp(text) {
