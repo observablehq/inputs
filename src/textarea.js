@@ -1,5 +1,6 @@
 import {html} from "htl";
 import {maybeWidth} from "./css.js";
+import {bubbles} from "./event.js";
 import {maybeLabel} from "./label.js";
 import {createText, onoff, truefalse} from "./text.js";
 
@@ -47,7 +48,7 @@ export function textarea({
   </form>`;
   function onkeydown(event) {
     if (options.submit && event.key === "Enter" && (event.metaKey || event.ctrlKey)) {
-      return form.onsubmit(event);
+      return form.dispatchEvent(new Event("submit", bubbles));
     }
   }
   return createText(form, input, value, options);

@@ -19,7 +19,7 @@ export function createText(form, input, value, {
   if (submit) after(button);
   set(input, value);
   value = validate(input) ? get(input) : undefined;
-  form.onsubmit = onsubmit;
+  form.addEventListener("submit", onsubmit);
   input.oninput = oninput;
   function update() {
     if (validate(input)) {
