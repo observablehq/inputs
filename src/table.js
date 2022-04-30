@@ -97,8 +97,8 @@ function initialize(
   let anchor = null, head = null;
 
   const tbody = html`<tbody>`;
-  const tr = html`<tr>${selectable ? html`<td><input type=${multiple ? "checkbox" : "radio"} name=${multiple ? null : "radio"}>` : html`<td style="width:0"><span>`}${columns.map(() => html`<td>`)}`;
-  const theadr = html`<tr>${selectable ? html`<th><input type=checkbox onclick=${reselectAll} disabled=${!multiple}>` : html`<th style="width:0"><span>`}${columns.map((column) => html`<th title=${column} onclick=${event => resort(event, column)}><span></span>${header && column in header ? header[column] : column}</th>`)}</tr>`;
+  const tr = html`<tr>${selectable ? html`<td><input type=${multiple ? "checkbox" : "radio"} name=${multiple ? null : "radio"}>` : html`<td>`}${columns.map(() => html`<td>`)}`;
+  const theadr = html`<tr>${selectable ? html`<th><input type=checkbox onclick=${reselectAll} disabled=${!multiple}>` : html`<th style="width:0">`}${columns.map((column) => html`<th title=${column} onclick=${event => resort(event, column)}><span></span>${header && column in header ? header[column] : column}</th>`)}</tr>`;
   root.appendChild(html.fragment`<table style=${{tableLayout: layout}}>
   <thead>${minlengthof(1) || columns.length ? theadr : null}</thead>
   ${tbody}
@@ -126,7 +126,7 @@ function initialize(
   function appendRow(d, i) {
     const itr = tr.cloneNode(true);
     const input = inputof(itr);
-    if (selectable) {
+    if (input != null) {
       input.onclick = reselect;
       input.checked = selected.has(i);
       input.value = i;
@@ -246,6 +246,7 @@ function initialize(
 
   function reinput() {
     const check = inputof(theadr);
+    if (check == null) return;
     check.disabled = !multiple && !selected.size;
     check.indeterminate = multiple && selected.size && selected.size !== N; // assume materalized!
     check.checked = selected.size;
