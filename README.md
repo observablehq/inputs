@@ -311,6 +311,7 @@ The available *options* are:
 * *maxHeight* - the maximum table height, if any; defaults to (*rows* + 1) * 22 - 1.
 * *layout* - the [table layout](https://developer.mozilla.org/en-US/docs/Web/CSS/table-layout); defaults to fixed for ≤12 columns.
 * *required* - if true, the table’s value is all *data* if no selection; defaults to true.
+* *select* - if true, allows the user to modify the table’s value by selecting rows; defaults to true.
 * *multiple* - if true, allow multiple rows to be selected; defaults to true.
 
 If *width* is “auto”, the table width will be based on the table contents; note that this may cause the table to resize as rows are lazily rendered.
