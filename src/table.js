@@ -292,7 +292,7 @@ function initialize(
       if (value === undefined) {
         materialize();
         if (multiple) {
-          value = Array.from(required && selected.size === 0 ? index : selected, i => array[i]);
+          value = Array.from(required && selected.size === 0 ? index : sort ? index.filter(i => selected.has(i)) : selected, i => array[i]);
           value.columns = columns;
         } else if (selected.size) {
           const [i] = selected;
