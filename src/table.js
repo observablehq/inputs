@@ -238,6 +238,7 @@ function initialize(
     while (tbody.firstChild) tbody.firstChild.remove();
     appendRows(0, n = minlengthof(rows * 2));
     anchor = head = null;
+    root.dispatchEvent(new CustomEvent('input', {bubbles: true, detail: {sort: column, reverse: currentReverse}}));
     reinput();
   }
 
