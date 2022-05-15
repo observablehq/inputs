@@ -38,8 +38,8 @@ Lastly, Inputs provides low-level utilities for more advanced usage:
 
 * [Form](#inputsforminputs-options) - combine multiple inputs
 * [Input](#inputsinputvalue) - a programmatic interface for storing input state
-* [bind](#bind) - synchronize two or more inputs
-* [disposal](#disposal) - detect when an input is discarded
+* [bind](#inputsbindtarget-source-invalidation) - synchronize two or more inputs
+* [disposal](#inputsdisposalelement) - detect when an input is discarded
 
 Observable Inputs are released under the [ISC license](./LICENSE) and depend only on [Hypertext Literal](https://github.com/observablehq/htl), our tagged template literal for safely generating dynamic HTML.
 
@@ -498,7 +498,7 @@ If the *template* object is not specified, the given inputs are wrapped in a DIV
 
 #### Inputs.input(*value*)
 
-[Source](./src/input.js) · [Examples](https://observablehq.com/@observablehq/synchronized-inputs) · Returns an [EventTarget](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget) with the specified *value*. This is typically used in conjunction with [bind](#bind) to synchronize multiple inputs, with the Input being the primary state store. An Input is similar to a [mutable](https://observablehq.com/@observablehq/introduction-to-mutable-state), except that it allows listeners.
+[Source](./src/input.js) · [Examples](https://observablehq.com/@observablehq/synchronized-inputs) · Returns an [EventTarget](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget) with the specified *value*. This is typically used in conjunction with [bind](#inputsbindtarget-source-invalidation) to synchronize multiple inputs, with the Input being the primary state store. An Input is similar to a [mutable](https://observablehq.com/@observablehq/introduction-to-mutable-state), except that it allows listeners.
 
 #### Inputs.bind(*target*, *source*, *invalidation*)
 
@@ -517,11 +517,11 @@ When the *target* emits a type-appropriate event, the *target*’s type-appropri
 
 The type-appropriate event is a *click* event for buttons and submit inputs, a *change* event for file inputs, and an *input* event for anything else. The type-appropriate value is *input*.valueAsNumber for range and number inputs, *input*.valueAsDate for date inputs, *input*.checked for checkbox inputs, *input*.files for multiple file inputs, *input*.files[0] for single-file inputs, and *input*.value for anything else.
 
-If *invalidation* is specified, it is a promise; when the promise resolves, the target will stop listening to the source. If *invalidation* is not specified, it defaults to the [disposal promise](#disposal) on the specified *target*. Note that source will remain listening to the target, however, until the target is garbage-collected.
+If *invalidation* is specified, it is a promise; when the promise resolves, the target will stop listening to the source. If *invalidation* is not specified, it defaults to the [disposal promise](#inputsdisposalelement) on the specified *target*. Note that source will remain listening to the target, however, until the target is garbage-collected.
 
 #### Inputs.disposal(*element*)
 
-[Source](./src/disposal.js) · The disposal promise is a heuristic for detecting when an input has been removed from the DOM, say to detach synchronized inputs. It is used by [bind](#bind) by default as the invalidation promise, but is exported here for convenience.
+[Source](./src/disposal.js) · The disposal promise is a heuristic for detecting when an input has been removed from the DOM, say to detach synchronized inputs. It is used by [bind](#inputsbindtarget-source-invalidation) by default as the invalidation promise, but is exported here for convenience.
 
 #### Inputs.searchFilter(*query*)
 
