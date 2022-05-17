@@ -122,7 +122,7 @@ function termFilter(term) {
 }
 
 function escapeRegExp(text) {
-  return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+  return text.replace(/[\\^$.*+?()[\]{}|]/g, "\\$&");
 }
 
 const formatResults = localize(locale => {
