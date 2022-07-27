@@ -274,6 +274,7 @@ form.__ns__-table {
 .__ns__-table thead th {
   position: sticky;
   top: 0;
+  z-index: 1;
   background: white;
   cursor: ns-resize;
 }
