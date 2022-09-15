@@ -13,10 +13,43 @@ export function number(extent, options) {
   return createRange({extent}, options);
 }
 
+/**
+ * @typedef {{ label: string, step: number, format: (d: number) => string,
+ *   placeholder: string, transform: (d: number) => number, invert: (d: number)
+ *   => number, validate: (d: number) => boolean, value: number, width: number,
+ *   disabled: boolean }} Options
+ */
+
+/**
+ * A Range input specifies a number between the given *extent* = [*min*, *max*]
+ * (inclusive). If an *extent* is not specified, it defaults to [0, 1]. The
+ * chosen number can be adjusted roughly with a slider, or precisely by typing a
+ * number.
+ *
+ * The available *options* are:
+ *
+ * * *label* - a label; either a string or an HTML element.
+ * * *step* - the step (precision); the interval between adjacent values.
+ * * *format* - a format function; defaults to [formatTrim](#formatTrim).
+ * * *placeholder* - a placeholder string for when the input is empty.
+ * * *transform* - an optional non-linear transform.
+ * * *invert* - the inverse transform.
+ * * *validate* - a function to check whether the number input is valid.
+ * * *value* - the initial value; defaults to (*min* + *max*) / 2.
+ * * *width* - the width of the input (not including the label).
+ * * *disabled* - whether input is disabled; defaults to false.
+ *
+ * @param {[number, number]} extent
+ * @param {Options} options
+ * @returns Element
+ */
 export function range(extent = [0, 1], options) {
   return createRange({extent, range: true}, options);
 }
 
+/**
+ * @returns Element
+ */
 function createRange({
   extent: [min, max],
   range
