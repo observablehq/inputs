@@ -138,7 +138,7 @@ The available *options* are:
 [<img src="./img/radio.png" alt="A single-choice Radio input of colors" width="640">](https://observablehq.com/@observablehq/input-radio)
 
 ```js
-viewof color = Inputs.radio(["red", "green", "blue"]), {label: "Color"})
+viewof color = Inputs.radio(["red", "green", "blue"], {label: "Color"})
 ```
 
 [Source](./src/checkbox.js) · [Examples](https://observablehq.com/@observablehq/input-radio) · A Radio allows the user to choose one of a given set of values. Unlike a [Select](#Select), a Radio’s choices are all visible up-front. The Radio’s value is an element from *data*, or null if no choice has been made.
