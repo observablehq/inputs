@@ -69,8 +69,11 @@ function formatDate(value) {
     : value;
 }
 
+// The datetime-local input uses YYYY-MM-DDThh:mm like ISO 8601, but in local
+// time rather than UTC, so we apply the offset before calling toISOString.
+// https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/datetime-local
 function formatDatetime(value) {
   return (value = coerce(value))
-    ? value.toISOString().slice(0, 16)
+    ? (new Date(+value - value.getTimezoneOffset() * 1000 * 60)).toISOString().slice(0, 16)
     : value;
 }
