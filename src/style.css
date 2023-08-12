@@ -205,7 +205,6 @@ form.__ns__-checkbox {
 form.__ns__-table {
   display: block;
   overflow-y: auto;
-  margin: 0 -14px;
   width: 100%;
 }
 
