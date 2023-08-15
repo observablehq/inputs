@@ -21,7 +21,8 @@ export function search(data, {
   datalist,
   disabled,
   required = true, // if true, the value is everything if nothing is selected
-  width
+  width,
+  full = false // If false will only search at the beginning of the options
 } = {}) {
   let value = [];
   data = arrayify(data);
@@ -47,7 +48,7 @@ export function search(data, {
   </form>`;
   form.addEventListener("submit", preventDefault);
   function oninput() {
-    value = input.value || required ? data.filter(filter(input.value)) : [];
+    value = input.value || required ? data.filter(filter(input.value, full)) : [];
     if (columns !== undefined) value.columns = columns;
     output.value = format(value.length);
   }
@@ -70,8 +71,8 @@ export function search(data, {
   });
 }
 
-export function searchFilter(query) {
-  const filters = `${query}`.split(/\s+/g).filter(t => t).map(termFilter);
+export function searchFilter(query, full = false) {
+  const filters = `${query}`.split(/\s+/g).filter(t => t).map(getTermFilter(full));
   return d => {
     if (d == null) return false;
     if (typeof d === "object") {
@@ -94,9 +95,9 @@ export function searchFilter(query) {
   };
 }
 
-function columnFilter(columns) {
+function columnFilter(columns, full = false) {
   return query => {
-    const filters = `${query}`.split(/\s+/g).filter(t => t).map(termFilter);
+    const filters = `${query}`.split(/\s+/g).filter(t => t).map(getTermFilter(full));
     return d => {
       out: for (const filter of filters) {
         for (const column of columns) {
@@ -117,8 +118,8 @@ function* valuesof(d) {
   }
 }
 
-function termFilter(term) {
-  return new RegExp(`(?:^|[^\\p{L}-])${escapeRegExp(term)}`, "iu");
+function getTermFilter(full = false) {
+  return (term) => new RegExp(`(?:^${full ? ".*" : "" }|[^\\p{L}-])${escapeRegExp(term)}`, "iu");
 }
 
 function escapeRegExp(text) {
