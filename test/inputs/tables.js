@@ -28,3 +28,32 @@ export function tableCustomHeader() {
 export function tableCustomHeaderHtml() {
   return Inputs.table([{foo: "hello"}], {header: {foo: html`<i>Foo</i>`}});
 }
+
+export function tableVariousObjects() {
+  return Inputs.table([
+    {A: null},
+    {A: undefined}, // explicit undefined
+    {},
+    {A: ["a", "b"]},
+    {A: Float32Array.from([1, 2, 3])},
+    {A: Array.from({length: 30}, (_, i)=> i)},
+    {A: Array.from({length: 31}, (_, i)=> i)},
+    {A: [[1, 2], ["a"]]},
+    {A: {key: "value"}},
+    {A: {key: {key: "value"}}}
+  ]);
+}
+
+export function tableCircular() {
+  const o = {};
+  o.circular = o;
+  return Inputs.table([
+    {A: o}
+  ]);
+}
+
+export function tableHtml() {
+  return Inputs.table([
+    {A: html`<span style="font-variant: small-caps">hello`}
+  ]);
+}
