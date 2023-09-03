@@ -52,7 +52,8 @@
     "module-alias": "2",
     "rollup": "2",
     "rollup-plugin-terser": "7",
-    "snowpack": "3"
+    "snowpack": "3",
+    "typescript": "^4.8.3"
   },
   "dependencies": {
     "htl": "0.3",
