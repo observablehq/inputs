@@ -17,6 +17,10 @@ export async function searchLabelQuery() {
   return Inputs.search(["red", "green", "blue", "black"], {label: "colors", query: "bl"});
 }
 
+export async function searchLabelQueryCyrillic() {
+  return Inputs.search(["red", "green", "blue", "чёрный"], {label: "colors", query: "чёрн"});
+}
+
 export async function searchPlaceholder() {
   return Inputs.search(["red", "green", "blue"], {placeholder: "dollars&pounds"});
 }

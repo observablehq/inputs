@@ -18,28 +18,28 @@ https://observablehq.com/@observablehq/inputs
 
 Observable Inputs provides basic inputs:
 
-* [Button](#Button) - do something when a button is clicked
-* [Checkbox](#Checkbox) - choose any from a set
-* [Toggle](#Toggle) - toggle between two values (on or off)
-* [Radio](#Radio) - choose one from a set
-* [Range](#Range) - choose a numeric value in a range (slider)
-* [Select](#Select) - choose one or many from a set (drop-down menu)
-* [Text](#Text) - freeform single-line text input
-* [Textarea](#Textarea) - freeform multi-line text input
-* [Date](#Date) - date input
-* [File](#File) - local file input
+* [Button](#button) - do something when a button is clicked
+* [Checkbox](#checkbox) - choose any from a set
+* [Toggle](#toggle) - toggle between two values (on or off)
+* [Radio](#radio) - choose one from a set
+* [Range](#range) - choose a numeric value in a range (slider)
+* [Select](#select) - choose one or many from a set (drop-down menu)
+* [Text](#text) - freeform single-line text input
+* [Textarea](#textarea) - freeform multi-line text input
+* [Date](#date) - date input
+* [File](#file) - local file input
 
 Observable Inputs provides fancy inputs for tabular data:
 
-* [Search](#Search) - query a tabular dataset
-* [Table](#Table) - browse a tabular dataset
+* [Search](#search) - query a tabular dataset
+* [Table](#table) - browse a tabular dataset
 
 Lastly, Inputs provides low-level utilities for more advanced usage:
 
 * [Form](#inputsforminputs-options) - combine multiple inputs
 * [Input](#inputsinputvalue) - a programmatic interface for storing input state
-* [bind](#bind) - synchronize two or more inputs
-* [disposal](#disposal) - detect when an input is discarded
+* [bind](#inputsbindtarget-source-invalidation) - synchronize two or more inputs
+* [disposal](#inputsdisposalelement) - detect when an input is discarded
 
 Observable Inputs are released under the [ISC license](./LICENSE) and depend only on [Hypertext Literal](https://github.com/observablehq/htl), our tagged template literal for safely generating dynamic HTML.
 
@@ -92,7 +92,7 @@ The available *options* are:
 viewof flavor = Inputs.checkbox(["Salty", "Spicy", "Sour", "Umami"], {label: "Flavor"})
 ```
 
-[Source](./src/checkbox.js) · [Examples](https://observablehq.com/@observablehq/input-checkbox) · A Checkbox allows the user to choose any of a given set of values (any of the given elements in the iterable *data*). Unlike a [Select](#Select), a Checkbox’s choices are all visible up-front. The Checkbox’s value is an array of the elements from *data* that are currently selected.
+[Source](./src/checkbox.js) · [Examples](https://observablehq.com/@observablehq/input-checkbox) · A Checkbox allows the user to choose any of a given set of values (any of the given elements in the iterable *data*). Unlike a [Select](#select), a Checkbox’s choices are all visible up-front. The Checkbox’s value is an array of the elements from *data* that are currently selected.
 
 The elements in *data* need not be strings; they can be anything. To customize display, optional *keyof* and *valueof* functions may be given; the result of the *keyof* function for each element in *data* is displayed to the user, while the result of the *valueof* function is exposed in the Checkbox’s value when selected. If *data* is a Map, the *keyof* function defaults to the map entry’s key (`([key]) => key`) and the *valueof* function defaults to the map entry’s value (`([, value]) => value`); otherwise, both *keyof* and *valueof* default to the identity function (`d => d`). For example, with [d3.group](https://github.com/d3/d3-array/blob/master/README.md#group):
 
@@ -108,7 +108,7 @@ The available *options* are:
 * *sort* - true, “ascending”, “descending”, or a comparator function to sort keys; defaults to false.
 * *unique* - true to only show unique keys; defaults to false.
 * *locale* - the current locale; defaults to English.
-* *format* - a format function; defaults to [formatLocaleAuto](#formatLocaleAuto).
+* *format* - a format function; defaults to [formatLocaleAuto](#formatLocaleAuto) composed with *keyof*.
 * *keyof* - a function to return the key for the given element in *data*.
 * *valueof* - a function to return the value of the given element in *data*.
 * *value* - the initial value, an array; defaults to an empty array (no selection).
@@ -138,10 +138,10 @@ The available *options* are:
 [<img src="./img/radio.png" alt="A single-choice Radio input of colors" width="640">](https://observablehq.com/@observablehq/input-radio)
 
 ```js
-viewof color = Inputs.radio(["red", "green", "blue"]), {label: "Color"})
+viewof color = Inputs.radio(["red", "green", "blue"], {label: "Color"})
 ```
 
-[Source](./src/checkbox.js) · [Examples](https://observablehq.com/@observablehq/input-radio) · A Radio allows the user to choose one of a given set of values. Unlike a [Select](#Select), a Radio’s choices are all visible up-front. The Radio’s value is an element from *data*, or null if no choice has been made.
+[Source](./src/checkbox.js) · [Examples](https://observablehq.com/@observablehq/input-radio) · A Radio allows the user to choose one of a given set of values. Unlike a [Select](#select), a Radio’s choices are all visible up-front. The Radio’s value is an element from *data*, or null if no choice has been made.
 
 The elements in *data* need not be strings; they can be anything. To customize display, optional *keyof* and *valueof* functions may be given; the result of the *keyof* function for each element in *data* is displayed to the user, while the result of the *valueof* function is exposed as the Radio’s value when selected. If *data* is a Map, the *keyof* function defaults to the map entry’s key (`([key]) => key`) and the *valueof* function defaults to the map entry’s value (`([, value]) => value`); otherwise, both *keyof* and *valueof* default to the identity function (`d => d`). For example, with [d3.group](https://github.com/d3/d3-array/blob/master/README.md#group):
 
@@ -157,7 +157,7 @@ The available *options* are:
 * *sort* - true, “ascending”, “descending”, or a comparator function to sort keys; defaults to false.
 * *unique* - true to only show unique keys; defaults to false.
 * *locale* - the current locale; defaults to English.
-* *format* - a format function; defaults to [formatLocaleAuto](#formatLocaleAuto).
+* *format* - a format function; defaults to [formatLocaleAuto](#formatLocaleAuto) composed with *keyof*.
 * *keyof* - a function to return the key for the given element in *data*.
 * *valueof* - a function to return the value of the given element in *data*.
 * *value* - the initial value; defaults to null (no selection).
@@ -210,7 +210,7 @@ Equivalent to Inputs.range, except the range input is suppressed; only a number 
 viewof foundAthletes = Inputs.search(athletes, {label: "Athletes"})
 ```
 
-[Source](./src/search.js) · [Examples](https://observablehq.com/@observablehq/input-search) · A Search input allows freeform, full-text search of an in-memory tabular dataset or an iterable (column) of values using a simple query parser. It is often used in conjunction with a [Table](#Table). The value of a Search is an array of elements from the iterable *data* that match the current query. If the query is currently empty, the search input’s value is all elements in *data*.
+[Source](./src/search.js) · [Examples](https://observablehq.com/@observablehq/input-search) · A Search input allows freeform, full-text search of an in-memory tabular dataset or an iterable (column) of values using a simple query parser. It is often used in conjunction with a [Table](#table). The value of a Search is an array of elements from the iterable *data* that match the current query. If the query is currently empty, the search input’s value is all elements in *data*.
 
 A Search input can work with either tabular data (an array of objects) or a single column (an array of strings). When searching tabular input, all properties on each object in *data* are searched by default, but you can limit the search to a specific set of properties using the *column* option. For example, to only search the “sport” and “nationality” column:
 
@@ -256,7 +256,7 @@ viewof size = Inputs.select(["Small", "Medium", "Large"], {label: "Size"})
 viewof inks = Inputs.select(["cyan", "magenta", "yellow", "black"], {multiple: true, label: "Inks"})
 ```
 
-[Source](./src/select.js) · [Examples](https://observablehq.com/@observablehq/input-select) · A Select allows the user to choose one of a given set of values (one of the given elements in the iterable *data*); or, if desired, multiple values may be chosen. Unlike a [Radio](#Radio), only one (or a few) choices are visible up-front, affording a compact display even when many options are available. If multiple choice is allowed via the *multiple* option, the Select’s value is an array of the elements from *data* that are currently selected; if single choice is required, the Select’s value is an element from *data*, or null if no choice has been made.
+[Source](./src/select.js) · [Examples](https://observablehq.com/@observablehq/input-select) · A Select allows the user to choose one of a given set of values (one of the given elements in the iterable *data*); or, if desired, multiple values may be chosen. Unlike a [Radio](#radio), only one (or a few) choices are visible up-front, affording a compact display even when many options are available. If multiple choice is allowed via the *multiple* option, the Select’s value is an array of the elements from *data* that are currently selected; if single choice is required, the Select’s value is an element from *data*, or null if no choice has been made.
 
 The elements in *data* need not be strings; they can be anything. To customize display, optional *keyof* and *valueof* functions may be given; the result of the *keyof* function for each element in *data* is displayed to the user, while the result of the *valueof* function is exposed as the Select’s value when selected. If *data* is a Map, the *keyof* function defaults to the map entry’s key (`([key]) => key`) and the *valueof* function defaults to the map entry’s value (`([, value]) => value`); otherwise, both *keyof* and *valueof* default to the identity function (`d => d`). For example, with [d3.group](https://github.com/d3/d3-array/blob/master/README.md#group):
 
@@ -274,7 +274,7 @@ The available *options* are:
 * *sort* - true, “ascending”, “descending”, or a comparator function to sort keys; defaults to false.
 * *unique* - true to only show unique keys; defaults to false.
 * *locale* - the current locale; defaults to English.
-* *format* - a format function; defaults to [formatLocaleAuto](#formatLocaleAuto).
+* *format* - a format function; defaults to [formatLocaleAuto](#formatLocaleAuto) composed with *keyof*.
 * *keyof* - a function to return the key for the given element in *data*.
 * *valueof* - a function to return the value of the given element in *data*.
 * *value* - the initial value, an array if multiple choice is allowed.
@@ -289,7 +289,7 @@ The available *options* are:
 
 [Source](./src/table.js) · [Examples](https://observablehq.com/@observablehq/input-table) · A Table displays a tabular dataset; *data* should be an iterable of objects, such as the result of loading a CSV file. The *data* may also be a promise to the same, in which case the contents of the table will be lazily populated once the promise resolves. Each object corresponds to a row, while each field corresponds to a column. To improve performance with large datasets, the rows of the table are lazily rendered on scroll. Rows may be sorted by clicking column headers (once for ascending, then again for descending).
 
-While intended primarily for display, a Table also serves as an input. The value of the Table is its selected rows: a filtered (and possibly sorted) view of the *data*. If the *data* is specified as a promise, while the promise is unresolved, the table’s value is undefined and attempting to set the value of the table will throw an error. Rows can be selected by clicking or shift-clicking checkboxes. See also [Search](#Search), which can be used for rapid filtering of the table’s rows.
+While intended primarily for display, a Table also serves as an input. The value of the Table is its selected rows: a filtered (and possibly sorted) view of the *data*. If the *data* is specified as a promise, while the promise is unresolved, the table’s value is undefined and attempting to set the value of the table will throw an error. Rows can be selected by clicking or shift-clicking checkboxes. See also [Search](#search), which can be used for rapid filtering of the table’s rows.
 
 By default, the Table infers the type of each column by inspecting values, assuming that non-null values in each column have consistent types. Numbers are formatted in the specified *locale*; dates are formatted in ISO 8601 UTC. Numbers columns are further right-aligned with [tabular figures](https://practicaltypography.com/alternate-figures.html) to assist comparison. The *format* and *align* of each column can be customized as options if desired.
 
@@ -325,7 +325,7 @@ If *width* is “auto”, the table width will be based on the table contents; n
 viewof name = Inputs.text({label: "Name", placeholder: "Enter your name"})
 ```
 
-[Source](./src/text.js) · [Examples](https://observablehq.com/@observablehq/input-text) · A Text allows freeform single-line text input. For example, a Text might be used to allow the user to enter a search query. (See also [Search](#Search).) By default, a Text will report its value immediately on input. If more deliberate behavior is desired, say if the input will trigger an expensive computation or remote API, the *submit* option can be set to true to wait until a button is clicked or the Enter key is pressed.
+[Source](./src/text.js) · [Examples](https://observablehq.com/@observablehq/input-text) · A Text allows freeform single-line text input. For example, a Text might be used to allow the user to enter a search query. (See also [Search](#search).) By default, a Text will report its value immediately on input. If more deliberate behavior is desired, say if the input will trigger an expensive computation or remote API, the *submit* option can be set to true to wait until a button is clicked or the Enter key is pressed.
 
 The available *options* are:
 
@@ -498,7 +498,7 @@ If the *template* object is not specified, the given inputs are wrapped in a DIV
 
 #### Inputs.input(*value*)
 
-[Source](./src/input.js) · [Examples](https://observablehq.com/@observablehq/synchronized-inputs) · Returns an [EventTarget](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget) with the specified *value*. This is typically used in conjunction with [bind](#bind) to synchronize multiple inputs, with the Input being the primary state store. An Input is similar to a [mutable](https://observablehq.com/@observablehq/introduction-to-mutable-state), except that it allows listeners.
+[Source](./src/input.js) · [Examples](https://observablehq.com/@observablehq/synchronized-inputs) · Returns an [EventTarget](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget) with the specified *value*. This is typically used in conjunction with [bind](#inputsbindtarget-source-invalidation) to synchronize multiple inputs, with the Input being the primary state store. An Input is similar to a [mutable](https://observablehq.com/@observablehq/introduction-to-mutable-state), except that it allows listeners.
 
 #### Inputs.bind(*target*, *source*, *invalidation*)
 
@@ -517,28 +517,28 @@ When the *target* emits a type-appropriate event, the *target*’s type-appropri
 
 The type-appropriate event is a *click* event for buttons and submit inputs, a *change* event for file inputs, and an *input* event for anything else. The type-appropriate value is *input*.valueAsNumber for range and number inputs, *input*.valueAsDate for date inputs, *input*.checked for checkbox inputs, *input*.files for multiple file inputs, *input*.files[0] for single-file inputs, and *input*.value for anything else.
 
-If *invalidation* is specified, it is a promise; when the promise resolves, the target will stop listening to the source. If *invalidation* is not specified, it defaults to the [disposal promise](#disposal) on the specified *target*. Note that source will remain listening to the target, however, until the target is garbage-collected.
+If *invalidation* is specified, it is a promise; when the promise resolves, the target will stop listening to the source. If *invalidation* is not specified, it defaults to the [disposal promise](#inputsdisposalelement) on the specified *target*. Note that source will remain listening to the target, however, until the target is garbage-collected.
 
 #### Inputs.disposal(*element*)
 
-[Source](./src/disposal.js) · The disposal promise is a heuristic for detecting when an input has been removed from the DOM, say to detach synchronized inputs. It is used by [bind](#bind) by default as the invalidation promise, but is exported here for convenience.
+[Source](./src/disposal.js) · The disposal promise is a heuristic for detecting when an input has been removed from the DOM, say to detach synchronized inputs. It is used by [bind](#inputsbindtarget-source-invalidation) by default as the invalidation promise, but is exported here for convenience.
 
 #### Inputs.searchFilter(*query*)
 
-[Source](./src/search.js) · The default query parser used by [Search](#Search).
+[Source](./src/search.js) · The default query parser used by [Search](#search).
 
 #### Inputs.formatLocaleAuto(*locale*)
 
-[Source](./src/format.js) · Returns a function that formats a given *value* as a string according to the specified *locale*. If *locale* is not specified, it defaults to English. If *value* is null, returns the empty string; if *value* is a number, calls [formatLocaleNumber](#formatLocaleNumber) if *value* is a date, calls [formatDate](#formatDate); otherwise coerces *value* to a string. The default formatter used by [Table](#Table).
+[Source](./src/format.js) · Returns a function that formats a given *value* as a string according to the specified *locale*. If *locale* is not specified, it defaults to English. If *value* is null, returns the empty string; if *value* is a number, calls [formatLocaleNumber](#formatLocaleNumber) if *value* is a date, calls [formatDate](#formatDate); otherwise coerces *value* to a string. The default formatter used by [Table](#table).
 
 #### Inputs.formatLocaleNumber(*locale*)
 
-[Source](./src/format.js) · Returns a function that formats a given *number* as a string according to the specified *locale*. The default number formatter used by [Table](#Table).
+[Source](./src/format.js) · Returns a function that formats a given *number* as a string according to the specified *locale*. The default number formatter used by [Table](#table).
 
 #### Inputs.formatTrim(*number*)
 
-[Source](./src/format.js) · The default number formatter used by [Range](#Range).
+[Source](./src/format.js) · The default number formatter used by [Range](#range).
 
 #### Inputs.formatDate(*date*)
 
-[Source](./src/format.js) · The default date formatter used by [Table](#Table).
+[Source](./src/format.js) · The default date formatter used by [Table](#table).

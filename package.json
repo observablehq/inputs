@@ -1,7 +1,7 @@
 {
   "name": "@observablehq/inputs",
   "description": "User interface components for Observable notebooks",
-  "version": "0.10.4",
+  "version": "0.10.6",
   "author": {
     "name": "Observable, Inc.",
     "url": "https://observablehq.com"
@@ -28,7 +28,9 @@
     "node": ">=14.5.0"
   },
   "scripts": {
-    "test": "mkdir -p test/output && mocha -r module-alias/register 'test/**/*-test.js' test/input.js && eslint src test",
+    "test": "yarn test:mocha && yarn test:lint",
+    "test:mocha": "mkdir -p test/output && mocha -r module-alias/register 'test/**/*-test.js' test/input.js",
+    "test:lint": "eslint src test",
     "prepublishOnly": "rm -rf dist && rollup -c",
     "postpublish": "git push && git push --tags",
     "dev": "snowpack dev"

@@ -53,11 +53,12 @@ function createRange({
     range = null;
     transform = invert = identity;
   }
-  const form = html`<form class=__ns__ onsubmit=${preventDefault} style=${maybeWidth(width)}>
+  const form = html`<form class=__ns__ style=${maybeWidth(width)}>
     ${maybeLabel(label, number)}<div class=__ns__-input>
       ${number}${range}
     </div>
   </form>`;
+  form.addEventListener("submit", preventDefault);
   // If range, use an untransformed range to round to the nearest valid value.
   function coerce(v) {
     if (!irange) return +v;
