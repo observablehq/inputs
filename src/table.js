@@ -355,6 +355,8 @@ function alignof(base = {}, data, columns) {
 }
 
 function type(data, column) {
+  // duck-type Arrow table date fields
+  if (String(data?.schema?.fields?.find?.(d => d?.name === column)).match(/<MILLISECOND>/)) return "date";
   for (const d of data) {
     if (d == null) continue;
     const value = d[column];

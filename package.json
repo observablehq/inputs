@@ -43,6 +43,7 @@
     "@rollup/plugin-node-resolve": "13",
     "@rollup/plugin-replace": "3",
     "clean-css": "5",
+    "apache-arrow": "16",
     "d3": "7",
     "eslint": "8",
     "js-beautify": "1",
