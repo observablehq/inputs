@@ -1,13 +1,37 @@
 # Observable Inputs
 
-**Observable Inputs** are lightweight user interface components — buttons, sliders, dropdowns, tables, and the like — to help you explore data and build interactive displays in [Observable](https://observablehq.com). Each input exposes a _value_ property that reflects its current value, and emits an _input_ event when the value changes. For example, to allow a number *x* to be manipulated by a slider:
+**Observable Inputs** are lightweight user interface components — buttons, sliders, dropdowns, tables, and the like — to help you explore data and build interactive displays. Each provided input implementation returns an HTML element that exposes a _value_ property that reflects the input’s current value, and emits an _input_ event when the current value changes.
+
+Observable Inputs is a free, [open-source](./LICENSE) JavaScript library that can be used in any web environment. For example, here’s how you might let the user choose a number in a vanilla web page:
+
+```html
+<script type="module">
+
+import * as Inputs from "https://cdn.jsdelivr.net/npm/@observablehq/inputs@0.10/+esm";
+
+// Create a numeric slider allowing a value between 0 and 100 (inclusive).
+const slider = Inputs.range([0, 100]);
+
+// Display the slider on the page.
+document.body.append(slider);
+
+// Listen and respond to the user dragging the slider.
+slider.addEventListener("input", (event) => {
+  console.log(event.target.value);
+});
+
+</script>
+```
+
+, but it is especially convenient to use in [Observable Framework](https://observablehq/com/framework) and [Observable notebooks](https://observablehq/)
+
+In [Observable Framework](https://observablehq/com/framework), the reactivity is ensured with the *view* function, that both displays the input and returns the value generator. Write:
 
 ```js
-const slider = Inputs.range([0, 100]);
-slider.addEventListener((event) => {
-  // do something with event.value
-});
+const x = view(Inputs.range([0, 100]));
 ```
+
+For live examples, see the [Framework Reactivity](https://observablehq.com/framework/reactivity#inputs) documentation.
 
 In Observable notebooks, the [`viewof`](https://observablehq.com/@observablehq/introduction-to-views) keyword can be used as a shortcut to display the view and create its reactive value *x* as a generator:
 
@@ -24,14 +48,6 @@ md`The value of *x* is ${x}.`
 Any cell that references *x* will run automatically when the slider is moved. For live examples, see:
 
 https://observablehq.com/@observablehq/inputs
-
-In [Observable Framework](https://observablehq/com/framework), the reactivity is ensured with the *view* function, that both displays the input and returns the value generator. Write:
-
-```js
-const x = view(Inputs.range([0, 100]));
-```
-
-For live examples, see the [Framework Reactivity](https://observablehq.com/framework/reactivity#inputs) documentation.
 
 Observable Inputs provides basic inputs:
 
