@@ -1,4 +1,4 @@
-import * as Inputs from "@observablehq/inputs";
+import * as Inputs from "../../src/index.js";
 import * as d3 from "d3";
 import {html} from "htl";
 

@@ -1,5 +1,5 @@
 import assert from "assert";
-import * as Inputs from "@observablehq/inputs";
+import * as Inputs from "../src/index.js";
 import it from "./jsdom.js";
 
 it("Inputs.bind(button, button) dispatches click events", () => {

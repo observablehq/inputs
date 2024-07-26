@@ -33,7 +33,7 @@
   },
   "scripts": {
     "test": "yarn test:mocha && yarn test:lint",
-    "test:mocha": "mkdir -p test/output && mocha -r module-alias/register 'test/**/*-test.js' test/input.js",
+    "test:mocha": "mkdir -p test/output && mocha 'test/**/*-test.js' test/input.js",
     "test:lint": "eslint src test",
     "prepublishOnly": "rm -rf dist && rollup -c && node bin/clean-css < src/style.css > dist/index.css",
     "postpublish": "git push && git push --tags",
@@ -53,7 +53,6 @@
     "jsdom": "19",
     "jsesc": "3",
     "mocha": "9",
-    "module-alias": "2",
     "rollup": "2",
     "rollup-plugin-terser": "7",
     "snowpack": "3"

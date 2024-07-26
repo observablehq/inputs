@@ -1,4 +1,4 @@
-import * as Inputs from "@observablehq/inputs";
+import * as Inputs from "../src/index.js";
 import assert from "assert";
 import it from "./jsdom.js";
 

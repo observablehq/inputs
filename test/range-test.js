@@ -1,4 +1,4 @@
-import * as Inputs from "@observablehq/inputs";
+import * as Inputs from "../src/index.js";
 import {html} from "htl";
 import {number, string} from "./coercible.js";
 import assert from "assert";
