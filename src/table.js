@@ -355,6 +355,7 @@ function alignof(base = {}, data, columns) {
 }
 
 function type(data, column) {
+  if (isArrowTable(data)) return getArrowType(data, column);
   for (const d of data) {
     if (d == null) continue;
     const value = d[column];
@@ -362,6 +363,31 @@ function type(data, column) {
     if (typeof value === "number") return "number";
     if (value instanceof Date) return "date";
     return;
+  }
+}
+
+// https://github.com/observablehq/stdlib/blob/746ca2e69135df6178e4f3a17244def35d8d6b20/src/arrow.js#L4-L16
+function isArrowTable(value) {
+  return (
+    typeof value.getChild === "function" &&
+    typeof value.toArray === "function" &&
+    value.schema &&
+    Array.isArray(value.schema.fields)
+  );
+}
+
+// https://github.com/apache/arrow/blob/89f9a0948961f6e94f1ef5e4f310b707d22a3c11/js/src/enum.ts#L140-L141
+function getArrowType(value, column) {
+  const field = value.schema.fields.find((d) => d.name === column);
+  switch (field?.type.typeId) {
+    case 8: // Date
+    case 10: // Timestamp
+      return field.type.unit === 1 ? "date" : "number"; // millisecond
+    case 2: // Int
+    case 3: // Float
+    case 7: // Decimal
+    case 9: // Time
+      return "number";
   }
 }
 
