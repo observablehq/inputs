@@ -8,8 +8,8 @@
   },
   "license": "ISC",
   "type": "module",
-  "main": "src/index.js",
-  "module": "src/index.js",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
   "jsdelivr": "dist/inputs.min.js",
   "unpkg": "dist/inputs.min.js",
   "exports": {
