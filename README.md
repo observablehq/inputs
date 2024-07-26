@@ -71,7 +71,7 @@ Lastly, Inputs provides low-level utilities for more advanced usage:
 
 #### Inputs.button(*content*, *options*)
 
-[<img src="./img/button.png" alt="A Button labeled OK" width="640">](https://observablehq.com/@observablehq/input-button)
+[<img src="./img/button.png" alt="A Button labeled OK" width="640">](https://observablehq.com/framework/inputs/button)
 
 ```js
 Inputs.button("OK", {label: "Click me"})
@@ -108,7 +108,7 @@ The available *options* are:
 
 #### Inputs.checkbox(*data*, *options*)
 
-[<img src="./img/checkbox.png" alt="A multi-choice Checkbox input of flavors" width="640">](https://observablehq.com/@observablehq/input-checkbox)
+[<img src="./img/checkbox.png" alt="A multi-choice Checkbox input of flavors" width="640">](https://observablehq.com/framework/inputs/checkbox)
 
 ```js
 Inputs.checkbox(["Salty", "Spicy", "Sour", "Umami"], {label: "Flavor"})
@@ -157,7 +157,7 @@ The available *options* are:
 
 #### Inputs.radio(*data*, *options*)
 
-[<img src="./img/radio.png" alt="A single-choice Radio input of colors" width="640">](https://observablehq.com/@observablehq/input-radio)
+[<img src="./img/radio.png" alt="A single-choice Radio input of colors" width="640">](https://observablehq.com/framework/inputs/radio)
 
 ```js
 Inputs.radio(["red", "green", "blue"], {label: "Color"})
@@ -189,7 +189,7 @@ The available *options* are:
 
 #### Inputs.range(*extent*, *options*)
 
-[<img src="./img/range.png" alt="A Range input of intensity, a number between 0 and 100" width="640">](https://observablehq.com/@observablehq/input-range)
+[<img src="./img/range.png" alt="A Range input of intensity, a number between 0 and 100" width="640">](https://observablehq.com/framework/inputs/range)
 
 ```js
 Inputs.range([0, 100], {step: 1, label: "Intensity"})
@@ -226,7 +226,7 @@ Equivalent to Inputs.range, except the range input is suppressed; only a number 
 
 #### Inputs.search(*data*, *options*)
 
-[<img src="./img/search.png" alt="A Search input over a tabular dataset of athletes" width="640">](https://observablehq.com/@observablehq/input-search)
+[<img src="./img/search.png" alt="A Search input over a tabular dataset of athletes" width="640">](https://observablehq.com/framework/inputs/search)
 
 ```js
 Inputs.search(athletes, {label: "Athletes"})
@@ -269,7 +269,7 @@ If a *filter* function is specified, it is invoked whenever the query changes; t
 
 #### Inputs.select(*data*, *options*)
 
-[<img src="./img/select.png" alt="A Select input asking to choose a t-shirt size" width="640">](https://observablehq.com/@observablehq/input-select)
+[<img src="./img/select.png" alt="A Select input asking to choose a t-shirt size" width="640">](https://observablehq.com/framework/inputs/select)
 
 ```js
 Inputs.select(["Small", "Medium", "Large"], {label: "Size"})
@@ -307,7 +307,7 @@ The available *options* are:
 
 #### Inputs.table(*data*, *options*)
 
-[<img src="./img/table.png" alt="A Table input showing rows of Olympic athletes" width="988">](https://observablehq.com/@observablehq/input-table)
+[<img src="./img/table.png" alt="A Table input showing rows of Olympic athletes" width="988">](https://observablehq.com/framework/inputs/table)
 
 [Source](./src/table.js) · [Examples](https://observablehq.com/framework/inputs/table) · [Notebook](https://observablehq.com/@observablehq/input-table) · A Table displays a tabular dataset; *data* should be an iterable of objects, such as the result of loading a CSV file. The *data* may also be a promise to the same, in which case the contents of the table will be lazily populated once the promise resolves. Each object corresponds to a row, while each field corresponds to a column. To improve performance with large datasets, the rows of the table are lazily rendered on scroll. Rows may be sorted by clicking column headers (once for ascending, then again for descending).
 
@@ -341,7 +341,7 @@ If *width* is “auto”, the table width will be based on the table contents; n
 
 #### Inputs.text(*options*)
 
-[<img src="./img/text.png" alt="A Text input asking to enter your name" width="640">](https://observablehq.com/@observablehq/input-text)
+[<img src="./img/text.png" alt="A Text input asking to enter your name" width="640">](https://observablehq.com/framework/inputs/text)
 
 ```js
 Inputs.text({label: "Name", placeholder: "Enter your name"})
@@ -397,7 +397,7 @@ Like Inputs.text, but where *type* is color. The color value is represented as a
 
 #### Inputs.textarea(*options*)
 
-[<img src="./img/textarea.png" alt="A Textarea asking for your biography" width="660">](https://observablehq.com/@observablehq/input-textarea)
+[<img src="./img/textarea.png" alt="A Textarea asking for your biography" width="660">](https://observablehq.com/framework/inputs/textarea)
 
 ```js
 Inputs.textarea({label: "Biography", placeholder: "Tell us a little about yourself…"})
