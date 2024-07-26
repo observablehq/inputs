@@ -1,6 +1,6 @@
-import * as Inputs from "../../src/index.js";
 import * as d3 from "d3";
 import {html} from "htl";
+import * as Inputs from "../../src/index.js";
 
 export async function table() {
   const athletes = await d3.csv("data/athletes.csv");

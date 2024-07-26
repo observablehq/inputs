@@ -1,4 +1,4 @@
-import assert from "assert";
+import assert from "node:assert";
 import * as Inputs from "../src/index.js";
 import it from "./jsdom.js";
 

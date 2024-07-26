@@ -1,5 +1,5 @@
-import * as Inputs from "../../src/index.js";
 import {html} from "htl";
+import * as Inputs from "../../src/index.js";
 
 export async function select() {
   return Inputs.select(["red", "green", "blue"]);

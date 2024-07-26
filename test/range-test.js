@@ -1,7 +1,7 @@
-import * as Inputs from "../src/index.js";
+import assert from "node:assert";
 import {html} from "htl";
+import * as Inputs from "../src/index.js";
 import {number, string} from "./coercible.js";
-import assert from "assert";
 import it from "./jsdom.js";
 
 it("Inputs.range([min, max]) sets the min and max", () => {

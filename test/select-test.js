@@ -1,6 +1,6 @@
+import assert from "node:assert";
 import * as Inputs from "../src/index.js";
 import {string} from "./coercible.js";
-import assert from "assert";
 import it from "./jsdom.js";
 
 it("Inputs.select(options) sets the options", () => {
