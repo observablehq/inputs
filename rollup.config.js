@@ -22,7 +22,7 @@ const copyrights = fs.readFileSync("./LICENSE", "utf-8")
   .map(line => line.replace(/^copyright\s+/i, ""));
 
 // A unique namespace for our styles.
-const styleNs = "oi-3a86ea";
+const styleNs = "inputs-3a86ea";
 
 const stylePath = path.resolve("./src/style.css");
 

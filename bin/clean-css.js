@@ -10,6 +10,6 @@ for await (const chunk of stdin) {
 }
 
 // A unique namespace for our styles.
-const styleNs = "oi-3a86ea";
+const styleNs = "inputs-3a86ea";
 
 process.stdout.write(new CleanCSS().minify(input.replace(/\.__ns__\b/g, `.${styleNs}`)).styles);
