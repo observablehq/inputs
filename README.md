@@ -2,7 +2,7 @@
 
 **Observable Inputs** are lightweight user interface components — buttons, sliders, dropdowns, tables, and the like — to help you explore data and build interactive displays. Each provided input implementation returns an HTML element that exposes a _value_ property that reflects the input’s current value, and emits an _input_ event when the current value changes.
 
-Observable Inputs is a free, [open-source](./LICENSE) JavaScript library that can be used in any web environment. For example, here’s how you might let the user choose a number in a vanilla web page:
+Observable Inputs is a small, free, [open-source](./LICENSE) JavaScript library that can be used in any web environment. For example, here’s how you might let the user choose a number in a vanilla web page, loading Inputs and its stylesheet from the jsDelivr CDN:
 
 ```html
 <!DOCTYPE html>
@@ -26,31 +26,19 @@ slider.addEventListener("input", (event) => {
 </script>
 ```
 
-, but it is especially convenient to use in [Observable Framework](https://observablehq/com/framework) and [Observable notebooks](https://observablehq/)
-
-In [Observable Framework](https://observablehq/com/framework), the reactivity is ensured with the *view* function, that both displays the input and returns the value generator. Write:
+Observable Inputs are designed to be especially convenient in [Observable Framework](https://observablehq/com/framework) and [Observable notebooks](https://observablehq/). In Framework, use the *view* function to display an input and expose its value as a top-level [reactive variable](https://observablehq.com/framework/reactivity):
 
 ```js
 const x = view(Inputs.range([0, 100]));
 ```
 
-For live examples, see the [Framework Reactivity](https://observablehq.com/framework/reactivity#inputs) documentation.
-
-In Observable notebooks, the [`viewof`](https://observablehq.com/@observablehq/introduction-to-views) keyword can be used as a shortcut to display the view and create its reactive value *x* as a generator:
+In Observable notebooks, you can similarly use the [`viewof`](https://observablehq.com/@observablehq/introduction-to-views) operator:
 
 ```js
 viewof x = Inputs.range([0, 100])
 ```
 
-Now you can reference the live value of *x* in any cell, *e.g.*:
-
-```js
-md`The value of *x* is ${x}.`
-```
-
-Any cell that references *x* will run automatically when the slider is moved. For live examples, see:
-
-https://observablehq.com/@observablehq/inputs
+In either case, *x* now refers reactively to the current value of the input; code that references *x* will re-run automatically when the user interacts with the input.
 
 Observable Inputs provides basic inputs:
 
@@ -77,8 +65,6 @@ Lastly, Inputs provides low-level utilities for more advanced usage:
 * [bind](#inputsbindtarget-source-invalidation) - synchronize two or more inputs
 * [disposal](#inputsdisposalelement) - detect when an input is discarded
 
-Observable Inputs are released under the [ISC license](./LICENSE) and depend only on [Hypertext Literal](https://github.com/observablehq/htl), our tagged template literal for safely generating dynamic HTML.
-
 ## Inputs
 
 ### Button
@@ -88,21 +74,21 @@ Observable Inputs are released under the [ISC license](./LICENSE) and depend onl
 [<img src="./img/button.png" alt="A Button labeled OK" width="640">](https://observablehq.com/@observablehq/input-button)
 
 ```js
-viewof clicks = Inputs.button("OK", {label: "Click me"})
+Inputs.button("OK", {label: "Click me"})
 ```
 
-[Source](./src/button.js) · [Examples](https://observablehq.com/@observablehq/input-button) · A Button emits an *input* event when you click it. Buttons may be used to trigger the evaluation of cells, say to restart an animation. The given *content*, either a string or an HTML element, is displayed within the button. If *content* is not specified, it defaults to “≡”, but a more meaningful value is strongly encouraged for usability.
+[Source](./src/button.js) · [Examples](https://observablehq.com/framework/inputs/button) · [Notebook](https://observablehq.com/@observablehq/input-button) · A Button emits an *input* event when you click it. Buttons may be used to trigger the evaluation of cells, say to restart an animation. The given *content*, either a string or an HTML element, is displayed within the button. If *content* is not specified, it defaults to “≡”, but a more meaningful value is strongly encouraged for usability.
 
 By default, the value of a solitary Button (when *content* is a string or HTML) is how many times it has been clicked. The *reduce* function allows you to compute the new value of the Button when clicked, given the old value. For example, to set the value as the time of last click:
 
 ```js
-viewof time = Inputs.button("Refresh", {value: null, reduce: () => Date.now()})
+Inputs.button("Refresh", {value: null, reduce: () => Date.now()})
 ```
 
 If *content* is an array or iterable, then multiple buttons will be generated. Each element in *content* should be a tuple [*contenti*, *reducei*], where *contenti* is the content for the given button (a string or HTML), and *reducei* is the function to call when that button is clicked. For example, to have a counter that you can increment, decrement, or reset to zero:
 
 ```js
-viewof counter = Inputs.button([
+Inputs.button([
   ["Increment", value => value + 1],
   ["Decrement", value => value - 1],
   ["Reset", () => 0]
@@ -125,15 +111,15 @@ The available *options* are:
 [<img src="./img/checkbox.png" alt="A multi-choice Checkbox input of flavors" width="640">](https://observablehq.com/@observablehq/input-checkbox)
 
 ```js
-viewof flavor = Inputs.checkbox(["Salty", "Spicy", "Sour", "Umami"], {label: "Flavor"})
+Inputs.checkbox(["Salty", "Spicy", "Sour", "Umami"], {label: "Flavor"})
 ```
 
-[Source](./src/checkbox.js) · [Examples](https://observablehq.com/@observablehq/input-checkbox) · A Checkbox allows the user to choose any of a given set of values (any of the given elements in the iterable *data*). Unlike a [Select](#select), a Checkbox’s choices are all visible up-front. The Checkbox’s value is an array of the elements from *data* that are currently selected.
+[Source](./src/checkbox.js) · [Examples](https://observablehq.com/framework/inputs/checkbox) · [Notebook](https://observablehq.com/@observablehq/input-checkbox) · A Checkbox allows the user to choose any of a given set of values (any of the given elements in the iterable *data*). Unlike a [Select](#select), a Checkbox’s choices are all visible up-front. The Checkbox’s value is an array of the elements from *data* that are currently selected.
 
 The elements in *data* need not be strings; they can be anything. To customize display, optional *keyof* and *valueof* functions may be given; the result of the *keyof* function for each element in *data* is displayed to the user, while the result of the *valueof* function is exposed in the Checkbox’s value when selected. If *data* is a Map, the *keyof* function defaults to the map entry’s key (`([key]) => key`) and the *valueof* function defaults to the map entry’s value (`([, value]) => value`); otherwise, both *keyof* and *valueof* default to the identity function (`d => d`). For example, with [d3.group](https://github.com/d3/d3-array/blob/master/README.md#group):
 
 ```js
-viewof sportAthletes = Inputs.checkbox(d3.group(athletes, d => d.sport))
+Inputs.checkbox(d3.group(athletes, d => d.sport))
 ```
 
 Keys may be sorted and uniqued via the *sort* and *unique* options, respectively. Elements in *data* are formatted via an optional *format* function which has the same defaults as *keyof*. As with the *label* option, the *format* function may return either a string or an HTML element.
@@ -155,10 +141,10 @@ The available *options* are:
 #### Inputs.toggle(*options*)
 
 ```js
-viewof mute = Inputs.toggle({label: "Mute"})
+Inputs.toggle({label: "Mute"})
 ```
 
-[Source](./src/checkbox.js) · [Examples](https://observablehq.com/@observablehq/input-toggle) · A Toggle is a solitary checkbox. By default, the Toggle’s value is whether the checkbox is checked (true or false); a *values* = [*on*, *off*] option can be specified to toggle between two arbitrary values.
+[Source](./src/checkbox.js) · [Examples](https://observablehq.com/framework/inputs/toggle) · [Notebook](https://observablehq.com/@observablehq/input-toggle) · A Toggle is a solitary checkbox. By default, the Toggle’s value is whether the checkbox is checked (true or false); a *values* = [*on*, *off*] option can be specified to toggle between two arbitrary values.
 
 The available *options* are:
 
@@ -174,15 +160,15 @@ The available *options* are:
 [<img src="./img/radio.png" alt="A single-choice Radio input of colors" width="640">](https://observablehq.com/@observablehq/input-radio)
 
 ```js
-viewof color = Inputs.radio(["red", "green", "blue"], {label: "Color"})
+Inputs.radio(["red", "green", "blue"], {label: "Color"})
 ```
 
-[Source](./src/checkbox.js) · [Examples](https://observablehq.com/@observablehq/input-radio) · A Radio allows the user to choose one of a given set of values. Unlike a [Select](#select), a Radio’s choices are all visible up-front. The Radio’s value is an element from *data*, or null if no choice has been made.
+[Source](./src/checkbox.js) · [Examples](https://observablehq.com/framework/inputs/radio) · [Notebook](https://observablehq.com/@observablehq/input-radio) · A Radio allows the user to choose one of a given set of values. Unlike a [Select](#select), a Radio’s choices are all visible up-front. The Radio’s value is an element from *data*, or null if no choice has been made.
 
 The elements in *data* need not be strings; they can be anything. To customize display, optional *keyof* and *valueof* functions may be given; the result of the *keyof* function for each element in *data* is displayed to the user, while the result of the *valueof* function is exposed as the Radio’s value when selected. If *data* is a Map, the *keyof* function defaults to the map entry’s key (`([key]) => key`) and the *valueof* function defaults to the map entry’s value (`([, value]) => value`); otherwise, both *keyof* and *valueof* default to the identity function (`d => d`). For example, with [d3.group](https://github.com/d3/d3-array/blob/master/README.md#group):
 
 ```js
-viewof sportAthletes = Inputs.radio(d3.group(athletes, d => d.sport))
+Inputs.radio(d3.group(athletes, d => d.sport))
 ```
 
 Keys may be sorted and uniqued via the *sort* and *unique* options, respectively. Elements in *data* are formatted via an optional *format* function which has the same defaults as *keyof*. As with the *label* option, the *format* function may return either a string or an HTML element.
@@ -206,10 +192,10 @@ The available *options* are:
 [<img src="./img/range.png" alt="A Range input of intensity, a number between 0 and 100" width="640">](https://observablehq.com/@observablehq/input-range)
 
 ```js
-viewof intensity = Inputs.range([0, 100], {step: 1, label: "Intensity"})
+Inputs.range([0, 100], {step: 1, label: "Intensity"})
 ```
 
-[Source](./src/range.js) · [Examples](https://observablehq.com/@observablehq/input-range) · A Range input specifies a number between the given *extent* = [*min*, *max*] (inclusive). If an *extent* is not specified, it defaults to [0, 1]. The chosen number can be adjusted roughly with a slider, or precisely by typing a number.
+[Source](./src/range.js) · [Examples](https://observablehq.com/framework/inputs/range) · [Notebook](https://observablehq.com/@observablehq/input-range) · A Range input specifies a number between the given *extent* = [*min*, *max*] (inclusive). If an *extent* is not specified, it defaults to [0, 1]. The chosen number can be adjusted roughly with a slider, or precisely by typing a number.
 
 The available *options* are:
 
@@ -243,21 +229,21 @@ Equivalent to Inputs.range, except the range input is suppressed; only a number 
 [<img src="./img/search.png" alt="A Search input over a tabular dataset of athletes" width="640">](https://observablehq.com/@observablehq/input-search)
 
 ```js
-viewof foundAthletes = Inputs.search(athletes, {label: "Athletes"})
+Inputs.search(athletes, {label: "Athletes"})
 ```
 
-[Source](./src/search.js) · [Examples](https://observablehq.com/@observablehq/input-search) · A Search input allows freeform, full-text search of an in-memory tabular dataset or an iterable (column) of values using a simple query parser. It is often used in conjunction with a [Table](#table). The value of a Search is an array of elements from the iterable *data* that match the current query. If the query is currently empty, the search input’s value is all elements in *data*.
+[Source](./src/search.js) · [Examples](https://observablehq.com/framework/inputs/search) · [Notebook](https://observablehq.com/@observablehq/input-search) · A Search input allows freeform, full-text search of an in-memory tabular dataset or an iterable (column) of values using a simple query parser. It is often used in conjunction with a [Table](#table). The value of a Search is an array of elements from the iterable *data* that match the current query. If the query is currently empty, the search input’s value is all elements in *data*.
 
 A Search input can work with either tabular data (an array of objects) or a single column (an array of strings). When searching tabular input, all properties on each object in *data* are searched by default, but you can limit the search to a specific set of properties using the *column* option. For example, to only search the “sport” and “nationality” column:
 
 ```js
-viewof foundAthletes = Inputs.search(athletes, {label: "Athletes", columns: ["sport", "nationality"]})
+Inputs.search(athletes, {label: "Athletes", columns: ["sport", "nationality"]})
 ```
 
 For example, to search U.S. state names:
 
 ```js
-viewof state = Inputs.search(["Alabama", "Alaska", "Arizona", "Arkansas", "California", …], {label: "State"})
+Inputs.search(["Alabama", "Alaska", "Arizona", "Arkansas", "California", …], {label: "State"})
 ```
 
 The available *options* are:
@@ -286,18 +272,18 @@ If a *filter* function is specified, it is invoked whenever the query changes; t
 [<img src="./img/select.png" alt="A Select input asking to choose a t-shirt size" width="640">](https://observablehq.com/@observablehq/input-select)
 
 ```js
-viewof size = Inputs.select(["Small", "Medium", "Large"], {label: "Size"})
+Inputs.select(["Small", "Medium", "Large"], {label: "Size"})
 ```
 ```js
-viewof inks = Inputs.select(["cyan", "magenta", "yellow", "black"], {multiple: true, label: "Inks"})
+Inputs.select(["cyan", "magenta", "yellow", "black"], {multiple: true, label: "Inks"})
 ```
 
-[Source](./src/select.js) · [Examples](https://observablehq.com/@observablehq/input-select) · A Select allows the user to choose one of a given set of values (one of the given elements in the iterable *data*); or, if desired, multiple values may be chosen. Unlike a [Radio](#radio), only one (or a few) choices are visible up-front, affording a compact display even when many options are available. If multiple choice is allowed via the *multiple* option, the Select’s value is an array of the elements from *data* that are currently selected; if single choice is required, the Select’s value is an element from *data*, or null if no choice has been made.
+[Source](./src/select.js) · [Examples](https://observablehq.com/framework/inputs/select) · [Notebook](https://observablehq.com/@observablehq/input-select) · A Select allows the user to choose one of a given set of values (one of the given elements in the iterable *data*); or, if desired, multiple values may be chosen. Unlike a [Radio](#radio), only one (or a few) choices are visible up-front, affording a compact display even when many options are available. If multiple choice is allowed via the *multiple* option, the Select’s value is an array of the elements from *data* that are currently selected; if single choice is required, the Select’s value is an element from *data*, or null if no choice has been made.
 
 The elements in *data* need not be strings; they can be anything. To customize display, optional *keyof* and *valueof* functions may be given; the result of the *keyof* function for each element in *data* is displayed to the user, while the result of the *valueof* function is exposed as the Select’s value when selected. If *data* is a Map, the *keyof* function defaults to the map entry’s key (`([key]) => key`) and the *valueof* function defaults to the map entry’s value (`([, value]) => value`); otherwise, both *keyof* and *valueof* default to the identity function (`d => d`). For example, with [d3.group](https://github.com/d3/d3-array/blob/master/README.md#group):
 
 ```js
-viewof sportAthletes = Inputs.select(d3.group(athletes, d => d.sport))
+Inputs.select(d3.group(athletes, d => d.sport))
 ```
 
 Keys may be sorted and uniqued via the *sort* and *unique* options, respectively. Elements in *data* are formatted via an optional *format* function which has the same defaults as *keyof*. While the *label* option may be either a string or an HTML element, the *format* function must return a string (unlike a Radio).
@@ -323,7 +309,7 @@ The available *options* are:
 
 [<img src="./img/table.png" alt="A Table input showing rows of Olympic athletes" width="988">](https://observablehq.com/@observablehq/input-table)
 
-[Source](./src/table.js) · [Examples](https://observablehq.com/@observablehq/input-table) · A Table displays a tabular dataset; *data* should be an iterable of objects, such as the result of loading a CSV file. The *data* may also be a promise to the same, in which case the contents of the table will be lazily populated once the promise resolves. Each object corresponds to a row, while each field corresponds to a column. To improve performance with large datasets, the rows of the table are lazily rendered on scroll. Rows may be sorted by clicking column headers (once for ascending, then again for descending).
+[Source](./src/table.js) · [Examples](https://observablehq.com/framework/inputs/table) · [Notebook](https://observablehq.com/@observablehq/input-table) · A Table displays a tabular dataset; *data* should be an iterable of objects, such as the result of loading a CSV file. The *data* may also be a promise to the same, in which case the contents of the table will be lazily populated once the promise resolves. Each object corresponds to a row, while each field corresponds to a column. To improve performance with large datasets, the rows of the table are lazily rendered on scroll. Rows may be sorted by clicking column headers (once for ascending, then again for descending).
 
 While intended primarily for display, a Table also serves as an input. The value of the Table is its selected rows: a filtered (and possibly sorted) view of the *data*. If the *data* is specified as a promise, while the promise is unresolved, the table’s value is undefined and attempting to set the value of the table will throw an error. Rows can be selected by clicking or shift-clicking checkboxes. See also [Search](#search), which can be used for rapid filtering of the table’s rows.
 
@@ -358,10 +344,10 @@ If *width* is “auto”, the table width will be based on the table contents; n
 [<img src="./img/text.png" alt="A Text input asking to enter your name" width="640">](https://observablehq.com/@observablehq/input-text)
 
 ```js
-viewof name = Inputs.text({label: "Name", placeholder: "Enter your name"})
+Inputs.text({label: "Name", placeholder: "Enter your name"})
 ```
 
-[Source](./src/text.js) · [Examples](https://observablehq.com/@observablehq/input-text) · A Text allows freeform single-line text input. For example, a Text might be used to allow the user to enter a search query. (See also [Search](#search).) By default, a Text will report its value immediately on input. If more deliberate behavior is desired, say if the input will trigger an expensive computation or remote API, the *submit* option can be set to true to wait until a button is clicked or the Enter key is pressed.
+[Source](./src/text.js) · [Examples](https://observablehq.com/framework/inputs/text) · [Notebook](https://observablehq.com/@observablehq/input-text) · A Text allows freeform single-line text input. For example, a Text might be used to allow the user to enter a search query. (See also [Search](#search).) By default, a Text will report its value immediately on input. If more deliberate behavior is desired, say if the input will trigger an expensive computation or remote API, the *submit* option can be set to true to wait until a button is clicked or the Enter key is pressed.
 
 The available *options* are:
 
@@ -414,10 +400,10 @@ Like Inputs.text, but where *type* is color. The color value is represented as a
 [<img src="./img/textarea.png" alt="A Textarea asking for your biography" width="660">](https://observablehq.com/@observablehq/input-textarea)
 
 ```js
-viewof bio = Inputs.textarea({label: "Biography", placeholder: "Tell us a little about yourself…"})
+Inputs.textarea({label: "Biography", placeholder: "Tell us a little about yourself…"})
 ```
 
-[Source](./src/textarea.js) · [Examples](https://observablehq.com/@observablehq/input-textarea) · A Textarea allows multi-line freeform text input. By default, a Textarea will report its value immediately on input. If more deliberate behavior is desired, the *submit* option can be set to true to wait until a button is clicked or the appropriate keyboard shortcut (such as Command-Enter on macOS) is pressed.
+[Source](./src/textarea.js) · [Examples](https://observablehq.com/framework/inputs/textarea) · [Notebook](https://observablehq.com/@observablehq/input-textarea) · A Textarea allows multi-line freeform text input. By default, a Textarea will report its value immediately on input. If more deliberate behavior is desired, the *submit* option can be set to true to wait until a button is clicked or the appropriate keyboard shortcut (such as Command-Enter on macOS) is pressed.
 
 The available *options* are:
 
@@ -446,10 +432,10 @@ If *validate* is not defined, [*text*.checkValidity](https://html.spec.whatwg.or
 #### Inputs.date(*options*)
 
 ```js
-viewof start = Inputs.date({label: "Start date", value: "1982-03-06"})
+Inputs.date({label: "Start date", value: "1982-03-06"})
 ```
 
-[Source](./src/date.js) · [Examples](https://observablehq.com/@observablehq/input-date) · A Date allows a [calendar-based input](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/date). By default, a Date will report its value immediately on input. If more deliberate behavior is desired, say if the input will trigger an expensive computation or remote API, the *submit* option can be set to true to wait until a button is clicked or the Enter key is pressed.
+[Source](./src/date.js) · [Examples](https://observablehq.com/framework/inputs/date) · [Notebook](https://observablehq.com/@observablehq/input-date) · A Date allows a [calendar-based input](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/date). By default, a Date will report its value immediately on input. If more deliberate behavior is desired, say if the input will trigger an expensive computation or remote API, the *submit* option can be set to true to wait until a button is clicked or the Enter key is pressed.
 
 The available *options* are:
 
@@ -469,7 +455,7 @@ The value of the input is a Date instance at UTC midnight of the specified date,
 #### Inputs.datetime(*options*)
 
 ```js
-viewof start = Inputs.datetime({label: "Start date", value: "1982-03-06T02:30"})
+Inputs.datetime({label: "Start date", value: "1982-03-06T02:30"})
 ```
 
 Like Inputs.date, but allows a time to also be specified in the user’s local time zone.
@@ -479,10 +465,7 @@ Like Inputs.date, but allows a time to also be specified in the user’s local t
 #### Inputs.file(*options*)
 
 ```js
-viewof recordsFile = Inputs.file({label: "Records", accept: ".json"})
-```
-```js
-records = recordsFile.json()
+Inputs.file({label: "Records", accept: ".json"})
 ```
 
 [Source](./src/file.js) · A file input allows the user to pick one or more local files. These files will be exposed as objects with the same API as [Observable file attachments](https://github.com/observablehq/stdlib/blob/main/README.md#file-attachments).
@@ -506,10 +489,10 @@ Note that the value of file input cannot be set programmatically; it can only be
 
 #### Inputs.form(*inputs*, *options*)
 
-[Source](./src/form.js) · [Examples](https://observablehq.com/@observablehq/input-form) · Returns a compound input for the specified array or object of *inputs*. This allows multiple inputs to be combined into a single cell for a more compact display. For example, to define an input for the value `rgb` that is a three-element array [*r*, *g*, *b*] of numbers:
+[Source](./src/form.js) · [Examples](https://observablehq.com/framework/inputs/form) · [Notebook](https://observablehq.com/@observablehq/input-form) · Returns a compound input for the specified array or object of *inputs*. This allows multiple inputs to be combined into a single cell for a more compact display. For example, to define an input for the value `rgb` that is a three-element array [*r*, *g*, *b*] of numbers:
 
 ```js
-viewof rgb = Inputs.form([
+Inputs.form([
   Inputs.range([0, 255], {step: 1, label: "r"}),
   Inputs.range([0, 255], {step: 1, label: "g"}),
   Inputs.range([0, 255], {step: 1, label: "b"})
@@ -519,7 +502,7 @@ viewof rgb = Inputs.form([
 Alternatively, to represent `rgb` as an object {*r*, *g*, *b*}:
 
 ```js
-viewof rgb = Inputs.form({
+Inputs.form({
   r: Inputs.range([0, 255], {step: 1, label: "r"}),
   g: Inputs.range([0, 255], {step: 1, label: "g"}),
   b: Inputs.range([0, 255], {step: 1, label: "b"})
@@ -534,20 +517,13 @@ If the *template* object is not specified, the given inputs are wrapped in a DIV
 
 #### Inputs.input(*value*)
 
-[Source](./src/input.js) · [Examples](https://observablehq.com/@observablehq/synchronized-inputs) · Returns an [EventTarget](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget) with the specified *value*. This is typically used in conjunction with [bind](#inputsbindtarget-source-invalidation) to synchronize multiple inputs, with the Input being the primary state store. An Input is similar to a [mutable](https://observablehq.com/@observablehq/introduction-to-mutable-state), except that it allows listeners.
+[Source](./src/input.js) · [Notebook](https://observablehq.com/@observablehq/synchronized-inputs) · Returns an [EventTarget](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget) with the specified *value*. This is typically used in conjunction with [bind](#inputsbindtarget-source-invalidation) to synchronize multiple inputs, with the Input being the primary state store. An Input is similar to a [mutable](https://observablehq.com/@observablehq/introduction-to-mutable-state), except that it allows listeners.
 
 #### Inputs.bind(*target*, *source*, *invalidation*)
 
-[Source](./src/bind.js) · [Examples](https://observablehq.com/@observablehq/synchronized-inputs) · The bind function allows a *target* input to be bound to a *source* input, synchronizing the two: interaction with the *source* input will propagate to the *target* input and *vice versa*.
+[Source](./src/bind.js) · [Notebook](https://observablehq.com/@observablehq/synchronized-inputs) · The bind function allows a *target* input to be bound to a *source* input, synchronizing the two: interaction with the *source* input will propagate to the *target* input and *vice versa*.
 
-The relationship between *target* and *source* is not symmetric: the *target* input should be considered a dependant of the *source* input, and if desired, only the *source* should be declared an Observable view. For example:
-
-```js
-viewof i = Inputs.input(42) // the “primary” input
-```
-```js
-Inputs.bind(Inputs.range([0, 100]), viewof i) // a bound “secondary” input
-```
+The relationship between *target* and *source* is not symmetric: the *target* input should be considered a dependant of the *source* input, and if desired, only the *source* should be declared an Observable view.
 
 When the *target* emits a type-appropriate event, the *target*’s type-appropriate value will be applied to the *source* and a type-appropriate event will be dispatched on the *source*; when the *source* emits a type-appropriate event, the *source*’s type-appropriate value will be applied to the *target*, but *no event will be dispatched*, avoiding an infinite loop.
 
