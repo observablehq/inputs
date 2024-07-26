@@ -97,8 +97,8 @@ function initialize(
   let anchor = null, head = null;
 
   const tbody = html`<tbody>`;
-  const tr = html`<tr>${selectable ? html`<td><input type=${multiple ? "checkbox" : "radio"} name=${multiple ? null : "radio"}>` : html`<td>`}${columns.map(() => html`<td>`)}`;
-  const theadr = html`<tr>${selectable ? html`<th><input type=checkbox onclick=${reselectAll} disabled=${!multiple}>` : html`<th style="width:0">`}${columns.map((column) => html`<th title=${column} onclick=${event => resort(event, column)}><span></span>${header && column in header ? header[column] : column}</th>`)}</tr>`;
+  const tr = html`<tr><td>${selectable ? html`<input type=${multiple ? "checkbox" : "radio"} name=${multiple ? null : "radio"}>` : null}</td>${columns.map(() => html`<td>`)}`;
+  const theadr = html`<tr><th>${selectable ? html`<input type=checkbox onclick=${reselectAll} disabled=${!multiple}>` : null}</th>${columns.map((column) => html`<th title=${column} onclick=${event => resort(event, column)}><span></span>${header && column in header ? header[column] : column}</th>`)}</tr>`;
   root.appendChild(html.fragment`<table style=${{tableLayout: layout}}>
   <thead>${minlengthof(1) || columns.length ? theadr : null}</thead>
   ${tbody}
