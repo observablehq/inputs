@@ -89,8 +89,8 @@ If *content* is an array or iterable, then multiple buttons will be generated. E
 
 ```js
 Inputs.button([
-  ["Increment", value => value + 1],
-  ["Decrement", value => value - 1],
+  ["Increment", (value) => value + 1],
+  ["Decrement", (value) => value - 1],
   ["Reset", () => 0]
 ], {label: "Counter", value: 0})
 ```
@@ -119,7 +119,7 @@ Inputs.checkbox(["Salty", "Spicy", "Sour", "Umami"], {label: "Flavor"})
 The elements in *data* need not be strings; they can be anything. To customize display, optional *keyof* and *valueof* functions may be given; the result of the *keyof* function for each element in *data* is displayed to the user, while the result of the *valueof* function is exposed in the Checkbox’s value when selected. If *data* is a Map, the *keyof* function defaults to the map entry’s key (`([key]) => key`) and the *valueof* function defaults to the map entry’s value (`([, value]) => value`); otherwise, both *keyof* and *valueof* default to the identity function (`d => d`). For example, with [d3.group](https://github.com/d3/d3-array/blob/master/README.md#group):
 
 ```js
-Inputs.checkbox(d3.group(athletes, d => d.sport))
+Inputs.checkbox(d3.group(athletes, (d) => d.sport))
 ```
 
 Keys may be sorted and uniqued via the *sort* and *unique* options, respectively. Elements in *data* are formatted via an optional *format* function which has the same defaults as *keyof*. As with the *label* option, the *format* function may return either a string or an HTML element.
@@ -165,10 +165,10 @@ Inputs.radio(["red", "green", "blue"], {label: "Color"})
 
 [Source](./src/checkbox.js) · [Examples](https://observablehq.com/framework/inputs/radio) · [Notebook](https://observablehq.com/@observablehq/input-radio) · A Radio allows the user to choose one of a given set of values. Unlike a [Select](#select), a Radio’s choices are all visible up-front. The Radio’s value is an element from *data*, or null if no choice has been made.
 
-The elements in *data* need not be strings; they can be anything. To customize display, optional *keyof* and *valueof* functions may be given; the result of the *keyof* function for each element in *data* is displayed to the user, while the result of the *valueof* function is exposed as the Radio’s value when selected. If *data* is a Map, the *keyof* function defaults to the map entry’s key (`([key]) => key`) and the *valueof* function defaults to the map entry’s value (`([, value]) => value`); otherwise, both *keyof* and *valueof* default to the identity function (`d => d`). For example, with [d3.group](https://github.com/d3/d3-array/blob/master/README.md#group):
+The elements in *data* need not be strings; they can be anything. To customize display, optional *keyof* and *valueof* functions may be given; the result of the *keyof* function for each element in *data* is displayed to the user, while the result of the *valueof* function is exposed as the Radio’s value when selected. If *data* is a Map, the *keyof* function defaults to the map entry’s key (`([key]) => key`) and the *valueof* function defaults to the map entry’s value (`([, value]) => value`); otherwise, both *keyof* and *valueof* default to the identity function (`(d) => d`). For example, with [d3.group](https://github.com/d3/d3-array/blob/master/README.md#group):
 
 ```js
-Inputs.radio(d3.group(athletes, d => d.sport))
+Inputs.radio(d3.group(athletes, (d) => d.sport))
 ```
 
 Keys may be sorted and uniqued via the *sort* and *unique* options, respectively. Elements in *data* are formatted via an optional *format* function which has the same defaults as *keyof*. As with the *label* option, the *format* function may return either a string or an HTML element.
@@ -216,7 +216,7 @@ If *validate* is not defined, [*number*.checkValidity](https://html.spec.whatwg.
 
 The *format* function should return a string value that is compatible with native number parsing. Hence, the default [formatTrim](#formatTrim) is recommended.
 
-If a *transform* function is specified, an inverse transform function *invert* is strongly recommended. If *invert* is not provided, the Range will fallback to Newton’s method, but this may be slow or inaccurate. Passing Math.sqrt, Math.log, or Math.exp as a *transform* will automatically supply the corresponding *invert*. If *min* is greater than *max*, *i.e.* if the extent is inverted, then *transform* and *invert* will default to `value => -value`.
+If a *transform* function is specified, an inverse transform function *invert* is strongly recommended. If *invert* is not provided, the Range will fallback to Newton’s method, but this may be slow or inaccurate. Passing Math.sqrt, Math.log, or Math.exp as a *transform* will automatically supply the corresponding *invert*. If *min* is greater than *max*, *i.e.* if the extent is inverted, then *transform* and *invert* will default to `(value) => -value`.
 
 #### Inputs.number([*extent*, ]*options*)
 
@@ -280,10 +280,10 @@ Inputs.select(["cyan", "magenta", "yellow", "black"], {multiple: true, label: "I
 
 [Source](./src/select.js) · [Examples](https://observablehq.com/framework/inputs/select) · [Notebook](https://observablehq.com/@observablehq/input-select) · A Select allows the user to choose one of a given set of values (one of the given elements in the iterable *data*); or, if desired, multiple values may be chosen. Unlike a [Radio](#radio), only one (or a few) choices are visible up-front, affording a compact display even when many options are available. If multiple choice is allowed via the *multiple* option, the Select’s value is an array of the elements from *data* that are currently selected; if single choice is required, the Select’s value is an element from *data*, or null if no choice has been made.
 
-The elements in *data* need not be strings; they can be anything. To customize display, optional *keyof* and *valueof* functions may be given; the result of the *keyof* function for each element in *data* is displayed to the user, while the result of the *valueof* function is exposed as the Select’s value when selected. If *data* is a Map, the *keyof* function defaults to the map entry’s key (`([key]) => key`) and the *valueof* function defaults to the map entry’s value (`([, value]) => value`); otherwise, both *keyof* and *valueof* default to the identity function (`d => d`). For example, with [d3.group](https://github.com/d3/d3-array/blob/master/README.md#group):
+The elements in *data* need not be strings; they can be anything. To customize display, optional *keyof* and *valueof* functions may be given; the result of the *keyof* function for each element in *data* is displayed to the user, while the result of the *valueof* function is exposed as the Select’s value when selected. If *data* is a Map, the *keyof* function defaults to the map entry’s key (`([key]) => key`) and the *valueof* function defaults to the map entry’s value (`([, value]) => value`); otherwise, both *keyof* and *valueof* default to the identity function (`(d) => d`). For example, with [d3.group](https://github.com/d3/d3-array/blob/master/README.md#group):
 
 ```js
-Inputs.select(d3.group(athletes, d => d.sport))
+Inputs.select(d3.group(athletes, (d) => d.sport))
 ```
 
 Keys may be sorted and uniqued via the *sort* and *unique* options, respectively. Elements in *data* are formatted via an optional *format* function which has the same defaults as *keyof*. While the *label* option may be either a string or an HTML element, the *format* function must return a string (unlike a Radio).
