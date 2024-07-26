@@ -13,14 +13,18 @@
   "jsdelivr": "dist/inputs.min.js",
   "unpkg": "dist/inputs.min.js",
   "exports": {
-    "umd": "./dist/inputs.min.js",
-    "default": "./src/index.js"
+    ".": {
+      "umd": "./dist/inputs.min.js",
+      "default": "./src/index.js"
+    },
+    "./dist/inputs.css": "./dist/inputs.css"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/observablehq/inputs.git"
   },
   "files": [
+    "dist/**/*.css",
     "dist/**/*.js",
     "src/**/*.js"
   ],
@@ -31,7 +35,7 @@
     "test": "yarn test:mocha && yarn test:lint",
     "test:mocha": "mkdir -p test/output && mocha -r module-alias/register 'test/**/*-test.js' test/input.js",
     "test:lint": "eslint src test",
-    "prepublishOnly": "rm -rf dist && rollup -c",
+    "prepublishOnly": "rm -rf dist && rollup -c && node bin/clean-css < src/style.css > dist/inputs.css",
     "postpublish": "git push && git push --tags",
     "dev": "snowpack dev"
   },

@@ -1,4 +1,3 @@
-import crypto from "crypto";
 import fs from "fs";
 import path from "path";
 import {terser} from "rollup-plugin-terser";
@@ -22,10 +21,10 @@ const copyrights = fs.readFileSync("./LICENSE", "utf-8")
   .filter(line => /^copyright\s+/i.test(line))
   .map(line => line.replace(/^copyright\s+/i, ""));
 
-// Create a content-hashed namespace for our styles.
+// A unique namespace for our styles.
+const styleNs = "oi-3a86ea";
+
 const stylePath = path.resolve("./src/style.css");
-const styleHash = crypto.createHash("sha256").update(fs.readFileSync(stylePath, "utf8")).digest("hex").slice(0, 6);
-const styleNs = `oi-${styleHash}`;
 
 // A lil’ Rollup plugin to allow importing of style.css.
 const css = {
