@@ -5,12 +5,15 @@
 Observable Inputs is a free, [open-source](./LICENSE) JavaScript library that can be used in any web environment. For example, here’s how you might let the user choose a number in a vanilla web page:
 
 ```html
+<!DOCTYPE html>
+<body>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@observablehq/inputs@0.11/dist/index.css">
 <script type="module">
 
-import * as Inputs from "https://cdn.jsdelivr.net/npm/@observablehq/inputs@0.10/+esm";
+import * as Inputs from "https://cdn.jsdelivr.net/npm/@observablehq/inputs@0.11/+esm";
 
 // Create a numeric slider allowing a value between 0 and 100 (inclusive).
-const slider = Inputs.range([0, 100]);
+const slider = Inputs.range([0, 100], {label: "x"});
 
 // Display the slider on the page.
 document.body.append(slider);

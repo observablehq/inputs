@@ -85,5 +85,19 @@ export default [
       ...config.plugins,
       terser({output: {preamble: config.output.banner}})
     ]
+  },
+  {
+    input: "src/index.js",
+    external: ["htl", "isoformat"],
+    output: {
+      indent: false,
+      banner: `// ${meta.name} v${meta.version} Copyright ${copyrights.join(", ")}`,
+      format: "es",
+      file: "dist/index.js"
+    },
+    plugins: [
+      node(),
+      replace({__ns__: styleNs, preventAssignment: true})
+    ]
   }
 ];
