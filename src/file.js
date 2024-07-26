@@ -7,7 +7,7 @@ export function fileOf(AbstractFile) {
 
   class LocalFile extends AbstractFile {
     constructor(file) {
-      super(file.name);
+      super(file.name, file.type, file.lastModified);
       Object.defineProperty(this, "_", {value: file});
       Object.defineProperty(this, "_url", {writable: true});
     }
