@@ -1,5 +1,5 @@
-import * as Inputs from "@observablehq/inputs";
 import {html} from "htl";
+import * as Inputs from "../../src/index.js";
 
 export async function checkbox() {
   return Inputs.checkbox(["red", "green", "blue"]);

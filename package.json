@@ -1,26 +1,30 @@
 {
   "name": "@observablehq/inputs",
-  "description": "User interface components for Observable notebooks",
-  "version": "0.10.6",
+  "description": "Lightweight user interface components",
+  "version": "0.11.0",
   "author": {
     "name": "Observable, Inc.",
     "url": "https://observablehq.com"
   },
   "license": "ISC",
   "type": "module",
-  "main": "src/index.js",
-  "module": "src/index.js",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
   "jsdelivr": "dist/inputs.min.js",
   "unpkg": "dist/inputs.min.js",
   "exports": {
-    "umd": "./dist/inputs.min.js",
-    "default": "./src/index.js"
+    ".": {
+      "umd": "./dist/inputs.min.js",
+      "default": "./dist/index.js"
+    },
+    "./dist/index.css": "./dist/index.css"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/observablehq/inputs.git"
   },
   "files": [
+    "dist/**/*.css",
     "dist/**/*.js",
     "src/**/*.js"
   ],
@@ -29,34 +33,33 @@
   },
   "scripts": {
     "test": "yarn test:mocha && yarn test:lint",
-    "test:mocha": "mkdir -p test/output && mocha -r module-alias/register 'test/**/*-test.js' test/input.js",
+    "test:mocha": "mkdir -p test/output && mocha 'test/**/*-test.js' test/input.js",
     "test:lint": "eslint src test",
-    "prepublishOnly": "rm -rf dist && rollup -c",
+    "prepublishOnly": "rm -rf dist && rollup -c && node bin/clean-css < src/style.css > dist/index.css",
     "postpublish": "git push && git push --tags",
-    "dev": "snowpack dev"
+    "dev": "vite dev"
   },
   "_moduleAliases": {
     "@observablehq/inputs": "./src/index.js"
   },
   "devDependencies": {
-    "@rollup/plugin-json": "4",
-    "@rollup/plugin-node-resolve": "13",
-    "@rollup/plugin-replace": "3",
-    "apache-arrow": "17",
-    "clean-css": "5",
-    "d3": "7",
-    "eslint": "8",
-    "js-beautify": "1",
-    "jsdom": "19",
-    "jsesc": "3",
-    "mocha": "9",
-    "module-alias": "2",
-    "rollup": "2",
-    "rollup-plugin-terser": "7",
-    "snowpack": "3"
+    "@rollup/plugin-json": "^4.1.0",
+    "@rollup/plugin-node-resolve": "^13.3.0",
+    "@rollup/plugin-replace": "^3.1.0",
+    "apache-arrow": "^17.0.0",
+    "clean-css": "^5.3.3",
+    "d3": "^7.9.0",
+    "eslint": "^8.57.0",
+    "js-beautify": "^1.15.1",
+    "jsdom": "^24.1.1",
+    "jsesc": "^3.0.2",
+    "mocha": "^10.7.0",
+    "rollup": "^2.79.1",
+    "rollup-plugin-terser": "^7.0.2",
+    "vite": "^5.3.5"
   },
   "dependencies": {
-    "htl": "0.3",
+    "htl": "^0.3.1",
     "isoformat": "^0.2.0"
   },
   "publishConfig": {

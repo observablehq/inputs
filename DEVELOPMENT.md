@@ -8,14 +8,14 @@ cd inputs
 yarn
 ```
 
-Inputs is written in ES modules and uses [Snowpack](https://snowpack.dev/) for development; this means that you can edit the Inputs source code and examples, and they’ll update live as you save changes. To start, copy over the example scratch.html file:
+Inputs is written in ES modules and uses [Vite](https://vitejs.dev/) for development; this means that you can edit the Inputs source code and examples, and they’ll update live as you save changes. To start, copy over the example scratch.html file:
 
 ```
 mkdir scratch
 cp test/scratch.html scratch/index.html
 ```
 
-Then start Snowpack:
+Then start Vite:
 
 ```
 yarn dev

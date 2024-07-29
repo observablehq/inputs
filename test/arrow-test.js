@@ -1,7 +1,7 @@
-import assert from "assert";
-import {table} from "@observablehq/inputs";
+import assert from "node:assert";
 import {tableFromJSON} from "apache-arrow";
 import {autoType, csv} from "d3";
+import {table} from "../src/index.js";
 import it from "./jsdom.js";
 
 it("Inputs.table() detects dates in Arrow tables", async () => {
