@@ -24,6 +24,8 @@ form.__ns__ {
 form.__ns__ > label {
   width: 100%;
   padding-bottom: 3px;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 /* On narrow screens, a toggle is small enough to fit inline with the label;
