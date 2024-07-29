@@ -26,7 +26,7 @@ slider.addEventListener("input", (event) => {
 </script>
 ```
 
-Observable Inputs are designed to be especially convenient in [Observable Framework](https://observablehq/com/framework) and [Observable notebooks](https://observablehq/). In Framework, use the *view* function to display an input and expose its value as a top-level [reactive variable](https://observablehq.com/framework/reactivity):
+Observable Inputs are designed to be especially convenient in [Observable Framework](https://observablehq.com/framework) and [Observable notebooks](https://observablehq.com/). In Framework, use the *view* function to display an input and expose its value as a top-level [reactive variable](https://observablehq.com/framework/reactivity):
 
 ```js
 const x = view(Inputs.range([0, 100]));
