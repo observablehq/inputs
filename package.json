@@ -36,7 +36,6 @@
     "test:mocha": "mkdir -p test/output && mocha 'test/**/*-test.js' test/input.js",
     "test:lint": "eslint src test",
     "prepublishOnly": "rm -rf dist && rollup -c && node bin/clean-css < src/style.css > dist/index.css",
-    "postpublish": "git push && git push --tags",
     "dev": "vite dev"
   },
   "_moduleAliases": {
