@@ -7,10 +7,10 @@ Observable Inputs is a small, free, [open-source](./LICENSE) JavaScript library 
 ```html
 <!DOCTYPE html>
 <body>
-<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@observablehq/inputs@0.11/dist/index.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@observablehq/inputs@0.12/dist/index.css">
 <script type="module">
 
-import * as Inputs from "https://cdn.jsdelivr.net/npm/@observablehq/inputs@0.11/+esm";
+import * as Inputs from "https://cdn.jsdelivr.net/npm/@observablehq/inputs@0.12/+esm";
 
 // Create a numeric slider allowing a value between 0 and 100 (inclusive).
 const slider = Inputs.range([0, 100], {label: "x"});
@@ -484,7 +484,7 @@ The available *options* are:
 
 Note that the value of file input cannot be set programmatically; it can only be changed by the user.
 
-(In vanilla JavaScript, the Inputs.file method is not exposed directly. Instead, an Inputs.fileOf method is exposed which takes an AbstractFile implementation and returns the Inputs.file method. This avoids a circular dependency between Observable Inputs and the Observable standard library.)
+(In vanilla JavaScript, the Inputs.file method has an additional *transform* option which allows the native File object to be converted into an Observable FileAttachment.)
 
 ## Utilities
 
