@@ -231,6 +231,7 @@ form.__ns__-table {
   display: inline-block;
   width: 0.5em;
   margin-left: -0.5em;
+  padding-right: 0.25em;
 }
 
 .__ns__-table td,
