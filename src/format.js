@@ -1,4 +1,5 @@
 import {format as isoformat} from "isoformat";
+import {html} from "htl";
 
 // Note: use formatAuto (or any other localized format) to present values to the
 // user; stringify is only intended for machine values.
@@ -17,6 +18,34 @@ export const formatLocaleAuto = localize(locale => {
 export const formatLocaleNumber = localize(locale => {
   return value => value === 0 ? "0" : value.toLocaleString(locale); // handle negative zero
 });
+
+export function formatObjects(format, circular = true) {
+  return value => value === null ? gray("null")
+  : value === undefined ? gray("undefined")
+  : Number.isNaN(value) ? gray(NaN)
+  : circular && Array.isArray(value) ? formatArray(value)
+  : circular && isTypedArray(value) ? formatArray(value)
+  : value instanceof Date ? formatDate(value)
+  : circular && value instanceof Node ? value
+  : circular && typeof value === "object" ? formatObject(value)
+  : format(value);
+}
+
+function isTypedArray(_) {
+  return _?.prototype?.__proto__?.constructor?.name == "TypedArray";
+}
+
+function formatObject(o) {
+  const subformat = formatObjects(formatAuto, false);
+  return `{${Object.entries(o).map(([key, value]) => `${key}: ${subformat(value)}`).join(", ")}}`;
+}
+
+function formatArray(value) {
+  const subformat = formatObjects(formatAuto, false);
+  const l = value.length;
+  value = Array.from({length: Math.min(30, l)}, (_, i) => subformat(value[i]));
+  return `[${value.join(", ")}${l > 30 ? "…" : "" }]`;
+}
 
 export const formatAuto = formatLocaleAuto();
 
@@ -44,4 +73,8 @@ export function formatDate(date) {
 export function localize(f) {
   let key = localize, value;
   return (locale = "en") => locale === key ? value : (value = f(key = locale));
+}
+
+function gray(label) {
+  return html`<span class=gray>${label}`;
 }

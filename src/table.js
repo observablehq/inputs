@@ -1,10 +1,10 @@
 import {html} from "htl";
 import {arrayify, maybeColumns} from "./array.js";
 import {length} from "./css.js";
-import {formatDate, formatLocaleAuto, formatLocaleNumber} from "./format.js";
+import {formatDate, formatLocaleAuto, formatLocaleNumber, formatObjects} from "./format.js";
 import {newId} from "./id.js";
 import {identity} from "./identity.js";
-import {defined, ascending, descending} from "./sort.js";
+import {ascending, descending} from "./sort.js";
 
 const rowHeight = 22;
 
@@ -133,8 +133,8 @@ function initialize(
     }
     if (d != null) for (let j = 0; j < columns.length; ++j) {
       let column = columns[j];
+      if (!(column in d)) continue;
       let value = d[column];
-      if (!defined(value)) continue;
       value = format[column](value, i, data);
       if (!(value instanceof Node)) value = document.createTextNode(value);
       itr.childNodes[j + 1].appendChild(value);
@@ -338,9 +338,9 @@ function formatof(base = {}, data, columns, locale) {
       continue;
     }
     switch (type(data, column)) {
-      case "number": format[column] = formatLocaleNumber(locale); break;
-      case "date": format[column] = formatDate; break;
-      default: format[column] = formatLocaleAuto(locale); break;
+      case "number": format[column] = formatObjects(formatLocaleNumber(locale)); break;
+      case "date": format[column] = formatObjects(formatDate); break;
+      default: format[column] = formatObjects(formatLocaleAuto(locale)); break;
     }
   }
   return format;
