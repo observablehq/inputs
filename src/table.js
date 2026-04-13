@@ -248,7 +248,7 @@ function initialize(
     const check = inputof(theadr);
     if (check == null) return;
     check.disabled = !multiple && !selected.size;
-    check.indeterminate = multiple && selected.size && selected.size !== N; // assume materalized!
+    check.indeterminate = multiple && selected.size && selected.size !== N; // assume materialized!
     check.checked = selected.size;
     value = undefined; // lazily computed
   }
