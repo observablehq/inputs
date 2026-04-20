@@ -25,6 +25,8 @@ export function createText(form, input, value, {
     if (validate(input)) {
       value = get(input);
       return true;
+    } else if (!submit) {
+      input.reportValidity();
     }
   }
   function onsubmit(event) {
