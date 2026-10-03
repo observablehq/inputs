@@ -108,8 +108,8 @@ form.__ns__-toggle .__ns__-input {
   width: 100%;
   margin: 0;
   padding: 4px;
-  min-height: calc(2.5em + 8px);
-  max-height: calc(14em + 8px);
+  min-height: var(--textarea-min-height, calc(2.5em + 8px));
+  max-height: var(--textarea-max-height, calc(14em + 8px));
   resize: vertical;
 }
 
