@@ -340,10 +340,27 @@ function formatof(base = {}, data, columns, locale) {
     switch (type(data, column)) {
       case "number": format[column] = formatLocaleNumber(locale); break;
       case "date": format[column] = formatDate; break;
+      case "timestamp": format[column] = formatTimestamp(data, column); break;
       default: format[column] = formatLocaleAuto(locale); break;
     }
   }
   return format;
+}
+
+// Flechette’s useBigIntTimestamp option returns BigInt values in the column’s
+// time unit; convert them to milliseconds, as Flechette does by default.
+function formatTimestamp(data, column) {
+  const {unit} = data.schema.fields.find((d) => d.name === column).type;
+  return (value) => formatDate(typeof value === "bigint" ? toMilliseconds(value, unit) : value);
+}
+
+function toMilliseconds(value, unit) {
+  switch (unit) {
+    case 0: return Number(value) * 1e3; // second
+    case 1: return Number(value); // millisecond
+    case 2: return Number(value / 1000n) + Number(value % 1000n) / 1e3; // microsecond
+    case 3: return Number(value / 1000000n) + Number(value % 1000000n) / 1e6; // nanosecond
+  }
 }
 
 function alignof(base = {}, data, columns) {
@@ -385,8 +402,9 @@ function getArrowType(value, column) {
   const field = value.schema.fields.find((d) => d.name === column);
   switch (field?.type.typeId) {
     case 8: // Date
+      return "date";
     case 10: // Timestamp
-      return field.type.unit === 1 ? "date" : "number"; // millisecond
+      return "timestamp";
     case 2: // Int
     case 3: // Float
     case 7: // Decimal
