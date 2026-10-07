@@ -15,8 +15,6 @@ it("Inputs.table() detects day and microsecond dates in Flechette tables with us
   assert.strictEqual(t.querySelector("td:nth-of-type(3)").innerHTML, "2024-01-03T12:34Z");
 });
 
-// Use midnight for the day value: tableFromArrays rounds pre-1970 days toward
-// zero (https://github.com/uwdata/flechette/issues/74).
 it("Inputs.table() formats pre-1970 dates in Flechette tables with useDate", async () => {
   const t = table(tableFromArrays({
     day: [new Date("1969-07-20")],
@@ -41,8 +39,7 @@ it("Inputs.table() formats BigInt timestamps in Flechette tables with useBigIntT
   assert.strictEqual(t.querySelector("td:nth-of-type(5)").innerHTML, "2024-01-03T12:34:56.789Z");
 });
 
-// Skipped until https://github.com/uwdata/flechette/issues/74 is fixed.
-it.skip("Inputs.table() formats day dates with a time part in Flechette tables with useDate", async () => {
+it("Inputs.table() formats day dates with a time part in Flechette tables with useDate", async () => {
   const t = table(tableFromArrays({
     day: [new Date("2024-01-02T20:17Z"), new Date("1969-07-20T20:17Z")]
   }, {
