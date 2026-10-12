@@ -20,9 +20,7 @@ it("Inputs.radio([value]) handles singular option", () => {
   assert.strictEqual(r.value, "red");
 });
 
-// JSDOM doesn’t support Inputs.radioNodeList…
-// https://github.com/jsdom/jsdom/issues/2600
-it.skip("Inputs.radio(values) supports value getter and setter", () => {
+it("Inputs.radio(values) supports value getter and setter", () => {
   const r = Inputs.radio(["red", "blue"]);
   assert.strictEqual(r.value, null);
   r.value = "blue";
