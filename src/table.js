@@ -340,7 +340,10 @@ function formatof(base = {}, data, columns, locale) {
     switch (type(data, column)) {
       case "number": format[column] = formatLocaleNumber(locale); break;
       case "date": format[column] = formatDate; break;
-      case "timestamp": format[column] = formatTimestamp(data, column); break;
+      case "seconds": format[column] = formatSeconds; break;
+      case "milliseconds": format[column] = formatMilliseconds; break;
+      case "microseconds": format[column] = formatMicroseconds; break;
+      case "nanoseconds": format[column] = formatNanoseconds; break;
       default: format[column] = formatLocaleAuto(locale); break;
     }
   }
@@ -349,18 +352,20 @@ function formatof(base = {}, data, columns, locale) {
 
 // Flechette’s useBigIntTimestamp option returns BigInt values in the column’s
 // time unit; convert them to milliseconds, as Flechette does by default.
-function formatTimestamp(data, column) {
-  const {unit} = data.schema.fields.find((d) => d.name === column).type;
-  return (value) => formatDate(typeof value === "bigint" ? toMilliseconds(value, unit) : value);
+function formatSeconds(value) {
+  return formatDate(typeof value === "bigint" ? Number(value) * 1e3 : value);
 }
 
-function toMilliseconds(value, unit) {
-  switch (unit) {
-    case 0: return Number(value) * 1e3; // second
-    case 1: return Number(value); // millisecond
-    case 2: return Number(value / 1000n) + Number(value % 1000n) / 1e3; // microsecond
-    case 3: return Number(value / 1000000n) + Number(value % 1000000n) / 1e6; // nanosecond
-  }
+function formatMilliseconds(value) {
+  return formatDate(typeof value === "bigint" ? Number(value) : value);
+}
+
+function formatMicroseconds(value) {
+  return formatDate(typeof value === "bigint" ? Number(value / 1000n) + Number(value % 1000n) / 1e3 : value);
+}
+
+function formatNanoseconds(value) {
+  return formatDate(typeof value === "bigint" ? Number(value / 1000000n) + Number(value % 1000000n) / 1e6 : value);
 }
 
 function alignof(base = {}, data, columns) {
@@ -403,8 +408,10 @@ function getArrowType(value, column) {
   switch (field?.type.typeId) {
     case 8: // Date
       return "date";
-    case 10: // Timestamp
-      return "timestamp";
+    case 10: { // Timestamp
+      const unit = field.type.unit;
+      return unit === 0 ? "seconds" : unit === 1 ? "milliseconds" : unit === 2 ? "microseconds" : unit === 3 ? "nanoseconds" : undefined;
+    }
     case 2: // Int
     case 3: // Float
     case 7: // Decimal
