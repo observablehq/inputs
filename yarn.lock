@@ -444,6 +444,11 @@
   resolved "https://registry.yarnpkg.com/@ungap/structured-clone/-/structured-clone-1.2.0.tgz#756641adb587851b5ccb3e095daf27ae581c8406"
   integrity sha512-zuVdFrMJiuCDQUMCzQaD6KL28MjnqqN8XnAqiEq9PNm/hCPTSGfrXCOfwj1ow4LFb/tNymJPwsNbVePc1xFqrQ==
 
+"@uwdata/flechette@^2.6.0":
+  version "2.6.0"
+  resolved "https://registry.yarnpkg.com/@uwdata/flechette/-/flechette-2.6.0.tgz#fc3903099bedd249e3694a76409c403b5aa3619a"
+  integrity sha512-DOQYsAmAjYhwAdTCgsBYuD7lCiW/kQSIyrBuz7yt2A6fF6sLaVp74QZPUWJJ20MB6mWghP5X7xU46QUlEChPMg==
+
 abbrev@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/abbrev/-/abbrev-2.0.0.tgz#cf59829b8b4f03f89dda2771cb7f3653828c89bf"
