@@ -216,7 +216,7 @@ If *validate* is not defined, [*number*.checkValidity](https://html.spec.whatwg.
 
 The *format* function should return a string value that is compatible with native number parsing. Hence, the default [formatTrim](#formatTrim) is recommended.
 
-If a *transform* function is specified, an inverse transform function *invert* is strongly recommended. If *invert* is not provided, the Range will fallback to Newton’s method, but this may be slow or inaccurate. Passing Math.sqrt, Math.log, or Math.exp as a *transform* will automatically supply the corresponding *invert*. If *min* is greater than *max*, *i.e.* if the extent is inverted, then *transform* and *invert* will default to `(value) => -value`.
+If a *transform* function is specified, an inverse transform function *invert* is strongly recommended. If *invert* is not provided, the Range will fall back to Newton’s method, but this may be slow or inaccurate. Passing Math.sqrt, Math.log, or Math.exp as a *transform* will automatically supply the corresponding *invert*. If *min* is greater than *max*, *i.e.* if the extent is inverted, then *transform* and *invert* will default to `(value) => -value`.
 
 #### Inputs.number([*extent*, ]*options*)
 
@@ -524,7 +524,7 @@ If the *template* object is not specified, the given inputs are wrapped in a DIV
 
 [Source](./src/bind.js) · [Notebook](https://observablehq.com/@observablehq/synchronized-inputs) · The bind function allows a *target* input to be bound to a *source* input, synchronizing the two: interaction with the *source* input will propagate to the *target* input and *vice versa*.
 
-The relationship between *target* and *source* is not symmetric: the *target* input should be considered a dependant of the *source* input, and if desired, only the *source* should be declared an Observable view.
+The relationship between *target* and *source* is not symmetric: the *target* input should be considered a dependent of the *source* input, and if desired, only the *source* should be declared an Observable view.
 
 When the *target* emits a type-appropriate event, the *target*’s type-appropriate value will be applied to the *source* and a type-appropriate event will be dispatched on the *source*; when the *source* emits a type-appropriate event, the *source*’s type-appropriate value will be applied to the *target*, but *no event will be dispatched*, avoiding an infinite loop.
 
