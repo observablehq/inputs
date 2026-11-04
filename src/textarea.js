@@ -20,6 +20,7 @@ export function textarea({
   monospace = false,
   resize = rows < 12,
   width,
+  maxHeight,
   ...options
 } = {}) {
   const input = html`<textarea
@@ -37,6 +38,7 @@ export function textarea({
     onkeydown=${onkeydown}
     style=${{
       width,
+      maxHeight,
       fontFamily: monospace ? "var(--monospace, monospace)" : null,
       resize: resize ? null : "none"
     }}
