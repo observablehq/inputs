@@ -1,36 +1,33 @@
-import fs from "fs";
-import path from "path";
-import {terser} from "rollup-plugin-terser";
-import node from "@rollup/plugin-node-resolve";
-import replace from "@rollup/plugin-replace";
-import json from "@rollup/plugin-json";
+import {readFileSync} from "node:fs";
+import {resolve} from "node:path";
+import RollupNode from "@rollup/plugin-node-resolve";
+import RollupReplace from "@rollup/plugin-replace";
+import RollupTerser from "@rollup/plugin-terser";
+import RollupJson from "@rollup/plugin-json";
 import jsesc from "jsesc";
 import CleanCSS from "clean-css";
-import * as meta from "./package.json";
+import meta from "./package.json" with {type: "json"};
 
 const filename = meta.name.split("/").pop();
 
-// Resolve HTL dependency.
-const htl = JSON.parse(fs.readFileSync("./node_modules/htl/package.json", "utf-8"));
-if (typeof htl.jsdelivr === "undefined") throw new Error("unable to resolve htl");
-const htlPath = `htl@${htl.version}/${htl.jsdelivr}`;
-
 // Extract copyrights from the LICENSE.
-const copyrights = fs.readFileSync("./LICENSE", "utf-8")
+const copyright = readFileSync("./LICENSE", "utf-8")
   .split(/\n/g)
-  .filter(line => /^copyright\s+/i.test(line))
-  .map(line => line.replace(/^copyright\s+/i, ""));
+  .filter((line) => /^copyright\s+/i.test(line))
+  .map((line) => line.replace(/^copyright\s+/i, ""))
+  .join(", ");
+
+const banner = `// ${meta.name} v${meta.version} Copyright ${copyright}`;
 
 // A unique namespace for our styles.
 const styleNs = "inputs-3a86ea";
-
-const stylePath = path.resolve("./src/style.css");
+const stylePath = resolve("./src/style.css");
 
 // A lil’ Rollup plugin to allow importing of style.css.
 const css = {
   load(id) {
     if (id !== stylePath) return;
-    return fs.readFileSync(id, "utf8");
+    return readFileSync(id, "utf8");
   },
   transform(input, id) {
     if (id !== stylePath) return;
@@ -47,57 +44,58 @@ document.head.appendChild(style);
   }
 };
 
-const config = {
-  input: "bundle.js",
-  external: ["htl"],
-  output: {
-    indent: false,
-    banner: `// ${meta.name} v${meta.version} Copyright ${copyrights.join(", ")}`,
-    name: "Inputs",
-    format: "umd",
-    extend: true,
-    globals: {"htl": "htl"},
-    paths: {"htl": htlPath}
-  },
-  plugins: [
-    css,
-    json(),
-    node(),
-    replace({__ns__: styleNs, preventAssignment: true})
-  ]
-};
+const terser = RollupTerser({output: {preamble: banner}});
+
+function config(options) {
+  return {
+    input: "src/index.js",
+    external: ["htl"],
+    ...options,
+    output: {
+      name: "Inputs",
+      indent: false,
+      extend: true,
+      banner,
+      globals: {htl: "htl"},
+      ...options.output
+    },
+    plugins: [
+      RollupNode(),
+      RollupReplace({__ns__: styleNs, preventAssignment: true}),
+      RollupJson(),
+      ...(options.plugins ?? [])
+    ]
+  };
+}
 
 export default [
-  {
-    ...config,
+  config({
     output: {
-      ...config.output,
-      file: `dist/${filename}.js`
+      file: "dist/index.js",
+      format: "es"
     }
-  },
-  {
-    ...config,
+  }),
+  config({
     output: {
-      ...config.output,
-      file: `dist/${filename}.min.js`
+      file: "dist/index.min.js",
+      format: "es"
     },
-    plugins: [
-      ...config.plugins,
-      terser({output: {preamble: config.output.banner}})
-    ]
-  },
-  {
-    input: "src/index.js",
-    external: ["htl", "isoformat"],
+    plugins: [terser]
+  }),
+  config({
+    input: "bundle.js",
     output: {
-      indent: false,
-      banner: `// ${meta.name} v${meta.version} Copyright ${copyrights.join(", ")}`,
-      format: "es",
-      file: "dist/index.js"
+      file: `dist/${filename}.js`,
+      format: "umd"
     },
-    plugins: [
-      node(),
-      replace({__ns__: styleNs, preventAssignment: true})
-    ]
-  }
+    plugins: [css]
+  }),
+  config({
+    input: "bundle.js",
+    output: {
+      file: `dist/${filename}.min.js`,
+      format: "umd"
+    },
+    plugins: [css, terser]
+  })
 ];
