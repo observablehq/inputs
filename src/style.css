@@ -228,7 +228,8 @@ form.__ns__-table {
 }
 
 .__ns__-table thead th span {
-  display: inline-block;
+  display: inline-flex;
+  justify-content: center;
   width: 0.5em;
   margin-left: -0.5em;
 }
