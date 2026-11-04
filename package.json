@@ -1,7 +1,7 @@
 {
   "name": "@observablehq/inputs",
   "description": "Lightweight user interface components",
-  "version": "0.11.0",
+  "version": "1.0.0",
   "author": {
     "name": "Observable, Inc.",
     "url": "https://observablehq.com"
@@ -26,40 +26,36 @@
   "files": [
     "dist/**/*.css",
     "dist/**/*.js",
-    "src/**/*.js"
+    "dist/**/*.mjs"
   ],
   "engines": {
     "node": ">=14.5.0"
   },
   "scripts": {
-    "test": "yarn test:mocha && yarn test:lint",
-    "test:mocha": "mkdir -p test/output && mocha 'test/**/*-test.js' test/input.js",
-    "test:lint": "eslint src test",
+    "test": "mkdir -p test/output && mocha 'test/**/*-test.js' test/input.js",
+    "lint": "eslint",
     "prepublishOnly": "rm -rf dist && rollup -c && node bin/clean-css < src/style.css > dist/index.css",
     "dev": "vite dev"
   },
-  "_moduleAliases": {
-    "@observablehq/inputs": "./src/index.js"
-  },
   "devDependencies": {
-    "@rollup/plugin-json": "^4.1.0",
-    "@rollup/plugin-node-resolve": "^13.3.0",
-    "@rollup/plugin-replace": "^3.1.0",
+    "@rollup/plugin-json": "^6.1.0",
+    "@rollup/plugin-node-resolve": "^16.0.3",
+    "@rollup/plugin-terser": "^1.0.2",
     "apache-arrow": "^17.0.0",
     "clean-css": "^5.3.3",
-    "d3": "^7.9.0",
-    "eslint": "^8.57.0",
-    "js-beautify": "^1.15.1",
-    "jsdom": "^24.1.1",
-    "jsesc": "^3.0.2",
-    "mocha": "^10.7.0",
-    "rollup": "^2.79.1",
-    "rollup-plugin-terser": "^7.0.2",
-    "vite": "^5.3.5"
+    "d3": "^7.9.2",
+    "eslint": "^10.14.0",
+    "globals": "^17.14.0",
+    "js-beautify": "^1.15.4",
+    "jsdom": "^24.1.3",
+    "jsesc": "^3.1.0",
+    "mocha": "^10.8.2",
+    "rollup": "^4.67.5",
+    "vite": "^5.4.21"
   },
   "dependencies": {
-    "htl": "^0.3.1",
-    "isoformat": "^0.2.0"
+    "htl": "^1.0.0",
+    "isoformat": "^0.2.1"
   },
   "publishConfig": {
     "access": "public"

@@ -7,10 +7,10 @@ Observable Inputs is a small, free, [open-source](./LICENSE) JavaScript library 
 ```html
 <!DOCTYPE html>
 <body>
-<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@observablehq/inputs@0.11/dist/index.css">
+<link rel="stylesheet" type="text/css" href="https://esm.sh/@observablehq/inputs@1/dist/index.css">
 <script type="module">
 
-import * as Inputs from "https://cdn.jsdelivr.net/npm/@observablehq/inputs@0.11/+esm";
+import * as Inputs from "https://esm.sh/@observablehq/inputs@1";
 
 // Create a numeric slider allowing a value between 0 and 100 (inclusive).
 const slider = Inputs.range([0, 100], {label: "x"});
@@ -26,19 +26,13 @@ slider.addEventListener("input", (event) => {
 </script>
 ```
 
-Observable Inputs are designed to be especially convenient in [Observable Framework](https://observablehq.com/framework) and [Observable notebooks](https://observablehq.com/). In Framework, use the *view* function to display an input and expose its value as a top-level [reactive variable](https://observablehq.com/framework/reactivity):
+Observable Inputs are designed to be especially convenient in [Observable notebooks](https://observablehq.com/). Use the *view* function to display an input and expose its value as a top-level reactive variable:
 
 ```js
 const x = view(Inputs.range([0, 100]));
 ```
 
-In Observable notebooks, you can similarly use the [`viewof`](https://observablehq.com/@observablehq/introduction-to-views) operator:
-
-```js
-viewof x = Inputs.range([0, 100])
-```
-
-In either case, *x* now refers reactively to the current value of the input; code that references *x* will re-run automatically when the user interacts with the input.
+Now *x* refers reactively to the current value of the input; code that references *x* will re-run automatically when the user interacts with the input.
 
 Observable Inputs provides basic inputs:
 
