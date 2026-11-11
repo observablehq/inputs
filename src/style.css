@@ -40,8 +40,7 @@
 }
 
 /* Since toggles won’t wrap on narrow screens, collapse to content. */
-:where(form.__ns__-toggle > label,
-form.__ns__-toggle .__ns__-input) {
+:where(form.__ns__-toggle > label) {
   width: initial;
 }
 
