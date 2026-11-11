@@ -21,3 +21,16 @@ it("default styles use zero-specificity selectors, including media rules", async
     window.close();
   }
 });
+
+// jsdom resolves the cascade by source order only, ignoring specificity; that
+// matches browsers here because all default styles have zero specificity.
+it("toggle checkbox is not stretched to the form width", async () => {
+  const css = await readFile(new URL("../src/style.css", import.meta.url), "utf8");
+  const {window} = new JSDOM(`<style>${css}</style>
+<form class="__ns__ __ns__-toggle"><label>Label</label><input id="toggle" class="__ns__-input" type="checkbox"></form>
+<form class="__ns__"><label>Label</label><div id="text" class="__ns__-input"><input type="text"></div></form>`);
+  const width = (id) => window.getComputedStyle(window.document.getElementById(id)).width;
+  assert.strictEqual(width("text"), "100%");
+  assert.notStrictEqual(width("toggle"), "100%");
+  window.close();
+});

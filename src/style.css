@@ -126,7 +126,7 @@ form.__ns__-toggle .__ns__-input) {
 /* For compound inputs (e.g., text input + submit), use flex to ensure vertical
  * alignment and to allow responsive sizing. For all inputs except Checkbox,
  * Radio, and Button, we want the inputs to span the full width of the form. */
-:where(.__ns__-input) {
+:where(.__ns__-input:not(form.__ns__-toggle .__ns__-input)) {
   display: flex;
   align-items: center;
   width: 100%;
