@@ -145,7 +145,7 @@ function initialize(
   function unselect(i) {
     materialize();
     let j = index.indexOf(i);
-    if (j < tbody.childNodes.length) {
+    if (selectable && j < tbody.childNodes.length) {
       const tr = tbody.childNodes[j];
       inputof(tr).checked = false;
     }
@@ -155,7 +155,7 @@ function initialize(
   function select(i) {
     materialize();
     let j = index.indexOf(i);
-    if (j < tbody.childNodes.length) {
+    if (selectable && j < tbody.childNodes.length) {
       const tr = tbody.childNodes[j];
       inputof(tr).checked = true;
     }
@@ -315,8 +315,10 @@ function initialize(
         for (const i of selection) if (!selected.has(i)) select(i);
       } else {
         const i = array.indexOf(v);
-        selected = i < 0 ? new Set() : new Set([i]);
+        for (const j of selected) unselect(j);
+        if (i >= 0) select(i);
       }
+      reinput();
       value = undefined; // lazily computed
     }
   });
