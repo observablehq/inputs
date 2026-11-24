@@ -241,6 +241,7 @@ function initialize(
     while (tbody.firstChild) tbody.firstChild.remove();
     appendRows(0, n = minlengthof(rows * 2));
     anchor = head = null;
+    root.dispatchEvent(new CustomEvent('input', {bubbles: true, detail: {sort: column, reverse: currentReverse}}));
     reinput();
   }
 
@@ -295,7 +296,7 @@ function initialize(
       if (value === undefined) {
         materialize();
         if (multiple) {
-          value = Array.from(required && selected.size === 0 ? index : selected, i => array[i]);
+          value = Array.from(required && selected.size === 0 ? index : sort ? index.filter(i => selected.has(i)) : selected, i => array[i]);
           value.columns = columns;
         } else if (selected.size) {
           const [i] = selected;
